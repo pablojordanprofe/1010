@@ -55,7 +55,7 @@
   .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--text); }
   .card p { font-size: 0.9rem; line-height: 1.7; color: var(--text2); }
 
-  /* NIKE 4PS INFOGRAPHIC STYLE */
+  /* NIKE 4PS STYLE */
   .nike-section { margin-top: 1.5rem; }
   .nike-card { background: white; border-radius: 12px; border: 1px solid #dbeafe; padding: 1.5rem; margin-bottom: 1rem; display: flex; gap: 1.5rem; align-items: flex-start; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
   .nike-icon-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; font-weight: bold; color: #16a34a; }
@@ -131,12 +131,12 @@
   .hint-text { text-align:center; font-size: 0.8rem; color: var(--text2); background: var(--bg); border-radius: 8px; padding: 0.5rem; margin-bottom: 0.5rem; }
   .play-again { display:block; margin: 0.5rem auto; padding: 0.5rem 1.5rem; background: #533ab7; color: white; border:none; border-radius: 8px; cursor:pointer; font-size:0.85rem; }
 
-  /* SOPA DE LETRAS */
-  .grid-sopa { display:inline-grid; gap: 2px; margin: 0 auto; }
+  /* SOPA DE LETRAS INTERACTIVA ORIGINAL */
+  .grid-sopa { display:inline-grid; gap: 2px; margin: 0 auto; user-select: none; }
   .sopa-cell { width: 26px; height: 26px; display:flex; align-items:center; justify-content:center; font-size: 0.78rem; font-weight: 600; text-transform:uppercase; border-radius: 4px; cursor:pointer; user-select:none; background: var(--bg); border: 1px solid var(--border); transition: background .15s; }
   .sopa-cell.selected { background: #EEEDFE; border-color: #533ab7; color: #533ab7; }
   .sopa-cell.found { background: #eaf3de; border-color: #639922; color: #27500a; }
-  .sopa-words { display:flex; flex-wrap:wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .sopa-words { display:flex; flex-wrap:wrap; gap: 0.4rem; margin-top: 0.8rem; justify-content: center; }
   .sopa-word { padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; background: var(--bg); border: 1px solid var(--border); color: var(--text2); }
   .sopa-word.found { background: #eaf3de; border-color: #639922; color: #27500a; text-decoration: line-through; }
   .sopa-center { text-align:center; }
@@ -235,7 +235,7 @@
       <div class="tab-content active" id="tab-contenido">
         <div class="card">
           <h3>El sistema comercial</h3>
-          <p>El sistema comercial engloba el conjunto de elementos que intervienen en el proceso de intercambio entre la empresa y el mercado. Se distinguen dos tipos de variables:</p>
+          <p>El sistema comercial engloba el conjunto de elements que intervienen en el proceso de intercambio entre la empresa y el mercado. Se distinguen dos tipos de variables:</p>
         </div>
 
         <p class="flip-hint">👆 Haz clic en cada tarjeta para ver el contenido</p>
@@ -285,11 +285,11 @@
           <div class="nike-card">
             <div class="nike-icon-box precio">🏷️<div class="nike-label">Precio</div></div>
             <div class="nike-content">
-              <h4>Nike utiliza <strong>estrategias de precios</strong> que reflejan la calidad y el valor percibido de sus productos:</h4>
+              <h4>Nike utiliza <strong>estrategias de precios</strong> que reflejan la calidad y el valor percibido:</h4>
               <ul>
-                <li><strong>Estrategia de precios premium:</strong> los productos de alta gama tienen precios altos debido a su exclusividad y tecnología avanzada.</li>
-                <li><strong>Descuentos y promociones:</strong> ofrece descuentos durante eventos especiales como el Black Friday o ventas de fin de temporada.</li>
-                <li><strong>Variedad de precios:</strong> tienen una amplia gama de precios, desde productos accesibles hasta artículos de lujo.</li>
+                <li><strong>Estrategia de precios premium:</strong> precios altos basados en la exclusividad y la tecnología.</li>
+                <li><strong>Descuentos y promociones:</strong> rebajas especiales en eventos clave como Black Friday.</li>
+                <li><strong>Variedad de precios:</strong> desde equipamiento básico accesible hasta ediciones limitadas de lujo.</li>
               </ul>
             </div>
           </div>
@@ -297,12 +297,11 @@
           <div class="nike-card">
             <div class="nike-icon-box dist">🏪<div class="nike-label">Distribución</div></div>
             <div class="nike-content">
-              <h4>Nike utiliza <strong>múltiples canales de distribución</strong> para asegurar que sus productos estén disponibles a nivel global:</h4>
+              <h4>Nike utiliza <strong>múltiples canales de distribución</strong> a nivel global:</h4>
               <ul>
-                <li><strong>Tiendas propias:</strong> tienen tiendas insignia (<em>flagship stores</em>) en ubicaciones clave, como la Nike Store de Nueva York.</li>
-                <li><strong>Minoristas y grandes almacenes:</strong> distribución a través de terceros como Foot Locker o El Corte Inglés.</li>
-                <li><strong>Tienda en línea:</strong> venta directa al consumidor a través de su web oficial (www.nike.com).</li>
-                <li><strong>Distribuidores autorizados:</strong> venta a través de comercios especializados asociados.</li>
+                <li><strong>Tiendas propias:</strong> macrotiendas de imagen de marca (<em>flagship stores</em>).</li>
+                <li><strong>Minoristas y grandes almacenes:</strong> venta mediante distribuidores autorizados como Foot Locker.</li>
+                <li><strong>Tienda en línea:</strong> comercio directo a través de su plataforma web y apps móviles oficiales.</li>
               </ul>
             </div>
           </div>
@@ -310,23 +309,21 @@
           <div class="nike-card">
             <div class="nike-icon-box promo">📢<div class="nike-label">Promoción</div></div>
             <div class="nike-content">
-              <h4>Nike utiliza una <strong>combinación de estrategias de promoción</strong> para aumentar la visibilidad y atraer a su público objetivo:</h4>
+              <h4>Nike utiliza una <strong>potente combinación de comunicación</strong> para atraer a su público:</h4>
               <ul>
-                <li><strong>Publicidad:</strong> anuncios masivos en televisión, Internet y revistas deportivas.</li>
-                <li><strong>Patrocinios:</strong> contratos multimillonarios con atletas de élite como LeBron James, Serena Williams y Cristiano Ronaldo.</li>
-                <li><strong>Redes sociales:</strong> campañas en Instagram, X o Facebook para interactuar con los consumidores.</li>
-                <li><strong>Eventos y activaciones:</strong> organiza desafíos deportivos, como el Nike Run Club, para fomentar su comunidad.</li>
+                <li><strong>Publicidad de gran impacto:</strong> anuncios inspiracionales en TV, medios digitales y cartelería.</li>
+                <li><strong>Patrocinios masivos:</strong> contratos icónicos con deportistas de élite mundiales.</li>
+                <li><strong>Comunidades activas:</strong> apps propias como Nike Run Club para fidelizar al consumidor.</li>
               </ul>
             </div>
           </div>
-
         </div>
       </div>
 
       <div class="tab-content" id="tab-pestel">
         <div class="card" style="margin-bottom:1.2rem">
           <h3>Análisis PESTEL — Macroentorno</h3>
-          <p>El análisis PESTEL estudia los factores del macroentorno que influyen en la actividad comercial de la empresa.</p>
+          <p>El análisis PESTEL estudia los factores del macroentorno que influyen en la actividad de la empresa.</p>
         </div>
         <div id="pestel-accordion"></div>
       </div>
@@ -353,18 +350,15 @@
 
       <div class="tab-content" id="tab-instituciones">
         <div class="card">
-          <h3>Instituciones nacionales</h3>
-          <ul style="margin-top:0.6rem; padding-left:1.2rem; font-size:0.88rem; color:var(--text2); line-height:2">
-            <li><strong>CNMC</strong> – Comisión Nacional de los Mercados y la Competencia</li>
-            <li><strong>OCU</strong> – Organización de Consumidores y Usuarios</li>
-          </ul>
+          <h3>Instituciones nacionales e internacionales</h3>
+          <p>Regulan los mercados la <strong>CNMC</strong> (España) u organismos internacionales como la <strong>OMC</strong>.</p>
         </div>
       </div>
 
       <div class="tab-content" id="tab-juegos">
         <div class="card" style="margin-bottom:1.2rem">
           <h3>🎮 Zona Interactiva de Repaso</h3>
-          <p>Elige una actividad para poner a prueba los conocimientos del tema de forma amena.</p>
+          <p>Pon a prueba tus conocimientos sobre investigación comercial de forma lúdica.</p>
         </div>
         <div class="games-grid">
           <div class="game-launch" onclick="openAhorcado()">
@@ -375,12 +369,12 @@
           <div class="game-launch" onclick="openSopa()">
             <div class="g-icon">🔍</div>
             <h4>Sopa de letras</h4>
-            <p>Encuentra los conceptos del tema ocultos</p>
+            <p>Encuentra los conceptos ocultos en la cuadrícula</p>
           </div>
           <div class="game-launch" onclick="openQuiz()">
             <div class="g-icon">📝</div>
             <h4>Quiz Exprés</h4>
-            <p>Preguntas tipo test con corrección en tiempo real</p>
+            <p>Preguntas tipo test con corrección automática</p>
           </div>
         </div>
       </div>
@@ -420,14 +414,14 @@ function switchTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
 }
 
-/* ---- DATA GENERATORS ---- */
+/* ---- DATA ACORDIONES ---- */
 const pestelData = [
-  { letter:'P', label:'Político', color:'#533ab7', items:['Estabilidad del gobierno','Regulación del comercio exterior'] },
-  { letter:'E', label:'Económico', color:'#0f6e56', items:['PIB y crecimiento','Tasa de inflación y desempleo'] },
-  { letter:'S', label:'Sociocultural', color:'#993556', items:['Hábitos de consumo','Cambios demográficos'] },
-  { letter:'T', label:'Tecnológico', color:'#185fa5', items:['Comercio electrónico','Inteligencia Artificial'] },
-  { letter:'E2', label:'Ecológico', color:'#3b6d11', items:['Legislación medioambiental','RSE'] },
-  { letter:'L', label:'Legal', color:'#854f0b', items:['Leyes de Defensa de la Competencia','Protección de Datos'] }
+  { letter:'P', label:'Político', color:'#533ab7', items:['Estabilidad del gobierno','Regulación exterior'] },
+  { letter:'E', label:'Económico', color:'#0f6e56', items:['Crecimiento del PIB','Tasa de inflación y desempleo'] },
+  { letter:'S', label:'Sociocultural', color:'#993556', items:['Hábitos de compra','Cambios de edad en población'] },
+  { letter:'T', label:'Tecnológico', color:'#185fa5', items:['E-commerce','Inteligencia Artificial'] },
+  { letter:'E2', label:'Ecológico', color:'#3b6d11', items:['Leyes medioambientales','Sostenibilidad'] },
+  { letter:'L', label:'Legal', color:'#854f0b', items:['Defensa de la competencia','Leyes de publicidad'] }
 ];
 const pestelEl = document.getElementById('pestel-accordion');
 pestelData.forEach((d, i) => {
@@ -436,12 +430,12 @@ pestelData.forEach((d, i) => {
 function togglePestel(i, el) { document.getElementById('pestel-'+i).classList.toggle('open'); el.classList.toggle('open'); }
 
 const porterData = [
-  { id:'nuevos', label:'Nuevos entrantes', pos:'tl', detail:'Barreras de entrada como economías de escala y fuertes inversiones de capital inicial.' },
-  { id:'sustitutos', label:'Productos sustitutivos', pos:'tc', detail:'Bienes fuera del sector que cubren la misma necesidad.' },
-  { id:'proveedores', label:'Poder de proveedores', pos:'tr', detail:'Capacidad de fijar precios si hay poca oferta de materias primas.' },
-  { id:'compradores', label:'Poder de clientes', pos:'bl', detail:'Presión de los compradores para bajar costes o pedir más calidad.' },
-  { id:'rivalidad', label:'Rivalidad del sector', pos:'center', detail:'Intensidad competitiva entre las marcas ya existentes.' },
-  { id:'distribucion', label:'Canales de distribución', pos:'br', detail:'El control de los intermediarios sobre el acceso al mercado.' }
+  { id:'nuevos', label:'Nuevos entrantes', pos:'tl', detail:'Barreras como economías de escala e inversión.' },
+  { id:'sustitutos', label:'Sustitutivos', pos:'tc', detail:'Bienes ajenos que cubren la misma necesidad básica.' },
+  { id:'proveedores', label:'Poder proveedores', pos:'tr', detail:'Poder de fijar precios ante escasez de proveedores.' },
+  { id:'compradores', label:'Poder clientes', pos:'bl', detail:'Exigencia de los clientes de bajar precios o más calidad.' },
+  { id:'rivalidad', label:'Rivalidad sector', pos:'center', detail:'Fuerza central: competencia de marcas existentes.' },
+  { id:'distribucion', label:'Canales distribución', pos:'br', detail:'Control de intermediarios sobre los accesos a mercado.' }
 ];
 const porterGrid = document.getElementById('porter-grid');
 const posMap = { tl:[1,1], tc:[2,1], tr:[3,1], bl:[1,3], center:[2,2], br:[3,3] };
@@ -454,8 +448,8 @@ porterData.forEach(p => {
 });
 
 const marketCriteria = [
-  { title:'Por comprador', items:['Consumo, Industrial B2B, Gubernamental'] },
-  { title:'Por competencia', items:['Competencia Perfecta, Monopolio, Oligopolio, Monopolística'] }
+  { title:'Por tipo de comprador', items:['Consumo, Industrial B2B, Institucional'] },
+  { title:'Por nivel de competencia', items:['Competencia Perfecta, Monopolio, Oligopolio'] }
 ];
 const macc = document.getElementById('market-accordion');
 marketCriteria.forEach((m, i) => {
@@ -479,10 +473,84 @@ function renderHangman() {
   document.getElementById('hangman-content').innerHTML = html;
 }
 
-/* ======= JUEGO 2: SOPA DE LETRAS ======= */
-function openSopa() { openModal('modal-sopa'); document.getElementById('sopa-content').innerHTML = `<p style="text-align:center;color:var(--text2)">Encuentra los términos PESTEL, PORTER y MARCA en la cuadrícula.</p><div class="sopa-center" style="margin-top:1rem;"><button class="play-again" onclick="closeModal('modal-sopa')">¡Entendido!</button></div>`; }
+/* ======= JUEGO 2: SOPA DE LETRAS INTERACTIVA COMPLETA ======= */
+const sopaWords = ['PESTEL','PORTER','MERCADO','MONOPOLIO','DEMANDA','PRECIO','PRODUCTO','ENTORNO'];
+let sopaState = {};
+function openSopa() { openModal('modal-sopa'); buildSopa(); }
+function buildSopa() {
+  const SIZE = 12;
+  const grid = Array.from({length:SIZE}, () => Array(SIZE).fill(''));
+  const placed = [];
+  const dirs = [[0,1],[1,0],[1,1],[0,-1],[-1,0]];
+  const shuffle = arr => arr.sort(() => Math.random()-0.5);
+  shuffle(sopaWords).forEach(word => {
+    let tries = 0, ok = false;
+    while (!ok && tries < 100) {
+      tries++;
+      const dir = dirs[Math.floor(Math.random()*dirs.length)];
+      const r = Math.floor(Math.random()*SIZE), c = Math.floor(Math.random()*SIZE);
+      let cells = [];
+      for (let i = 0; i < word.length; i++) {
+        const nr = r + dir[0]*i, nc = c + dir[1]*i;
+        if (nr<0||nr>=SIZE||nc<0||nc>=SIZE) break;
+        if (grid[nr][nc] && grid[nr][nc] !== word[i]) break;
+        cells.push([nr,nc]);
+      }
+      if (cells.length === word.length) {
+        cells.forEach(([nr,nc],i) => grid[nr][nc] = word[i]);
+        placed.push({ word, cells });
+        ok = true;
+      }
+    }
+  });
+  const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!grid[r][c]) grid[r][c] = alpha[Math.floor(Math.random()*alpha.length)];
+  sopaState = { SIZE, grid, placed, found:[], selecting:[], mouseDown:false };
+  renderSopa();
+}
+function renderSopa() {
+  const { SIZE, grid, placed, found } = sopaState;
+  const allCells = {};
+  sopaState.placed.forEach(p => { if(found.includes(p.word)) p.cells.forEach(([r,c]) => allCells[r+','+c] = 'found'); });
+  sopaState.selecting.forEach(([r,c]) => { if(!allCells[r+','+c]) allCells[r+','+c] = 'selected'; });
 
-/* ======= JUEGO 3: QUIZ EXPRÉS (NUEVO JUEGO) ======= */
+  let html = `<div class="sopa-center"><div class="grid-sopa" style="grid-template-columns:repeat(${SIZE},26px)">`;
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) {
+    const cls = allCells[r+','+c] || '';
+    html += `<div class="sopa-cell ${cls}" onmousedown="startSel(${r},${c})" onmousemove="moveSel(${r},${c})" onmouseup="endSel()">${grid[r][c]}</div>`;
+  }
+  html += `</div><div class="sopa-words">`;
+  sopaWords.forEach(w => { html += `<span class="sopa-word ${found.includes(w)?'found':''}">${w}</span>`; });
+  html += `</div>`;
+  if(found.length === sopaWords.length) html += `<div style="text-align:center;margin-top:1rem;font-weight:700;color:#3b6d11">🎉 ¡Encontradas todas las palabras!</div><button class="play-again" onclick="buildSopa()">Jugar otra vez</button>`;
+  html += `</div>`;
+  document.getElementById('sopa-content').innerHTML = html;
+  document.getElementById('sopa-content').onmouseleave = () => { sopaState.mouseDown = false; sopaState.selecting = []; renderSopa(); };
+}
+function startSel(r,c) { sopaState.mouseDown=true; sopaState.startCell=[r,c]; sopaState.selecting=[[r,c]]; renderSopa(); }
+function moveSel(r,c) {
+  if(!sopaState.mouseDown) return;
+  const [sr,sc] = sopaState.startCell;
+  const dr = r-sr, dc = c-sc;
+  const len = Math.max(Math.abs(dr),Math.abs(dc));
+  if(len===0){sopaState.selecting=[[sr,sc]];renderSopa();return;}
+  let dirR=0,dirC=0;
+  if(Math.abs(dr)>=Math.abs(dc)) dirR=dr>0?1:-1; 
+  if(Math.abs(dc)>=Math.abs(dr)) dirC=dc>0?1:-1;
+  sopaState.selecting=[];
+  for(let i=0;i<=len;i++) sopaState.selecting.push([sr+dirR*i,sc+dirC*i]);
+  renderSopa();
+}
+function endSel() {
+  sopaState.mouseDown=false; const sel = sopaState.selecting; const { grid, placed, found } = sopaState;
+  if(sel.length<2){sopaState.selecting=[];renderSopa();return;}
+  const str = sel.map(([r,c])=>grid[r][c]).join('');
+  const hit = placed.find(p => p.word===str || p.word===str.split('').reverse().join(''));
+  if(hit && !found.includes(hit.word)) sopaState.found.push(hit.word);
+  sopaState.selecting=[]; renderSopa();
+}
+
+/* ======= JUEGO 3: QUIZ EXPRÉS ======= */
 const quizQuestions = [
   { q: "¿Qué significan las 4Ps del Marketing Mix?", o: ["Producto, Precio, Distribución (Place) y Promoción", "Planificación, Producción, Publicidad y Venta", "Político, Económico, Social y Tecnológico"], a: 0 },
   { q: "El análisis PESTEL se utiliza para estudiar...", o: ["El microentorno de la empresa", "El macroentorno sectorial", "El comportamiento interno de los empleados"], a: 1 },
