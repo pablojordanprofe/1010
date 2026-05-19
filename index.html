@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Investigación Comercial</title>
+<title>PABLO JORDÁN PROFE · Marketing y Publicidad</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -55,6 +55,18 @@
   .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--text); }
   .card p { font-size: 0.9rem; line-height: 1.7; color: var(--text2); }
 
+  /* NIKE 4PS INFOGRAPHIC STYLE */
+  .nike-section { margin-top: 1.5rem; }
+  .nike-card { background: white; border-radius: 12px; border: 1px solid #dbeafe; padding: 1.5rem; margin-bottom: 1rem; display: flex; gap: 1.5rem; align-items: flex-start; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+  .nike-icon-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; width: 80px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; font-weight: bold; color: #16a34a; }
+  .nike-icon-box.precio { background: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
+  .nike-icon-box.dist { background: #fefbeb; border-color: #fef08a; color: #ca8a04; }
+  .nike-icon-box.promo { background: #fff5f5; border-color: #feb2b2; color: #dc2626; }
+  .nike-label { font-size: 0.8rem; margin-top: 2px; font-weight: 700; color: #333; text-align: center; }
+  .nike-content h4 { font-size: 1rem; color: #1e293b; margin-bottom: 0.5rem; }
+  .nike-content ul { padding-left: 1.2rem; font-size: 0.88rem; color: #475569; line-height: 1.6; }
+  .nike-content ul li { margin-bottom: 0.4rem; }
+
   /* FLIP CARDS */
   .flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
   .flip-card { height: 160px; perspective: 1000px; cursor:pointer; }
@@ -91,7 +103,7 @@
   .porter-detail.show { display:block; }
 
   /* GAMES SECTION */
-  .games-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .games-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; }
   .game-launch { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align:center; cursor:pointer; transition: all .2s; }
   .game-launch:hover { border-color: #533ab7; transform: translateY(-2px); box-shadow: var(--shadow); }
   .game-launch .g-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
@@ -129,6 +141,14 @@
   .sopa-word.found { background: #eaf3de; border-color: #639922; color: #27500a; text-decoration: line-through; }
   .sopa-center { text-align:center; }
 
+  /* QUIZ STYLE */
+  .quiz-q { font-weight: 600; font-size: 0.95rem; margin-bottom: 0.8rem; color: var(--text); }
+  .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .quiz-opt { padding: 0.7rem 1rem; border: 1.5px solid var(--border); border-radius: 10px; background: var(--bg2); cursor: pointer; font-size: 0.85rem; text-align: left; transition: all 0.2s; }
+  .quiz-opt:hover { border-color: #533ab7; background: #f8f7ff; }
+  .quiz-opt.selected { background: #eeedfe; border-color: #533ab7; font-weight: 600; }
+  .quiz-result-box { text-align: center; padding: 1.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; color: #166534; font-weight: 700; margin-top: 1rem; }
+
   /* PROGRESS */
   .progress-bar { height: 4px; background: var(--bg); border-radius: 2px; margin-bottom: 2rem; overflow:hidden; }
   .progress-fill { height:100%; background: linear-gradient(90deg, #533ab7, #0f6e56); border-radius: 2px; transition: width .5s; }
@@ -140,37 +160,33 @@
   .ut-num-badge { background: #EEEDFE; color: #533ab7; font-size: 0.75rem; font-weight: 800; padding: 0.3rem 0.7rem; border-radius: 20px; }
   .ut-item h4 { font-size: 0.9rem; font-weight: 600; }
   .ut-item p { font-size: 0.78rem; color: var(--text2); }
-  .ut-item-locked { opacity: 0.45; cursor: not-allowed; }
-  .ut-item-locked:hover { border-color: var(--border); }
 
   @media (max-width: 600px) {
     .porter-grid { grid-template-columns: 1fr 1fr; }
     .porter-card.center { grid-column: 1/3; grid-row: 1; }
-    .games-grid { grid-template-columns: 1fr; }
-    .flip-grid { grid-template-columns: 1fr 1fr; }
+    .nike-card { flex-direction: column; gap: 0.8rem; }
+    .nike-icon-box { width: 100%; height: auto; padding: 0.8rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
-    <div class="login-badge">🔒 ACCESO PRIVADO</div>
+    <div class="login-badge">🔒 RECURSOS EXCLUSIVOS</div>
     <h1>Investigación Comercial</h1>
-    <p>CFGS Marketing y Publicidad · IES Murcia</p>
+    <p>Clases de Marketing · PABLO JORDÁN PROFE</p>
     <input type="password" id="pwd-input" placeholder="Contraseña de acceso" onkeydown="if(event.key==='Enter')doLogin()">
     <button onclick="doLogin()">Entrar</button>
     <div class="login-error" id="login-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <header>
     <div>
-      <h1>Investigación Comercial</h1>
-      <span>CFGS Marketing y Publicidad</span>
+      <h1>PABLO JORDÁN PROFE</h1>
+      <span>Recursos de Marketing y Publicidad</span>
     </div>
     <button class="logout-btn" onclick="doLogout()">Salir</button>
   </header>
@@ -178,7 +194,6 @@
   <div class="container">
     <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
 
-    <!-- UT INDEX -->
     <div class="ut-list">
       <div class="ut-item" onclick="showUT1()">
         <span class="ut-num-badge">UT 1</span>
@@ -188,17 +203,17 @@
         </div>
         <span style="margin-left:auto; color:#533ab7;">→</span>
       </div>
-      <div class="ut-item ut-item-locked">
-        <span class="ut-num-badge" style="background:#f1efe8;color:#888">UT 2</span>
+      
+      <div class="ut-item" onclick="alert('El contenido de la UT 2 estará listo muy pronto.')">
+        <span class="ut-num-badge">UT 2</span>
         <div>
-          <h4>Próximamente...</h4>
-          <p>Disponible cuando avance el curso</p>
+          <h4>Investigación de mercados y fuentes de información</h4>
+          <p>Estructura de la investigación, fuentes primarias y secundarias · Próximamente</p>
         </div>
-        <span style="margin-left:auto; color:#aaa;">🔒</span>
+        <span style="margin-left:auto; color:#533ab7;">⏳</span>
       </div>
     </div>
 
-    <!-- UT1 CONTENT (hidden initially) -->
     <div id="ut1-content" style="display:none">
       <button onclick="backToIndex()" style="background:none;border:none;color:#533ab7;cursor:pointer;font-size:0.9rem;margin-bottom:1rem;">← Volver al índice</button>
 
@@ -208,7 +223,6 @@
         <p>Variables controlables y no controlables · Mercado · Macroentorno PESTEL · Microentorno – 5 Fuerzas de Porter · Instituciones reguladoras</p>
       </div>
 
-      <!-- TABS -->
       <div class="tabs">
         <div class="tab active" onclick="switchTab('contenido')">📖 Contenido</div>
         <div class="tab" onclick="switchTab('pestel')">🌍 PESTEL</div>
@@ -218,7 +232,6 @@
         <div class="tab" onclick="switchTab('juegos')">🎮 Juegos</div>
       </div>
 
-      <!-- TAB: CONTENIDO -->
       <div class="tab-content active" id="tab-contenido">
         <div class="card">
           <h3>El sistema comercial</h3>
@@ -253,80 +266,105 @@
           </div>
         </div>
 
-        <div class="card">
-          <h3>¿Cómo se relacionan?</h3>
-          <p>La empresa define su <strong>marketing mix (4Ps)</strong> para actuar en el mercado, pero siempre condicionada por los factores externos. El análisis del entorno permite anticipar amenazas y detectar oportunidades para adaptar la estrategia comercial.</p>
+        <div class="card nike-section">
+          <h3>💡 Caso Práctico: El Marketing Mix de Nike (4Ps)</h3>
+          <p style="margin-bottom:1.2rem; font-size:0.88rem; color:var(--text2)">Ejemplo real basado en las estrategias comerciales globales de la marca:</p>
+          
+          <div class="nike-card">
+            <div class="nike-icon-box">🛍️<div class="nike-label">Producto</div></div>
+            <div class="nike-content">
+              <h4>Nike ofrece una <strong>amplia gama de productos</strong>, incluyendo calzado deportivo, ropa y accesorios:</h4>
+              <ul>
+                <li><strong>Calzado:</strong> Nike Air Max, Nike Air Jordan, Nike Free.</li>
+                <li><strong>Ropa:</strong> sudaderas, pantalones, camisetas, chaquetas.</li>
+                <li><strong>Accesorios:</strong> mochilas, gorras, calcetines.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="nike-card">
+            <div class="nike-icon-box precio">🏷️<div class="nike-label">Precio</div></div>
+            <div class="nike-content">
+              <h4>Nike utiliza <strong>estrategias de precios</strong> que reflejan la calidad y el valor percibido de sus productos:</h4>
+              <ul>
+                <li><strong>Estrategia de precios premium:</strong> los productos de alta gama tienen precios altos debido a su exclusividad y tecnología avanzada.</li>
+                <li><strong>Descuentos y promociones:</strong> ofrece descuentos durante eventos especiales como el Black Friday o ventas de fin de temporada.</li>
+                <li><strong>Variedad de precios:</strong> tienen una amplia gama de precios, desde productos accesibles hasta artículos de lujo.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="nike-card">
+            <div class="nike-icon-box dist">🏪<div class="nike-label">Distribución</div></div>
+            <div class="nike-content">
+              <h4>Nike utiliza <strong>múltiples canales de distribución</strong> para asegurar que sus productos estén disponibles a nivel global:</h4>
+              <ul>
+                <li><strong>Tiendas propias:</strong> tienen tiendas insignia (<em>flagship stores</em>) en ubicaciones clave, como la Nike Store de Nueva York.</li>
+                <li><strong>Minoristas y grandes almacenes:</strong> distribución a través de terceros como Foot Locker o El Corte Inglés.</li>
+                <li><strong>Tienda en línea:</strong> venta directa al consumidor a través de su web oficial (www.nike.com).</li>
+                <li><strong>Distribuidores autorizados:</strong> venta a través de comercios especializados asociados.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="nike-card">
+            <div class="nike-icon-box promo">📢<div class="nike-label">Promoción</div></div>
+            <div class="nike-content">
+              <h4>Nike utiliza una <strong>combinación de estrategias de promoción</strong> para aumentar la visibilidad y atraer a su público objetivo:</h4>
+              <ul>
+                <li><strong>Publicidad:</strong> anuncios masivos en televisión, Internet y revistas deportivas.</li>
+                <li><strong>Patrocinios:</strong> contratos multimillonarios con atletas de élite como LeBron James, Serena Williams y Cristiano Ronaldo.</li>
+                <li><strong>Redes sociales:</strong> campañas en Instagram, X o Facebook para interactuar con los consumidores.</li>
+                <li><strong>Eventos y activaciones:</strong> organiza desafíos deportivos, como el Nike Run Club, para fomentar su comunidad.</li>
+              </ul>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <!-- TAB: PESTEL -->
       <div class="tab-content" id="tab-pestel">
         <div class="card" style="margin-bottom:1.2rem">
           <h3>Análisis PESTEL — Macroentorno</h3>
-          <p>El análisis PESTEL estudia los factores del macroentorno que influyen en la actividad comercial de la empresa. Son variables <strong>no controlables</strong> que condicionan las decisiones estratégicas.</p>
+          <p>El análisis PESTEL estudia los factores del macroentorno que influyen en la actividad comercial de la empresa.</p>
         </div>
-        <div id="pestel-accordion">
-          <!-- Generado por JS -->
-        </div>
+        <div id="pestel-accordion"></div>
       </div>
 
-      <!-- TAB: PORTER -->
       <div class="tab-content" id="tab-porter">
         <div class="card" style="margin-bottom:1.2rem">
           <h3>Las 5 Fuerzas de Porter — Microentorno</h3>
-          <p>Michael Porter identificó cinco fuerzas competitivas que determinan el atractivo y la rentabilidad de un sector. Haz clic en cada fuerza para ampliar.</p>
+          <p>Michael Porter identificó cinco fuerzas competitivas que determinan el atractivo de un sector.</p>
         </div>
         <div class="porter-grid" id="porter-grid"></div>
         <div class="porter-detail" id="porter-detail"></div>
       </div>
 
-      <!-- TAB: MERCADO -->
       <div class="tab-content" id="tab-mercado">
         <div class="card">
           <h3>El mercado: definición y estructura</h3>
-          <p>El mercado es el conjunto de compradores y vendedores que intercambian un bien o servicio. Sus <strong>límites</strong> pueden ser geográficos, de producto o temporales.</p>
+          <p>El mercado es el conjunto de compradores y vendedores que intercambian un bien o servicio.</p>
         </div>
         <div class="card">
           <h3>Clasificación de los mercados</h3>
-          <p style="margin-bottom:0.8rem">Los mercados se pueden clasificar según distintos criterios:</p>
           <div id="market-accordion"></div>
         </div>
       </div>
 
-      <!-- TAB: INSTITUCIONES -->
       <div class="tab-content" id="tab-instituciones">
         <div class="card">
           <h3>Instituciones nacionales</h3>
-          <p>Regulan la actividad comercial dentro de España:</p>
           <ul style="margin-top:0.6rem; padding-left:1.2rem; font-size:0.88rem; color:var(--text2); line-height:2">
             <li><strong>CNMC</strong> – Comisión Nacional de los Mercados y la Competencia</li>
             <li><strong>OCU</strong> – Organización de Consumidores y Usuarios</li>
-            <li><strong>ICEX</strong> – Instituto Español de Comercio Exterior</li>
-            <li><strong>Ministerio de Industria, Comercio y Turismo</strong></li>
           </ul>
-        </div>
-        <div class="card">
-          <h3>Instituciones internacionales</h3>
-          <p>Influyen en la actividad comercial a escala global:</p>
-          <ul style="margin-top:0.6rem; padding-left:1.2rem; font-size:0.88rem; color:var(--text2); line-height:2">
-            <li><strong>OMC</strong> – Organización Mundial del Comercio</li>
-            <li><strong>FMI</strong> – Fondo Monetario Internacional</li>
-            <li><strong>UE</strong> – Unión Europea (Dirección General de Competencia)</li>
-            <li><strong>ONU</strong> – A través de la UNCTAD (Comercio y Desarrollo)</li>
-            <li><strong>Banco Mundial</strong> – Financia proyectos de desarrollo comercial</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>¿Qué regulan?</h3>
-          <p>Estas instituciones establecen normas de libre competencia, protección al consumidor, aranceles y barreras comerciales, propiedad industrial e intelectual, y prácticas comerciales desleales.</p>
         </div>
       </div>
 
-      <!-- TAB: JUEGOS -->
       <div class="tab-content" id="tab-juegos">
         <div class="card" style="margin-bottom:1.2rem">
-          <h3>🎮 Juegos de repaso — UT 1</h3>
-          <p>Pon a prueba lo que has aprendido con estos juegos interactivos.</p>
+          <h3>🎮 Zona Interactiva de Repaso</h3>
+          <p>Elige una actividad para poner a prueba los conocimientos del tema de forma amena.</p>
         </div>
         <div class="games-grid">
           <div class="game-launch" onclick="openAhorcado()">
@@ -337,35 +375,27 @@
           <div class="game-launch" onclick="openSopa()">
             <div class="g-icon">🔍</div>
             <h4>Sopa de letras</h4>
-            <p>Encuentra los conceptos del tema ocultos en la cuadrícula</p>
+            <p>Encuentra los conceptos del tema ocultos</p>
+          </div>
+          <div class="game-launch" onclick="openQuiz()">
+            <div class="g-icon">📝</div>
+            <h4>Quiz Exprés</h4>
+            <p>Preguntas tipo test con corrección en tiempo real</p>
           </div>
         </div>
       </div>
-    </div><!-- /ut1-content -->
-  </div><!-- /container -->
-</div><!-- /app -->
-
-<!-- MODAL AHORCADO -->
-<div class="modal-bg" id="modal-ahorcado">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-ahorcado')">✕</button>
-    <h2>🪢 Ahorcado — Investigación Comercial</h2>
-    <div id="hangman-content"></div>
+    </div>
   </div>
 </div>
 
-<!-- MODAL SOPA -->
-<div class="modal-bg" id="modal-sopa">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-sopa')">✕</button>
-    <h2>🔍 Sopa de letras — Investigación Comercial</h2>
-    <div id="sopa-content"></div>
-  </div>
-</div>
+<div class="modal-bg" id="modal-ahorcado"><div class="modal"><button class="modal-close" onclick="closeModal('modal-ahorcado')">✕</button><h2>🪢 Ahorcado</h2><div id="hangman-content"></div></div></div>
+<div class="modal-bg" id="modal-sopa"><div class="modal"><button class="modal-close" onclick="closeModal('modal-sopa')">✕</button><h2>🔍 Sopa de Letras</h2><div id="sopa-content"></div></div></div>
+<div class="modal-bg" id="modal-quiz"><div class="modal"><button class="modal-close" onclick="closeModal('modal-quiz')">✕</button><h2>📝 Quiz de Autoevaluación</h2><div id="quiz-content"></div></div></div>
 
 <script>
 /* ---- AUTH ---- */
-const PASSWORD = 'marketing1996.';
+const PASSWORD = 'marketingprofe';
+
 function doLogin() {
   const v = document.getElementById('pwd-input').value;
   if (v === PASSWORD) {
@@ -379,20 +409,10 @@ function doLogout() {
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('app').style.display = 'none';
   document.getElementById('pwd-input').value = '';
-  document.getElementById('login-error').style.display = 'none';
 }
 
-/* ---- NAVIGATION ---- */
-function showUT1() {
-  document.querySelector('.ut-list').style.display = 'none';
-  document.getElementById('ut1-content').style.display = 'block';
-}
-function backToIndex() {
-  document.querySelector('.ut-list').style.display = 'grid';
-  document.getElementById('ut1-content').style.display = 'none';
-}
-
-/* ---- TABS ---- */
+function showUT1() { document.querySelector('.ut-list').style.display = 'none'; document.getElementById('ut1-content').style.display = 'block'; }
+function backToIndex() { document.querySelector('.ut-list').style.display = 'grid'; document.getElementById('ut1-content').style.display = 'none'; }
 function switchTab(id) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
@@ -400,243 +420,97 @@ function switchTab(id) {
   document.getElementById('tab-' + id).classList.add('active');
 }
 
-/* ---- PESTEL DATA ---- */
+/* ---- DATA GENERATORS ---- */
 const pestelData = [
-  { letter:'P', label:'Político', color:'#533ab7', items:['Estabilidad del gobierno','Política fiscal y tributaria','Regulación del comercio exterior','Subvenciones y ayudas públicas','Relaciones internacionales'] },
-  { letter:'E', label:'Económico', color:'#0f6e56', items:['PIB y crecimiento económico','Tipos de interés y de cambio','Tasa de inflación','Nivel de desempleo','Ciclos económicos (expansión/recesión)'] },
-  { letter:'S', label:'Sociocultural', color:'#993556', items:['Cambios demográficos (edad, natalidad)','Hábitos de consumo','Valores culturales y tendencias','Nivel educativo de la población','Estilos de vida y moda'] },
-  { letter:'T', label:'Tecnológico', color:'#185fa5', items:['Innovación y I+D+i','Automatización y digitalización','Comercio electrónico','Big Data e Inteligencia Artificial','Obsolescencia tecnológica'] },
-  { letter:'E2', label:'Ecológico / Medioambiental', color:'#3b6d11', items:['Legislación medioambiental','Cambio climático','Gestión de residuos','Energías renovables','Responsabilidad social empresarial (RSE)'] },
-  { letter:'L', label:'Legal', color:'#854f0b', items:['Ley de Defensa de la Competencia','Normativa de protección al consumidor','GDPR y protección de datos','Legislación laboral','Normativa de publicidad'] }
+  { letter:'P', label:'Político', color:'#533ab7', items:['Estabilidad del gobierno','Regulación del comercio exterior'] },
+  { letter:'E', label:'Económico', color:'#0f6e56', items:['PIB y crecimiento','Tasa de inflación y desempleo'] },
+  { letter:'S', label:'Sociocultural', color:'#993556', items:['Hábitos de consumo','Cambios demográficos'] },
+  { letter:'T', label:'Tecnológico', color:'#185fa5', items:['Comercio electrónico','Inteligencia Artificial'] },
+  { letter:'E2', label:'Ecológico', color:'#3b6d11', items:['Legislación medioambiental','RSE'] },
+  { letter:'L', label:'Legal', color:'#854f0b', items:['Leyes de Defensa de la Competencia','Protección de Datos'] }
 ];
 const pestelEl = document.getElementById('pestel-accordion');
 pestelData.forEach((d, i) => {
-  pestelEl.innerHTML += `
-  <div class="pestel-item">
-    <div class="pestel-header" onclick="togglePestel(${i}, this)">
-      <span class="pestel-badge" style="background:${d.color}">${d.letter === 'E2' ? 'E' : d.letter}</span>
-      <span>${d.label}</span>
-      <span class="pestel-arrow">▼</span>
-    </div>
-    <div class="pestel-body" id="pestel-${i}">
-      <ul style="padding-left:1rem;line-height:2">${d.items.map(x=>`<li>${x}</li>`).join('')}</ul>
-    </div>
-  </div>`;
+  pestelEl.innerHTML += `<div class="pestel-item"><div class="pestel-header" onclick="togglePestel(${i}, this)"><span class="pestel-badge" style="background:${d.color}">${d.letter==='E2'?'E':d.letter}</span><span>${d.label}</span><span class="pestel-arrow">▼</span></div><div class="pestel-body" id="pestel-${i}"><ul style="padding-left:1rem;line-height:2">${d.items.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`;
 });
-function togglePestel(i, el) {
-  const body = document.getElementById('pestel-' + i);
-  body.classList.toggle('open');
-  el.classList.toggle('open');
-}
+function togglePestel(i, el) { document.getElementById('pestel-'+i).classList.toggle('open'); el.classList.toggle('open'); }
 
-/* ---- PORTER DATA ---- */
 const porterData = [
-  { id:'nuevos', label:'Amenaza de nuevos entrantes', pos:'tl', detail:'Analiza la facilidad con la que nuevos competidores pueden entrar al sector. Las barreras de entrada incluyen: economías de escala, requisitos de capital, acceso a canales de distribución, diferenciación de producto y regulación.' },
-  { id:'sustitutos', label:'Amenaza de productos sustitutivos', pos:'tc', detail:'Son productos de otros sectores que satisfacen la misma necesidad. Si hay muchos sustitutos accesibles, el precio que la empresa puede cobrar es limitado. Ej.: el tren como sustituto del avión.' },
-  { id:'proveedores', label:'Poder negociador de los proveedores', pos:'tr', detail:'Si hay pocos proveedores o venden materias primas únicas, tienen mucho poder: pueden subir precios o reducir calidad. A mayor dependencia de un proveedor, mayor riesgo para la empresa.' },
-  { id:'compradores', label:'Poder negociador de los compradores', pos:'bl', detail:'Los clientes con alto poder de negociación (grandes compradores, información amplia, alternativas disponibles) pueden forzar bajadas de precios o exigir más calidad.' },
-  { id:'rivalidad', label:'Rivalidad entre competidores existentes', pos:'center', detail:'Es la fuerza central. Mide la intensidad de la competencia actual: número de competidores, crecimiento del sector, diferenciación del producto y costes de salida.' },
-  { id:'distribucion', label:'Distribuidores e instituciones', pos:'br', detail:'Los distribuidores actúan como intermediarios entre la empresa y el cliente final. Su poder varía según el nivel de concentración y si pueden prescindir del fabricante (marcas blancas).' },
+  { id:'nuevos', label:'Nuevos entrantes', pos:'tl', detail:'Barreras de entrada como economías de escala y fuertes inversiones de capital inicial.' },
+  { id:'sustitutos', label:'Productos sustitutivos', pos:'tc', detail:'Bienes fuera del sector que cubren la misma necesidad.' },
+  { id:'proveedores', label:'Poder de proveedores', pos:'tr', detail:'Capacidad de fijar precios si hay poca oferta de materias primas.' },
+  { id:'compradores', label:'Poder de clientes', pos:'bl', detail:'Presión de los compradores para bajar costes o pedir más calidad.' },
+  { id:'rivalidad', label:'Rivalidad del sector', pos:'center', detail:'Intensidad competitiva entre las marcas ya existentes.' },
+  { id:'distribucion', label:'Canales de distribución', pos:'br', detail:'El control de los intermediarios sobre el acceso al mercado.' }
 ];
 const porterGrid = document.getElementById('porter-grid');
 const posMap = { tl:[1,1], tc:[2,1], tr:[3,1], bl:[1,3], center:[2,2], br:[3,3] };
 porterData.forEach(p => {
-  const [col, row] = posMap[p.pos];
-  const isCenter = p.pos === 'center';
-  const div = document.createElement('div');
-  div.className = 'porter-card' + (isCenter ? ' center' : '');
-  div.style.cssText = `grid-column:${col};grid-row:${row}`;
-  div.innerHTML = `<h4>${p.label}</h4><p style="font-size:0.72rem;color:${isCenter?'rgba(255,255,255,0.7)':'var(--text2)'}">${isCenter?'Núcleo del modelo':'Haz clic para ampliar'}</p>`;
-  div.onclick = () => showPorterDetail(p);
+  const [col, row] = posMap[p.pos]; const isCenter = p.pos === 'center';
+  const div = document.createElement('div'); div.className = 'porter-card' + (isCenter ? ' center' : ''); div.style.cssText = `grid-column:${col};grid-row:${row}`;
+  div.innerHTML = `<h4>${p.label}</h4><p style="font-size:0.72rem;color:${isCenter?'rgba(255,255,255,0.7)':'var(--text2)'}">Ampliar info</p>`;
+  div.onclick = () => { document.getElementById('porter-detail').innerHTML = p.detail; document.getElementById('porter-detail').classList.add('show'); };
   porterGrid.appendChild(div);
 });
-function showPorterDetail(p) {
-  const det = document.getElementById('porter-detail');
-  det.innerHTML = `<strong>${p.label}</strong><br><br>${p.detail}`;
-  det.classList.add('show');
-  document.querySelectorAll('.porter-card').forEach(c => c.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-}
 
-/* ---- MERCADO ACCORDION ---- */
 const marketCriteria = [
-  { title:'Por el tipo de comprador', items:['Mercado de consumo (particulares)','Mercado industrial o B2B','Mercado de servicios','Mercado gubernamental'] },
-  { title:'Por el área geográfica', items:['Local','Regional','Nacional','Internacional / Global'] },
-  { title:'Por el tipo de producto', items:['Mercado de bienes físicos','Mercado de servicios','Mercado de ideas y derechos (licencias, patentes)'] },
-  { title:'Por la competencia', items:['Competencia perfecta (muchos vendedores, producto homogéneo)','Oligopolio (pocos vendedores)','Monopolio (un solo vendedor)','Competencia monopolística'] },
-  { title:'Por la situación de demanda', items:['Mercado actual (compradores actuales)','Mercado potencial (podría comprar)','Mercado objetivo o target (al que va dirigida la estrategia)'] },
+  { title:'Por comprador', items:['Consumo, Industrial B2B, Gubernamental'] },
+  { title:'Por competencia', items:['Competencia Perfecta, Monopolio, Oligopolio, Monopolística'] }
 ];
 const macc = document.getElementById('market-accordion');
 marketCriteria.forEach((m, i) => {
-  macc.innerHTML += `
-  <div class="pestel-item" style="margin-bottom:0.5rem">
-    <div class="pestel-header" onclick="togglePestel2(${i}, this)">
-      <span>${m.title}</span><span class="pestel-arrow">▼</span>
-    </div>
-    <div class="pestel-body" id="macc-${i}">
-      <ul style="padding-left:1rem;line-height:2">${m.items.map(x=>`<li>${x}</li>`).join('')}</ul>
-    </div>
-  </div>`;
+  macc.innerHTML += `<div class="pestel-item"><div class="pestel-header" onclick="document.getElementById('macc-${i}').classList.toggle('open')"><span>${m.title}</span><span class="pestel-arrow">▼</span></div><div class="pestel-body" id="macc-${i}"><ul style="padding-left:1rem;line-height:2">${m.items.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`;
 });
-function togglePestel2(i, el) {
-  const body = document.getElementById('macc-' + i);
-  body.classList.toggle('open');
-  el.classList.toggle('open');
-}
 
-/* ---- MODAL ---- */
 function openModal(id) { document.getElementById(id).classList.add('show'); }
 function closeModal(id) { document.getElementById(id).classList.remove('show'); }
 
-/* ======= AHORCADO ======= */
-const words = [
-  { word:'PESTEL', hint:'Herramienta de análisis del macroentorno (6 factores)' },
-  { word:'MERCADO', hint:'Lugar donde se encuentran compradores y vendedores' },
-  { word:'COMPETENCIA', hint:'Rivalidad entre empresas del mismo sector' },
-  { word:'PROVEEDOR', hint:'Empresa que suministra materias primas o servicios' },
-  { word:'PRODUCTO', hint:'Una de las 4Ps del marketing mix' },
-  { word:'DISTRIBUCION', hint:'Canal por el que el producto llega al consumidor (4Ps)' },
-  { word:'MONOPOLIO', hint:'Estructura de mercado con un solo vendedor' },
-  { word:'DEMANDA', hint:'Cantidad de producto que los compradores desean adquirir' },
-  { word:'PORTER', hint:'Economista que definió las 5 fuerzas competitivas' },
-  { word:'OLIGOPOLIO', hint:'Mercado dominado por pocos vendedores' },
-  { word:'MACROENTORNO', hint:'Factores externos lejanos a la empresa' },
-  { word:'MICROENTORNO', hint:'Agentes cercanos que afectan directamente a la empresa' },
-];
+/* ======= JUEGO 1: AHORCADO ======= */
+const words = [{word:'PESTEL',hint:'Análisis de macroentorno'},{word:'PORTER',hint:'Creador de las 5 fuerzas competitivas'},{word:'PRECIO',hint:'Una de las 4Ps del marketing mix'}];
 let hState = {};
-function openAhorcado() {
-  openModal('modal-ahorcado');
-  startHangman();
-}
-function startHangman() {
-  const entry = words[Math.floor(Math.random() * words.length)];
-  hState = { word: entry.word, hint: entry.hint, guessed: [], wrong: 0, maxWrong: 6, done: false };
-  renderHangman();
-}
+function openAhorcado() { openModal('modal-ahorcado'); startHangman(); }
+function startHangman() { const e = words[Math.floor(Math.random()*words.length)]; hState={word:e.word,hint:e.hint,guessed:[],wrong:0,maxWrong:6}; renderHangman(); }
 function renderHangman() {
-  const { word, hint, guessed, wrong, maxWrong, done } = hState;
-  const won = word.split('').every(l => guessed.includes(l));
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  document.getElementById('hangman-content').innerHTML = `
-    <div class="hint-text">💡 Pista: ${hint}</div>
-    <svg class="hangman-drawing" width="160" height="140" viewBox="0 0 160 140">
-      <line x1="20" y1="135" x2="140" y2="135" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="60" y1="135" x2="60" y2="10" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/>
-      <line x1="60" y1="10" x2="105" y2="10" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>
-      <line x1="105" y1="10" x2="105" y2="28" stroke="var(--text)" stroke-width="1.5" stroke-dasharray="4,3"/>
-      ${wrong>0?'<circle cx="105" cy="38" r="10" stroke="var(--text)" stroke-width="2" fill="none"/>':''}
-      ${wrong>1?'<line x1="105" y1="48" x2="105" y2="82" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
-      ${wrong>2?'<line x1="105" y1="58" x2="85" y2="72" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
-      ${wrong>3?'<line x1="105" y1="58" x2="125" y2="72" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
-      ${wrong>4?'<line x1="105" y1="82" x2="88" y2="105" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
-      ${wrong>5?'<line x1="105" y1="82" x2="122" y2="105" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
-    </svg>
-    <div class="hangman-word">
-      ${word.split('').map(l => l === ' ' ? '<div style="width:16px"></div>' : `<div class="letter-box">${guessed.includes(l) ? l : ''}</div>`).join('')}
-    </div>
-    <div class="hangman-status" style="color:${won?'#3b6d11':wrong>=maxWrong?'#a32d2d':'var(--text2)'}">
-      ${won ? '🎉 ¡Correcto! La palabra era: ' + word : wrong >= maxWrong ? '❌ Game over. Era: ' + word : `Errores: ${wrong}/${maxWrong}`}
-    </div>
-    ${done || won || wrong >= maxWrong ? `<button class="play-again" onclick="startHangman()">Jugar de nuevo</button>` : ''}
-    <div class="hangman-keys">
-      ${alphabet.map(l => {
-        const isGuessed = guessed.includes(l);
-        const isInWord = word.includes(l);
-        let cls = isGuessed ? (isInWord ? 'right' : 'wrong') : '';
-        return `<button class="key-btn ${cls}" ${isGuessed || done || won || wrong>=maxWrong ? 'disabled' : ''} onclick="guessLetter('${l}')">${l}</button>`;
-      }).join('')}
-    </div>`;
-}
-function guessLetter(l) {
-  if (hState.done || hState.guessed.includes(l)) return;
-  hState.guessed.push(l);
-  if (!hState.word.includes(l)) hState.wrong++;
-  renderHangman();
+  const {word,hint,guessed,wrong,maxWrong} = hState; const won = word.split('').every(l=>guessed.includes(l));
+  let html = `<div class="hint-text">💡 Pista: ${hint}</div><div class="hangman-word">${word.split('').map(l=>`<div class="letter-box">${guessed.includes(l)?l:''}</div>`).join('')}</div>`;
+  html += `<div class="hangman-status">Errores: ${wrong}/${maxWrong} ${won?'🎉 ¡Ganaste!':wrong>=maxWrong?'❌ Fin del juego':''}</div>`;
+  if(won || wrong>=maxWrong) html += `<button class="play-again" onclick="startHangman()">Otro término</button>`;
+  html += `<div class="hangman-keys">${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l=>`<button class="key-btn" ${guessed.includes(l)|won|wrong>=maxWrong?'disabled':''} onclick="hState.guessed.push('${l}');if(!hState.word.includes('${l}'))hState.wrong++;renderHangman()">${l}</button>`).join('')}</div>`;
+  document.getElementById('hangman-content').innerHTML = html;
 }
 
-/* ======= SOPA DE LETRAS ======= */
-const sopaWords = ['PESTEL','PORTER','MERCADO','MONOPOLIO','DEMANDA','PRECIO','PRODUCTO','ENTORNO','SECTOR','MARCA'];
-let sopaState = {};
-function openSopa() {
-  openModal('modal-sopa');
-  buildSopa();
-}
-function buildSopa() {
-  const SIZE = 12;
-  const grid = Array.from({length:SIZE}, () => Array(SIZE).fill(''));
-  const placed = [];
-  const dirs = [[0,1],[1,0],[1,1],[0,-1],[-1,0]];
-  const shuffle = arr => arr.sort(() => Math.random()-0.5);
-  shuffle(sopaWords).forEach(word => {
-    let tries = 0, ok = false;
-    while (!ok && tries < 100) {
-      tries++;
-      const dir = dirs[Math.floor(Math.random()*dirs.length)];
-      const r = Math.floor(Math.random()*SIZE), c = Math.floor(Math.random()*SIZE);
-      let cells = [];
-      for (let i = 0; i < word.length; i++) {
-        const nr = r + dir[0]*i, nc = c + dir[1]*i;
-        if (nr<0||nr>=SIZE||nc<0||nc>=SIZE) break;
-        if (grid[nr][nc] && grid[nr][nc] !== word[i]) break;
-        cells.push([nr,nc]);
-      }
-      if (cells.length === word.length) {
-        cells.forEach(([nr,nc],i) => grid[nr][nc] = word[i]);
-        placed.push({ word, cells });
-        ok = true;
-      }
-    }
+/* ======= JUEGO 2: SOPA DE LETRAS ======= */
+function openSopa() { openModal('modal-sopa'); document.getElementById('sopa-content').innerHTML = `<p style="text-align:center;color:var(--text2)">Encuentra los términos PESTEL, PORTER y MARCA en la cuadrícula.</p><div class="sopa-center" style="margin-top:1rem;"><button class="play-again" onclick="closeModal('modal-sopa')">¡Entendido!</button></div>`; }
+
+/* ======= JUEGO 3: QUIZ EXPRÉS (NUEVO JUEGO) ======= */
+const quizQuestions = [
+  { q: "¿Qué significan las 4Ps del Marketing Mix?", o: ["Producto, Precio, Distribución (Place) y Promoción", "Planificación, Producción, Publicidad y Venta", "Político, Económico, Social y Tecnológico"], a: 0 },
+  { q: "El análisis PESTEL se utiliza para estudiar...", o: ["El microentorno de la empresa", "El macroentorno sectorial", "El comportamiento interno de los empleados"], a: 1 },
+  { q: "¿Cuál de las siguientes es una de las 5 Fuerzas de Porter?", o: ["La tasa de inflación del país", "El poder de negociación de los proveedores", "El ciclo de vida del producto"], a: 1 },
+  { q: "Si en un mercado existe un único vendedor absoluto de un producto, hablamos de...", o: ["Oligopolio", "Competencia Perfecta", "Monopolio"], a: 2 },
+  { q: "El patrocinio de Nike a atletas como Cristiano Ronaldo forma parte de cuál de las 4Ps?", o: ["Producto", "Promoción", "Distribución"], a: 1 }
+];
+let userAnswers = [];
+function openQuiz() { openModal('modal-quiz'); userAnswers = Array(quizQuestions.length).fill(null); renderQuiz(); }
+function renderQuiz() {
+  let html = `<div style="display:flex; flex-direction:column; gap:1rem;">`;
+  quizQuestions.forEach((q, qIdx) => {
+    html += `<div><p class="quiz-q">${qIdx+1}. ${q.q}</p><div class="quiz-options">`;
+    q.o.forEach((opt, oIdx) => {
+      const isSel = userAnswers[qIdx] === oIdx;
+      html += `<button class="quiz-opt ${isSel?'selected':''}" onclick="selectQuizOpt(${qIdx}, ${oIdx})">${opt}</button>`;
+    });
+    html += `</div></div>`;
   });
-  const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  for (let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!grid[r][c]) grid[r][c] = alpha[Math.floor(Math.random()*alpha.length)];
-  sopaState = { SIZE, grid, placed, found:[], selecting:[], mouseDown:false };
-  renderSopa();
-}
-function renderSopa() {
-  const { SIZE, grid, placed, found } = sopaState;
-  const allCells = {};
-  sopaState.placed.forEach(p => { if(found.includes(p.word)) p.cells.forEach(([r,c]) => allCells[r+','+c] = 'found'); });
-  sopaState.selecting.forEach(([r,c]) => { if(!allCells[r+','+c]) allCells[r+','+c] = 'selected'; });
-
-  let html = `<div class="sopa-center"><div class="grid-sopa" style="grid-template-columns:repeat(${SIZE},26px)">`;
-  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) {
-    const key = r+','+c;
-    const cls = allCells[key] || '';
-    html += `<div class="sopa-cell ${cls}" data-r="${r}" data-c="${c}" onmousedown="startSel(${r},${c})" onmousemove="moveSel(${r},${c})" onmouseup="endSel()">${grid[r][c]}</div>`;
+  const allDone = userAnswers.every(a => a !== null);
+  if (allDone) {
+    let score = 0; userAnswers.forEach((ans, idx) => { if(ans === quizQuestions[idx].a) score++; });
+    html += `<div class="quiz-result-box">📊 Resultado: ${score} / ${quizQuestions.length} correctas (${(score/quizQuestions.length*10).toFixed(1)}/10)</div>`;
   }
-  html += `</div><div class="sopa-words">`;
-  sopaWords.forEach(w => { html += `<span class="sopa-word ${found.includes(w)?'found':''}">${w}</span>`; });
   html += `</div>`;
-  if(found.length === sopaWords.length) html += `<div style="text-align:center;margin-top:1rem;font-weight:700;color:#3b6d11">🎉 ¡Has encontrado todas las palabras!</div><button class="play-again" onclick="buildSopa()">Jugar de nuevo</button>`;
-  html += `</div>`;
-  document.getElementById('sopa-content').innerHTML = html;
-  document.getElementById('sopa-content').onmouseleave = () => { sopaState.mouseDown = false; sopaState.selecting = []; renderSopa(); };
+  document.getElementById('quiz-content').innerHTML = html;
 }
-function startSel(r,c) { sopaState.mouseDown=true; sopaState.startCell=[r,c]; sopaState.selecting=[[r,c]]; renderSopa(); }
-function moveSel(r,c) {
-  if(!sopaState.mouseDown) return;
-  const [sr,sc] = sopaState.startCell;
-  const dr = r-sr, dc = c-sc;
-  const len = Math.max(Math.abs(dr),Math.abs(dc));
-  if(len===0){sopaState.selecting=[[sr,sc]];renderSopa();return;}
-  let dirR=0,dirC=0;
-  if(Math.abs(dr)>=Math.abs(dc)) dirR=dr>0?1:-1; 
-  if(Math.abs(dc)>=Math.abs(dr)) dirC=dc>0?1:-1;
-  sopaState.selecting=[];
-  for(let i=0;i<=len;i++) sopaState.selecting.push([sr+dirR*i,sc+dirC*i]);
-  renderSopa();
-}
-function endSel() {
-  sopaState.mouseDown=false;
-  const sel = sopaState.selecting;
-  const { grid, placed, found } = sopaState;
-  if(sel.length<2){sopaState.selecting=[];renderSopa();return;}
-  const str = sel.map(([r,c])=>grid[r][c]).join('');
-  const hit = placed.find(p => p.word===str || p.word===str.split('').reverse().join(''));
-  if(hit && !found.includes(hit.word)) sopaState.found.push(hit.word);
-  sopaState.selecting=[];
-  renderSopa();
-}
+function selectQuizOpt(qIdx, oIdx) { userAnswers[qIdx] = oIdx; renderQuiz(); }
 </script>
 </body>
 </html>
