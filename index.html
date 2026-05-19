@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Investigación Comercial</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f6f2; --bg2: #ffffff; --text: #1a1a18; --text2: #6b6a64;
+    --border: rgba(0,0,0,0.1); --accent: #533ab7; --accent2: #0f6e56;
+    --accent3: #993556; --accent4: #185fa5;
+    --card-r: 14px; --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* LOGIN */
+  #login-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; background: linear-gradient(135deg, #1a0f3d 0%, #0f3d2e 100%); }
+  .login-card { background: white; border-radius: 20px; padding: 2.5rem; width: 360px; text-align:center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+  .login-card h1 { font-size: 1.4rem; font-weight: 700; color: #1a1a18; margin-bottom: 0.3rem; }
+  .login-card p { font-size: 0.85rem; color: #888; margin-bottom: 1.8rem; }
+  .login-card input { width:100%; padding: 0.75rem 1rem; border: 1.5px solid #ddd; border-radius: 10px; font-size: 1rem; outline:none; margin-bottom: 1rem; transition: border-color .2s; }
+  .login-card input:focus { border-color: #533ab7; }
+  .login-card button { width:100%; padding: 0.8rem; background: #533ab7; color:white; border:none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor:pointer; transition: background .2s; }
+  .login-card button:hover { background: #3c2889; }
+  .login-error { color: #e24b4a; font-size: 0.8rem; margin-top: 0.5rem; display:none; }
+  .login-badge { display:inline-block; background: #EEEDFE; color: #533ab7; font-size: 0.75rem; padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 1.5rem; font-weight: 600; letter-spacing: 0.5px; }
+
+  /* MAIN APP */
+  #app { display:none; }
+  header { background: #1a0f3d; color: white; padding: 1rem 2rem; display:flex; align-items:center; justify-content:space-between; position: sticky; top:0; z-index:100; }
+  header h1 { font-size: 1.1rem; font-weight: 700; }
+  header span { font-size: 0.75rem; opacity: 0.6; }
+  .logout-btn { background: rgba(255,255,255,0.15); border: none; color: white; padding: 0.4rem 1rem; border-radius: 8px; cursor:pointer; font-size: 0.8rem; }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  /* HERO UT */
+  .ut-hero { background: linear-gradient(135deg, #533ab7 0%, #0f6e56 100%); border-radius: var(--card-r); padding: 2.5rem; color: white; margin-bottom: 2rem; position:relative; overflow:hidden; }
+  .ut-hero::before { content:''; position:absolute; right:-40px; top:-40px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,0.05); }
+  .ut-hero .ut-num { font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; opacity: 0.7; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .ut-hero h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .ut-hero p { opacity: 0.8; font-size: 0.95rem; line-height: 1.6; }
+
+  /* TABS */
+  .tabs { display:flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap:wrap; }
+  .tab { padding: 0.55rem 1.2rem; border: 1.5px solid var(--border); border-radius: 30px; background: var(--bg2); cursor:pointer; font-size: 0.85rem; font-weight: 500; color: var(--text2); transition: all .2s; user-select:none; }
+  .tab:hover { border-color: #533ab7; color: #533ab7; }
+  .tab.active { background: #533ab7; color: white; border-color: #533ab7; }
+  .tab-content { display:none; }
+  .tab-content.active { display:block; }
+
+  /* CARDS */
+  .card { background: var(--bg2); border-radius: var(--card-r); border: 1px solid var(--border); padding: 1.5rem; margin-bottom: 1.2rem; box-shadow: var(--shadow); }
+  .card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.8rem; color: var(--text); }
+  .card p { font-size: 0.9rem; line-height: 1.7; color: var(--text2); }
+
+  /* FLIP CARDS */
+  .flip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .flip-card { height: 160px; perspective: 1000px; cursor:pointer; }
+  .flip-inner { position:relative; width:100%; height:100%; transition: transform 0.6s; transform-style: preserve-3d; }
+  .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
+  .flip-front, .flip-back { position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius: 12px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 1rem; text-align:center; border: 1px solid var(--border); }
+  .flip-front { background: var(--bg2); }
+  .flip-back { background: #533ab7; color: white; transform: rotateY(180deg); }
+  .flip-front .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .flip-front h4 { font-size: 0.9rem; font-weight: 700; }
+  .flip-back p { font-size: 0.82rem; line-height: 1.5; }
+  .flip-hint { font-size: 0.72rem; color: var(--text2); text-align:center; margin-bottom: 1rem; }
+
+  /* PESTEL ACCORDION */
+  .pestel-item { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 0.6rem; overflow:hidden; }
+  .pestel-header { padding: 1rem 1.2rem; display:flex; align-items:center; gap: 0.8rem; cursor:pointer; font-weight: 600; font-size: 0.9rem; user-select:none; transition: background .2s; }
+  .pestel-header:hover { background: var(--bg); }
+  .pestel-badge { width: 28px; height: 28px; border-radius: 8px; display:flex; align-items:center; justify-content:center; font-size: 0.75rem; font-weight: 800; color: white; flex-shrink:0; }
+  .pestel-body { max-height: 0; overflow:hidden; transition: max-height 0.4s ease, padding 0.3s; padding: 0 1.2rem; font-size: 0.88rem; line-height: 1.7; color: var(--text2); }
+  .pestel-body.open { max-height: 300px; padding: 0.8rem 1.2rem 1rem; }
+  .pestel-arrow { margin-left:auto; font-size: 0.7rem; transition: transform .3s; }
+  .pestel-header.open .pestel-arrow { transform: rotate(180deg); }
+
+  /* PORTER 5 FUERZAS */
+  .porter-grid { display:grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: auto auto auto; gap: 1rem; margin-bottom: 1.5rem; }
+  .porter-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; cursor:pointer; transition: all .2s; position:relative; }
+  .porter-card:hover, .porter-card.active { border-color: #185fa5; box-shadow: 0 0 0 3px rgba(24,95,165,0.1); }
+  .porter-card.center { grid-column: 2; grid-row: 2; background: #185fa5; color: white; border-color: #185fa5; }
+  .porter-card.center h4 { color: white; }
+  .porter-card.center p { color: rgba(255,255,255,0.8); }
+  .porter-card h4 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .porter-card p { font-size: 0.75rem; color: var(--text2); line-height: 1.4; }
+  .porter-detail { background: #e6f1fb; border: 1px solid #b5d4f4; border-radius: 10px; padding: 1rem 1.2rem; font-size: 0.88rem; line-height: 1.7; color: #042c53; display:none; margin-bottom: 1rem; }
+  .porter-detail.show { display:block; }
+
+  /* GAMES SECTION */
+  .games-grid { display:grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .game-launch { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align:center; cursor:pointer; transition: all .2s; }
+  .game-launch:hover { border-color: #533ab7; transform: translateY(-2px); box-shadow: var(--shadow); }
+  .game-launch .g-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+  .game-launch h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .game-launch p { font-size: 0.78rem; color: var(--text2); }
+
+  /* MODAL */
+  .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center; }
+  .modal-bg.show { display:flex; }
+  .modal { background: var(--bg2); border-radius: 16px; padding: 2rem; max-width: 520px; width:90%; max-height: 80vh; overflow-y:auto; position:relative; }
+  .modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text2); }
+  .modal h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.2rem; }
+
+  /* AHORCADO */
+  .hangman-word { display:flex; gap: 0.4rem; flex-wrap:wrap; justify-content:center; margin: 1rem 0; }
+  .letter-box { width: 32px; height: 36px; border-bottom: 2.5px solid var(--text); display:flex; align-items:center; justify-content:center; font-size: 1.1rem; font-weight: 700; text-transform:uppercase; }
+  .hangman-keys { display:flex; flex-wrap:wrap; gap: 0.4rem; justify-content:center; margin: 1rem 0; }
+  .key-btn { padding: 0.4rem 0.6rem; min-width: 34px; border: 1.5px solid var(--border); border-radius: 7px; background: var(--bg2); cursor:pointer; font-size: 0.85rem; font-weight: 600; text-transform:uppercase; transition: all .15s; }
+  .key-btn:hover:not(:disabled) { border-color: #533ab7; color: #533ab7; }
+  .key-btn:disabled { opacity: 0.35; cursor:not-allowed; }
+  .key-btn.wrong { background: #fcebeb; border-color: #f09595; color: #a32d2d; }
+  .key-btn.right { background: #eaf3de; border-color: #639922; color: #3b6d11; }
+  .hangman-drawing { margin: 0 auto 0.5rem; }
+  .hangman-status { text-align:center; font-weight: 700; font-size: 0.95rem; margin: 0.5rem 0; }
+  .hint-text { text-align:center; font-size: 0.8rem; color: var(--text2); background: var(--bg); border-radius: 8px; padding: 0.5rem; margin-bottom: 0.5rem; }
+  .play-again { display:block; margin: 0.5rem auto; padding: 0.5rem 1.5rem; background: #533ab7; color: white; border:none; border-radius: 8px; cursor:pointer; font-size:0.85rem; }
+
+  /* SOPA DE LETRAS */
+  .grid-sopa { display:inline-grid; gap: 2px; margin: 0 auto; }
+  .sopa-cell { width: 26px; height: 26px; display:flex; align-items:center; justify-content:center; font-size: 0.78rem; font-weight: 600; text-transform:uppercase; border-radius: 4px; cursor:pointer; user-select:none; background: var(--bg); border: 1px solid var(--border); transition: background .15s; }
+  .sopa-cell.selected { background: #EEEDFE; border-color: #533ab7; color: #533ab7; }
+  .sopa-cell.found { background: #eaf3de; border-color: #639922; color: #27500a; }
+  .sopa-words { display:flex; flex-wrap:wrap; gap: 0.4rem; margin-top: 0.8rem; }
+  .sopa-word { padding: 0.25rem 0.7rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600; background: var(--bg); border: 1px solid var(--border); color: var(--text2); }
+  .sopa-word.found { background: #eaf3de; border-color: #639922; color: #27500a; text-decoration: line-through; }
+  .sopa-center { text-align:center; }
+
+  /* PROGRESS */
+  .progress-bar { height: 4px; background: var(--bg); border-radius: 2px; margin-bottom: 2rem; overflow:hidden; }
+  .progress-fill { height:100%; background: linear-gradient(90deg, #533ab7, #0f6e56); border-radius: 2px; transition: width .5s; }
+
+  /* UT INDEX */
+  .ut-list { display:grid; gap: 0.8rem; margin-bottom: 2rem; }
+  .ut-item { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.3rem; display:flex; align-items:center; gap: 1rem; cursor:pointer; transition: all .2s; }
+  .ut-item:hover { border-color: #533ab7; }
+  .ut-num-badge { background: #EEEDFE; color: #533ab7; font-size: 0.75rem; font-weight: 800; padding: 0.3rem 0.7rem; border-radius: 20px; }
+  .ut-item h4 { font-size: 0.9rem; font-weight: 600; }
+  .ut-item p { font-size: 0.78rem; color: var(--text2); }
+  .ut-item-locked { opacity: 0.45; cursor: not-allowed; }
+  .ut-item-locked:hover { border-color: var(--border); }
+
+  @media (max-width: 600px) {
+    .porter-grid { grid-template-columns: 1fr 1fr; }
+    .porter-card.center { grid-column: 1/3; grid-row: 1; }
+    .games-grid { grid-template-columns: 1fr; }
+    .flip-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-badge">🔒 ACCESO PRIVADO</div>
+    <h1>Investigación Comercial</h1>
+    <p>CFGS Marketing y Publicidad · IES Murcia</p>
+    <input type="password" id="pwd-input" placeholder="Contraseña de acceso" onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="login-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div>
+      <h1>Investigación Comercial</h1>
+      <span>CFGS Marketing y Publicidad</span>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">Salir</button>
+  </header>
+
+  <div class="container">
+    <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
+
+    <!-- UT INDEX -->
+    <div class="ut-list">
+      <div class="ut-item" onclick="showUT1()">
+        <span class="ut-num-badge">UT 1</span>
+        <div>
+          <h4>El sistema comercial y el entorno de la empresa</h4>
+          <p>Mercado, macroentorno PESTEL, microentorno Porter · Disponible</p>
+        </div>
+        <span style="margin-left:auto; color:#533ab7;">→</span>
+      </div>
+      <div class="ut-item ut-item-locked">
+        <span class="ut-num-badge" style="background:#f1efe8;color:#888">UT 2</span>
+        <div>
+          <h4>Próximamente...</h4>
+          <p>Disponible cuando avance el curso</p>
+        </div>
+        <span style="margin-left:auto; color:#aaa;">🔒</span>
+      </div>
+    </div>
+
+    <!-- UT1 CONTENT (hidden initially) -->
+    <div id="ut1-content" style="display:none">
+      <button onclick="backToIndex()" style="background:none;border:none;color:#533ab7;cursor:pointer;font-size:0.9rem;margin-bottom:1rem;">← Volver al índice</button>
+
+      <div class="ut-hero">
+        <div class="ut-num">Unidad de Trabajo 1</div>
+        <h2>El sistema comercial y el entorno de la empresa</h2>
+        <p>Variables controlables y no controlables · Mercado · Macroentorno PESTEL · Microentorno – 5 Fuerzas de Porter · Instituciones reguladoras</p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('contenido')">📖 Contenido</div>
+        <div class="tab" onclick="switchTab('pestel')">🌍 PESTEL</div>
+        <div class="tab" onclick="switchTab('porter')">⚡ Porter</div>
+        <div class="tab" onclick="switchTab('mercado')">🏪 Mercado</div>
+        <div class="tab" onclick="switchTab('instituciones')">🏛️ Instituciones</div>
+        <div class="tab" onclick="switchTab('juegos')">🎮 Juegos</div>
+      </div>
+
+      <!-- TAB: CONTENIDO -->
+      <div class="tab-content active" id="tab-contenido">
+        <div class="card">
+          <h3>El sistema comercial</h3>
+          <p>El sistema comercial engloba el conjunto de elementos que intervienen en el proceso de intercambio entre la empresa y el mercado. Se distinguen dos tipos de variables:</p>
+        </div>
+
+        <p class="flip-hint">👆 Haz clic en cada tarjeta para ver el contenido</p>
+        <div class="flip-grid">
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="icon">🎯</div><h4>Variables controlables (4Ps)</h4></div>
+              <div class="flip-back"><p><strong>Producto:</strong> qué ofrecemos<br><strong>Precio:</strong> cuánto cuesta<br><strong>Distribución (Place):</strong> cómo llega al cliente<br><strong>Promoción:</strong> cómo lo comunicamos</p></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="icon">🌐</div><h4>Variables no controlables</h4></div>
+              <div class="flip-back"><p>Factores externos que la empresa <strong>no puede controlar</strong> pero debe analizar y adaptarse: el mercado y el entorno (macro y micro).</p></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="icon">📊</div><h4>Macroentorno</h4></div>
+              <div class="flip-back"><p>Factores lejanos a la empresa que afectan a todo el sector: <strong>P</strong>olítico, <strong>E</strong>conómico, <strong>S</strong>ocial, <strong>T</strong>ecnológico, <strong>E</strong>cológico, <strong>L</strong>egal → <strong>PESTEL</strong></p></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="icon">⚙️</div><h4>Microentorno</h4></div>
+              <div class="flip-back"><p>Factores cercanos que afectan directamente: competencia, clientes, proveedores, distribuidores. Analizado con el modelo de las <strong>5 Fuerzas de Porter</strong>.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>¿Cómo se relacionan?</h3>
+          <p>La empresa define su <strong>marketing mix (4Ps)</strong> para actuar en el mercado, pero siempre condicionada por los factores externos. El análisis del entorno permite anticipar amenazas y detectar oportunidades para adaptar la estrategia comercial.</p>
+        </div>
+      </div>
+
+      <!-- TAB: PESTEL -->
+      <div class="tab-content" id="tab-pestel">
+        <div class="card" style="margin-bottom:1.2rem">
+          <h3>Análisis PESTEL — Macroentorno</h3>
+          <p>El análisis PESTEL estudia los factores del macroentorno que influyen en la actividad comercial de la empresa. Son variables <strong>no controlables</strong> que condicionan las decisiones estratégicas.</p>
+        </div>
+        <div id="pestel-accordion">
+          <!-- Generado por JS -->
+        </div>
+      </div>
+
+      <!-- TAB: PORTER -->
+      <div class="tab-content" id="tab-porter">
+        <div class="card" style="margin-bottom:1.2rem">
+          <h3>Las 5 Fuerzas de Porter — Microentorno</h3>
+          <p>Michael Porter identificó cinco fuerzas competitivas que determinan el atractivo y la rentabilidad de un sector. Haz clic en cada fuerza para ampliar.</p>
+        </div>
+        <div class="porter-grid" id="porter-grid"></div>
+        <div class="porter-detail" id="porter-detail"></div>
+      </div>
+
+      <!-- TAB: MERCADO -->
+      <div class="tab-content" id="tab-mercado">
+        <div class="card">
+          <h3>El mercado: definición y estructura</h3>
+          <p>El mercado es el conjunto de compradores y vendedores que intercambian un bien o servicio. Sus <strong>límites</strong> pueden ser geográficos, de producto o temporales.</p>
+        </div>
+        <div class="card">
+          <h3>Clasificación de los mercados</h3>
+          <p style="margin-bottom:0.8rem">Los mercados se pueden clasificar según distintos criterios:</p>
+          <div id="market-accordion"></div>
+        </div>
+      </div>
+
+      <!-- TAB: INSTITUCIONES -->
+      <div class="tab-content" id="tab-instituciones">
+        <div class="card">
+          <h3>Instituciones nacionales</h3>
+          <p>Regulan la actividad comercial dentro de España:</p>
+          <ul style="margin-top:0.6rem; padding-left:1.2rem; font-size:0.88rem; color:var(--text2); line-height:2">
+            <li><strong>CNMC</strong> – Comisión Nacional de los Mercados y la Competencia</li>
+            <li><strong>OCU</strong> – Organización de Consumidores y Usuarios</li>
+            <li><strong>ICEX</strong> – Instituto Español de Comercio Exterior</li>
+            <li><strong>Ministerio de Industria, Comercio y Turismo</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Instituciones internacionales</h3>
+          <p>Influyen en la actividad comercial a escala global:</p>
+          <ul style="margin-top:0.6rem; padding-left:1.2rem; font-size:0.88rem; color:var(--text2); line-height:2">
+            <li><strong>OMC</strong> – Organización Mundial del Comercio</li>
+            <li><strong>FMI</strong> – Fondo Monetario Internacional</li>
+            <li><strong>UE</strong> – Unión Europea (Dirección General de Competencia)</li>
+            <li><strong>ONU</strong> – A través de la UNCTAD (Comercio y Desarrollo)</li>
+            <li><strong>Banco Mundial</strong> – Financia proyectos de desarrollo comercial</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>¿Qué regulan?</h3>
+          <p>Estas instituciones establecen normas de libre competencia, protección al consumidor, aranceles y barreras comerciales, propiedad industrial e intelectual, y prácticas comerciales desleales.</p>
+        </div>
+      </div>
+
+      <!-- TAB: JUEGOS -->
+      <div class="tab-content" id="tab-juegos">
+        <div class="card" style="margin-bottom:1.2rem">
+          <h3>🎮 Juegos de repaso — UT 1</h3>
+          <p>Pon a prueba lo que has aprendido con estos juegos interactivos.</p>
+        </div>
+        <div class="games-grid">
+          <div class="game-launch" onclick="openAhorcado()">
+            <div class="g-icon">🪢</div>
+            <h4>Ahorcado</h4>
+            <p>Adivina términos clave de investigación comercial</p>
+          </div>
+          <div class="game-launch" onclick="openSopa()">
+            <div class="g-icon">🔍</div>
+            <h4>Sopa de letras</h4>
+            <p>Encuentra los conceptos del tema ocultos en la cuadrícula</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /ut1-content -->
+  </div><!-- /container -->
+</div><!-- /app -->
+
+<!-- MODAL AHORCADO -->
+<div class="modal-bg" id="modal-ahorcado">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-ahorcado')">✕</button>
+    <h2>🪢 Ahorcado — Investigación Comercial</h2>
+    <div id="hangman-content"></div>
+  </div>
+</div>
+
+<!-- MODAL SOPA -->
+<div class="modal-bg" id="modal-sopa">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-sopa')">✕</button>
+    <h2>🔍 Sopa de letras — Investigación Comercial</h2>
+    <div id="sopa-content"></div>
+  </div>
+</div>
+
+<script>
+/* ---- AUTH ---- */
+const PASSWORD = 'murcia2025';
+function doLogin() {
+  const v = document.getElementById('pwd-input').value;
+  if (v === PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+function doLogout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('pwd-input').value = '';
+  document.getElementById('login-error').style.display = 'none';
+}
+
+/* ---- NAVIGATION ---- */
+function showUT1() {
+  document.querySelector('.ut-list').style.display = 'none';
+  document.getElementById('ut1-content').style.display = 'block';
+}
+function backToIndex() {
+  document.querySelector('.ut-list').style.display = 'grid';
+  document.getElementById('ut1-content').style.display = 'none';
+}
+
+/* ---- TABS ---- */
+function switchTab(id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+/* ---- PESTEL DATA ---- */
+const pestelData = [
+  { letter:'P', label:'Político', color:'#533ab7', items:['Estabilidad del gobierno','Política fiscal y tributaria','Regulación del comercio exterior','Subvenciones y ayudas públicas','Relaciones internacionales'] },
+  { letter:'E', label:'Económico', color:'#0f6e56', items:['PIB y crecimiento económico','Tipos de interés y de cambio','Tasa de inflación','Nivel de desempleo','Ciclos económicos (expansión/recesión)'] },
+  { letter:'S', label:'Sociocultural', color:'#993556', items:['Cambios demográficos (edad, natalidad)','Hábitos de consumo','Valores culturales y tendencias','Nivel educativo de la población','Estilos de vida y moda'] },
+  { letter:'T', label:'Tecnológico', color:'#185fa5', items:['Innovación y I+D+i','Automatización y digitalización','Comercio electrónico','Big Data e Inteligencia Artificial','Obsolescencia tecnológica'] },
+  { letter:'E2', label:'Ecológico / Medioambiental', color:'#3b6d11', items:['Legislación medioambiental','Cambio climático','Gestión de residuos','Energías renovables','Responsabilidad social empresarial (RSE)'] },
+  { letter:'L', label:'Legal', color:'#854f0b', items:['Ley de Defensa de la Competencia','Normativa de protección al consumidor','GDPR y protección de datos','Legislación laboral','Normativa de publicidad'] }
+];
+const pestelEl = document.getElementById('pestel-accordion');
+pestelData.forEach((d, i) => {
+  pestelEl.innerHTML += `
+  <div class="pestel-item">
+    <div class="pestel-header" onclick="togglePestel(${i}, this)">
+      <span class="pestel-badge" style="background:${d.color}">${d.letter === 'E2' ? 'E' : d.letter}</span>
+      <span>${d.label}</span>
+      <span class="pestel-arrow">▼</span>
+    </div>
+    <div class="pestel-body" id="pestel-${i}">
+      <ul style="padding-left:1rem;line-height:2">${d.items.map(x=>`<li>${x}</li>`).join('')}</ul>
+    </div>
+  </div>`;
+});
+function togglePestel(i, el) {
+  const body = document.getElementById('pestel-' + i);
+  body.classList.toggle('open');
+  el.classList.toggle('open');
+}
+
+/* ---- PORTER DATA ---- */
+const porterData = [
+  { id:'nuevos', label:'Amenaza de nuevos entrantes', pos:'tl', detail:'Analiza la facilidad con la que nuevos competidores pueden entrar al sector. Las barreras de entrada incluyen: economías de escala, requisitos de capital, acceso a canales de distribución, diferenciación de producto y regulación.' },
+  { id:'sustitutos', label:'Amenaza de productos sustitutivos', pos:'tc', detail:'Son productos de otros sectores que satisfacen la misma necesidad. Si hay muchos sustitutos accesibles, el precio que la empresa puede cobrar es limitado. Ej.: el tren como sustituto del avión.' },
+  { id:'proveedores', label:'Poder negociador de los proveedores', pos:'tr', detail:'Si hay pocos proveedores o venden materias primas únicas, tienen mucho poder: pueden subir precios o reducir calidad. A mayor dependencia de un proveedor, mayor riesgo para la empresa.' },
+  { id:'compradores', label:'Poder negociador de los compradores', pos:'bl', detail:'Los clientes con alto poder de negociación (grandes compradores, información amplia, alternativas disponibles) pueden forzar bajadas de precios o exigir más calidad.' },
+  { id:'rivalidad', label:'Rivalidad entre competidores existentes', pos:'center', detail:'Es la fuerza central. Mide la intensidad de la competencia actual: número de competidores, crecimiento del sector, diferenciación del producto y costes de salida.' },
+  { id:'distribucion', label:'Distribuidores e instituciones', pos:'br', detail:'Los distribuidores actúan como intermediarios entre la empresa y el cliente final. Su poder varía según el nivel de concentración y si pueden prescindir del fabricante (marcas blancas).' },
+];
+const porterGrid = document.getElementById('porter-grid');
+const posMap = { tl:[1,1], tc:[2,1], tr:[3,1], bl:[1,3], center:[2,2], br:[3,3] };
+porterData.forEach(p => {
+  const [col, row] = posMap[p.pos];
+  const isCenter = p.pos === 'center';
+  const div = document.createElement('div');
+  div.className = 'porter-card' + (isCenter ? ' center' : '');
+  div.style.cssText = `grid-column:${col};grid-row:${row}`;
+  div.innerHTML = `<h4>${p.label}</h4><p style="font-size:0.72rem;color:${isCenter?'rgba(255,255,255,0.7)':'var(--text2)'}">${isCenter?'Núcleo del modelo':'Haz clic para ampliar'}</p>`;
+  div.onclick = () => showPorterDetail(p);
+  porterGrid.appendChild(div);
+});
+function showPorterDetail(p) {
+  const det = document.getElementById('porter-detail');
+  det.innerHTML = `<strong>${p.label}</strong><br><br>${p.detail}`;
+  det.classList.add('show');
+  document.querySelectorAll('.porter-card').forEach(c => c.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
+/* ---- MERCADO ACCORDION ---- */
+const marketCriteria = [
+  { title:'Por el tipo de comprador', items:['Mercado de consumo (particulares)','Mercado industrial o B2B','Mercado de servicios','Mercado gubernamental'] },
+  { title:'Por el área geográfica', items:['Local','Regional','Nacional','Internacional / Global'] },
+  { title:'Por el tipo de producto', items:['Mercado de bienes físicos','Mercado de servicios','Mercado de ideas y derechos (licencias, patentes)'] },
+  { title:'Por la competencia', items:['Competencia perfecta (muchos vendedores, producto homogéneo)','Oligopolio (pocos vendedores)','Monopolio (un solo vendedor)','Competencia monopolística'] },
+  { title:'Por la situación de demanda', items:['Mercado actual (compradores actuales)','Mercado potencial (podría comprar)','Mercado objetivo o target (al que va dirigida la estrategia)'] },
+];
+const macc = document.getElementById('market-accordion');
+marketCriteria.forEach((m, i) => {
+  macc.innerHTML += `
+  <div class="pestel-item" style="margin-bottom:0.5rem">
+    <div class="pestel-header" onclick="togglePestel2(${i}, this)">
+      <span>${m.title}</span><span class="pestel-arrow">▼</span>
+    </div>
+    <div class="pestel-body" id="macc-${i}">
+      <ul style="padding-left:1rem;line-height:2">${m.items.map(x=>`<li>${x}</li>`).join('')}</ul>
+    </div>
+  </div>`;
+});
+function togglePestel2(i, el) {
+  const body = document.getElementById('macc-' + i);
+  body.classList.toggle('open');
+  el.classList.toggle('open');
+}
+
+/* ---- MODAL ---- */
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+/* ======= AHORCADO ======= */
+const words = [
+  { word:'PESTEL', hint:'Herramienta de análisis del macroentorno (6 factores)' },
+  { word:'MERCADO', hint:'Lugar donde se encuentran compradores y vendedores' },
+  { word:'COMPETENCIA', hint:'Rivalidad entre empresas del mismo sector' },
+  { word:'PROVEEDOR', hint:'Empresa que suministra materias primas o servicios' },
+  { word:'PRODUCTO', hint:'Una de las 4Ps del marketing mix' },
+  { word:'DISTRIBUCION', hint:'Canal por el que el producto llega al consumidor (4Ps)' },
+  { word:'MONOPOLIO', hint:'Estructura de mercado con un solo vendedor' },
+  { word:'DEMANDA', hint:'Cantidad de producto que los compradores desean adquirir' },
+  { word:'PORTER', hint:'Economista que definió las 5 fuerzas competitivas' },
+  { word:'OLIGOPOLIO', hint:'Mercado dominado por pocos vendedores' },
+  { word:'MACROENTORNO', hint:'Factores externos lejanos a la empresa' },
+  { word:'MICROENTORNO', hint:'Agentes cercanos que afectan directamente a la empresa' },
+];
+let hState = {};
+function openAhorcado() {
+  openModal('modal-ahorcado');
+  startHangman();
+}
+function startHangman() {
+  const entry = words[Math.floor(Math.random() * words.length)];
+  hState = { word: entry.word, hint: entry.hint, guessed: [], wrong: 0, maxWrong: 6, done: false };
+  renderHangman();
+}
+function renderHangman() {
+  const { word, hint, guessed, wrong, maxWrong, done } = hState;
+  const won = word.split('').every(l => guessed.includes(l));
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  document.getElementById('hangman-content').innerHTML = `
+    <div class="hint-text">💡 Pista: ${hint}</div>
+    <svg class="hangman-drawing" width="160" height="140" viewBox="0 0 160 140">
+      <line x1="20" y1="135" x2="140" y2="135" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="60" y1="135" x2="60" y2="10" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="60" y1="10" x2="105" y2="10" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>
+      <line x1="105" y1="10" x2="105" y2="28" stroke="var(--text)" stroke-width="1.5" stroke-dasharray="4,3"/>
+      ${wrong>0?'<circle cx="105" cy="38" r="10" stroke="var(--text)" stroke-width="2" fill="none"/>':''}
+      ${wrong>1?'<line x1="105" y1="48" x2="105" y2="82" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
+      ${wrong>2?'<line x1="105" y1="58" x2="85" y2="72" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
+      ${wrong>3?'<line x1="105" y1="58" x2="125" y2="72" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
+      ${wrong>4?'<line x1="105" y1="82" x2="88" y2="105" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
+      ${wrong>5?'<line x1="105" y1="82" x2="122" y2="105" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>':''}
+    </svg>
+    <div class="hangman-word">
+      ${word.split('').map(l => l === ' ' ? '<div style="width:16px"></div>' : `<div class="letter-box">${guessed.includes(l) ? l : ''}</div>`).join('')}
+    </div>
+    <div class="hangman-status" style="color:${won?'#3b6d11':wrong>=maxWrong?'#a32d2d':'var(--text2)'}">
+      ${won ? '🎉 ¡Correcto! La palabra era: ' + word : wrong >= maxWrong ? '❌ Game over. Era: ' + word : `Errores: ${wrong}/${maxWrong}`}
+    </div>
+    ${done || won || wrong >= maxWrong ? `<button class="play-again" onclick="startHangman()">Jugar de nuevo</button>` : ''}
+    <div class="hangman-keys">
+      ${alphabet.map(l => {
+        const isGuessed = guessed.includes(l);
+        const isInWord = word.includes(l);
+        let cls = isGuessed ? (isInWord ? 'right' : 'wrong') : '';
+        return `<button class="key-btn ${cls}" ${isGuessed || done || won || wrong>=maxWrong ? 'disabled' : ''} onclick="guessLetter('${l}')">${l}</button>`;
+      }).join('')}
+    </div>`;
+}
+function guessLetter(l) {
+  if (hState.done || hState.guessed.includes(l)) return;
+  hState.guessed.push(l);
+  if (!hState.word.includes(l)) hState.wrong++;
+  renderHangman();
+}
+
+/* ======= SOPA DE LETRAS ======= */
+const sopaWords = ['PESTEL','PORTER','MERCADO','MONOPOLIO','DEMANDA','PRECIO','PRODUCTO','ENTORNO','SECTOR','MARCA'];
+let sopaState = {};
+function openSopa() {
+  openModal('modal-sopa');
+  buildSopa();
+}
+function buildSopa() {
+  const SIZE = 12;
+  const grid = Array.from({length:SIZE}, () => Array(SIZE).fill(''));
+  const placed = [];
+  const dirs = [[0,1],[1,0],[1,1],[0,-1],[-1,0]];
+  const shuffle = arr => arr.sort(() => Math.random()-0.5);
+  shuffle(sopaWords).forEach(word => {
+    let tries = 0, ok = false;
+    while (!ok && tries < 100) {
+      tries++;
+      const dir = dirs[Math.floor(Math.random()*dirs.length)];
+      const r = Math.floor(Math.random()*SIZE), c = Math.floor(Math.random()*SIZE);
+      let cells = [];
+      for (let i = 0; i < word.length; i++) {
+        const nr = r + dir[0]*i, nc = c + dir[1]*i;
+        if (nr<0||nr>=SIZE||nc<0||nc>=SIZE) break;
+        if (grid[nr][nc] && grid[nr][nc] !== word[i]) break;
+        cells.push([nr,nc]);
+      }
+      if (cells.length === word.length) {
+        cells.forEach(([nr,nc],i) => grid[nr][nc] = word[i]);
+        placed.push({ word, cells });
+        ok = true;
+      }
+    }
+  });
+  const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for (let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!grid[r][c]) grid[r][c] = alpha[Math.floor(Math.random()*alpha.length)];
+  sopaState = { SIZE, grid, placed, found:[], selecting:[], mouseDown:false };
+  renderSopa();
+}
+function renderSopa() {
+  const { SIZE, grid, placed, found } = sopaState;
+  const allCells = {};
+  sopaState.placed.forEach(p => { if(found.includes(p.word)) p.cells.forEach(([r,c]) => allCells[r+','+c] = 'found'); });
+  sopaState.selecting.forEach(([r,c]) => { if(!allCells[r+','+c]) allCells[r+','+c] = 'selected'; });
+
+  let html = `<div class="sopa-center"><div class="grid-sopa" style="grid-template-columns:repeat(${SIZE},26px)">`;
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) {
+    const key = r+','+c;
+    const cls = allCells[key] || '';
+    html += `<div class="sopa-cell ${cls}" data-r="${r}" data-c="${c}" onmousedown="startSel(${r},${c})" onmousemove="moveSel(${r},${c})" onmouseup="endSel()">${grid[r][c]}</div>`;
+  }
+  html += `</div><div class="sopa-words">`;
+  sopaWords.forEach(w => { html += `<span class="sopa-word ${found.includes(w)?'found':''}">${w}</span>`; });
+  html += `</div>`;
+  if(found.length === sopaWords.length) html += `<div style="text-align:center;margin-top:1rem;font-weight:700;color:#3b6d11">🎉 ¡Has encontrado todas las palabras!</div><button class="play-again" onclick="buildSopa()">Jugar de nuevo</button>`;
+  html += `</div>`;
+  document.getElementById('sopa-content').innerHTML = html;
+  document.getElementById('sopa-content').onmouseleave = () => { sopaState.mouseDown = false; sopaState.selecting = []; renderSopa(); };
+}
+function startSel(r,c) { sopaState.mouseDown=true; sopaState.startCell=[r,c]; sopaState.selecting=[[r,c]]; renderSopa(); }
+function moveSel(r,c) {
+  if(!sopaState.mouseDown) return;
+  const [sr,sc] = sopaState.startCell;
+  const dr = r-sr, dc = c-sc;
+  const len = Math.max(Math.abs(dr),Math.abs(dc));
+  if(len===0){sopaState.selecting=[[sr,sc]];renderSopa();return;}
+  let dirR=0,dirC=0;
+  if(Math.abs(dr)>=Math.abs(dc)) dirR=dr>0?1:-1; 
+  if(Math.abs(dc)>=Math.abs(dr)) dirC=dc>0?1:-1;
+  sopaState.selecting=[];
+  for(let i=0;i<=len;i++) sopaState.selecting.push([sr+dirR*i,sc+dirC*i]);
+  renderSopa();
+}
+function endSel() {
+  sopaState.mouseDown=false;
+  const sel = sopaState.selecting;
+  const { grid, placed, found } = sopaState;
+  if(sel.length<2){sopaState.selecting=[];renderSopa();return;}
+  const str = sel.map(([r,c])=>grid[r][c]).join('');
+  const hit = placed.find(p => p.word===str || p.word===str.split('').reverse().join(''));
+  if(hit && !found.includes(hit.word)) sopaState.found.push(hit.word);
+  sopaState.selecting=[];
+  renderSopa();
+}
+</script>
+</body>
+</html>
