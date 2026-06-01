@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PABLO JORDÁN PROFE · Marketing y Publicidad</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#f7f6f2; --bg2:#ffffff; --text:#1a1a18; --text2:#6b6a64;
+  --border:rgba(0,0,0,0.1); --accent:#533ab7; --accent2:#0f6e56;
+  --card-r:14px; --shadow:0 2px 12px rgba(0,0,0,0.07);
+}
+body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+/* LOGIN */
+#login-screen { display:flex; align-items:center; justify-content:center; min-height:100vh; background:linear-gradient(135deg,#1a0f3d 0%,#0f3d2e 100%); }
+.login-card { background:white; border-radius:20px; padding:2.5rem; width:360px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+.login-card h1 { font-size:1.4rem; font-weight:700; color:#1a1a18; margin-bottom:0.3rem; }
+.login-card p { font-size:0.85rem; color:#888; margin-bottom:1.8rem; }
+.login-card input { width:100%; padding:0.75rem 1rem; border:1.5px solid #ddd; border-radius:10px; font-size:1rem; outline:none; margin-bottom:1rem; transition:border-color .2s; }
+.login-card input:focus { border-color:#533ab7; }
+.login-card button { width:100%; padding:0.8rem; background:#533ab7; color:white; border:none; border-radius:10px; font-size:1rem; font-weight:600; cursor:pointer; transition:background .2s; }
+.login-card button:hover { background:#3c2889; }
+.login-error { color:#e24b4a; font-size:0.8rem; margin-top:0.5rem; display:none; }
+.login-badge { display:inline-block; background:#EEEDFE; color:#533ab7; font-size:0.75rem; padding:0.3rem 0.8rem; border-radius:20px; margin-bottom:1.5rem; font-weight:600; letter-spacing:0.5px; }
+
+/* APP */
+#app { display:none; }
+header { background:#1a0f3d; color:white; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+header h1 { font-size:1.1rem; font-weight:700; }
+header span { font-size:0.75rem; opacity:0.6; }
+.logout-btn { background:rgba(255,255,255,0.15); border:none; color:white; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; }
+.container { max-width:960px; margin:0 auto; padding:2rem 1.5rem; }
+
+/* UT HERO */
+.ut-hero { background:linear-gradient(135deg,#533ab7 0%,#0f6e56 100%); border-radius:var(--card-r); padding:2.5rem; color:white; margin-bottom:2rem; position:relative; overflow:hidden; }
+.ut-hero::before { content:''; position:absolute; right:-40px; top:-40px; width:200px; height:200px; border-radius:50%; background:rgba(255,255,255,0.05); }
+.ut-hero .ut-num { font-size:0.8rem; font-weight:700; letter-spacing:1px; opacity:0.7; text-transform:uppercase; margin-bottom:0.5rem; }
+.ut-hero h2 { font-size:1.8rem; font-weight:800; margin-bottom:0.5rem; }
+.ut-hero p { opacity:0.8; font-size:0.95rem; line-height:1.6; }
+
+/* TABS */
+.tabs { display:flex; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+.tab { padding:0.55rem 1.2rem; border:1.5px solid var(--border); border-radius:30px; background:var(--bg2); cursor:pointer; font-size:0.85rem; font-weight:500; color:var(--text2); transition:all .2s; user-select:none; }
+.tab:hover { border-color:#533ab7; color:#533ab7; }
+.tab.active { background:#533ab7; color:white; border-color:#533ab7; }
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+/* CARDS */
+.card { background:var(--bg2); border-radius:var(--card-r); border:1px solid var(--border); padding:1.5rem; margin-bottom:1.2rem; box-shadow:var(--shadow); }
+.card h3 { font-size:1.05rem; font-weight:700; margin-bottom:0.8rem; }
+.card p { font-size:0.9rem; line-height:1.7; color:var(--text2); }
+.card ul { padding-left:1.2rem; font-size:0.88rem; color:var(--text2); line-height:2; margin-top:0.5rem; }
+
+/* FLIP */
+.flip-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+.flip-card { height:160px; perspective:1000px; cursor:pointer; }
+.flip-inner { position:relative; width:100%; height:100%; transition:transform 0.6s; transform-style:preserve-3d; }
+.flip-card.flipped .flip-inner { transform:rotateY(180deg); }
+.flip-front,.flip-back { position:absolute; width:100%; height:100%; backface-visibility:hidden; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1rem; text-align:center; border:1px solid var(--border); }
+.flip-front { background:var(--bg2); }
+.flip-back { background:#533ab7; color:white; transform:rotateY(180deg); }
+.flip-front .icon { font-size:2rem; margin-bottom:0.5rem; }
+.flip-front h4 { font-size:0.9rem; font-weight:700; }
+.flip-back p { font-size:0.82rem; line-height:1.5; }
+.flip-hint { font-size:0.72rem; color:var(--text2); text-align:center; margin-bottom:1rem; }
+
+/* PESTEL */
+.pestel-item { border:1px solid var(--border); border-radius:10px; margin-bottom:0.6rem; overflow:hidden; }
+.pestel-header { padding:1rem 1.2rem; display:flex; align-items:center; gap:0.8rem; cursor:pointer; font-weight:600; font-size:0.9rem; user-select:none; transition:background .2s; }
+.pestel-header:hover { background:var(--bg); }
+.pestel-badge { min-width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; color:white; flex-shrink:0; padding:0 6px; }
+.pestel-body { max-height:0; overflow:hidden; transition:max-height 0.5s ease,padding 0.3s; padding:0 1.2rem; font-size:0.88rem; line-height:1.7; color:var(--text2); }
+.pestel-body.open { max-height:600px; padding:0.8rem 1.2rem 1.2rem; }
+.pestel-arrow { margin-left:auto; font-size:0.7rem; transition:transform .3s; }
+.pestel-header.open .pestel-arrow { transform:rotate(180deg); }
+.pestel-body h4 { font-size:0.9rem; font-weight:700; color:var(--text); margin:0.8rem 0 0.3rem; }
+.pestel-body ul { padding-left:1rem; line-height:1.9; }
+.pestel-body li { margin-bottom:0.1rem; }
+
+/* CASO PRACTICO PESTELL */
+.pcc-toggle { display:inline-block; margin-top:1rem; padding:0.5rem 1.2rem; background:#533ab7; color:white; border:none; border-radius:8px; cursor:pointer; font-size:0.82rem; font-weight:600; }
+.pcc-box { display:none; margin-top:0.8rem; background:#f0f7ff; border:1px solid #b5d4f4; border-radius:10px; padding:1rem 1.2rem; font-size:0.85rem; color:#042c53; line-height:1.7; }
+.pcc-box.show { display:block; }
+.pcc-label { display:inline-block; background:#185fa5; color:white; font-size:0.72rem; font-weight:700; padding:0.2rem 0.6rem; border-radius:20px; margin-bottom:0.4rem; }
+
+/* PORTER */
+.porter-wrap { display:grid; grid-template-columns:1fr 1fr 1fr; grid-template-rows:auto auto auto; gap:1rem; margin-bottom:1.5rem; }
+.porter-card { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1rem; cursor:pointer; transition:all .2s; }
+.porter-card:hover,.porter-card.active { border-color:#185fa5; box-shadow:0 0 0 3px rgba(24,95,165,0.1); }
+.porter-card.center { grid-column:2; grid-row:2; background:#185fa5; color:white; border-color:#185fa5; }
+.porter-card.center h4 { color:white; }
+.porter-card.center p { color:rgba(255,255,255,0.75); }
+.porter-card h4 { font-size:0.82rem; font-weight:700; margin-bottom:0.3rem; }
+.porter-card p { font-size:0.73rem; color:var(--text2); line-height:1.4; }
+.porter-detail { background:#e6f1fb; border:1px solid #b5d4f4; border-radius:10px; padding:1.2rem 1.4rem; font-size:0.88rem; line-height:1.8; color:#042c53; display:none; margin-bottom:1rem; }
+.porter-detail.show { display:block; }
+.porter-detail h4 { font-size:0.95rem; font-weight:700; color:#042c53; margin-bottom:0.5rem; }
+.porter-detail .pcc-box { background:#d4eaff; border-color:#93c5fd; }
+
+/* MERCADO */
+.mercado-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; margin-bottom:1.2rem; }
+.mercado-card { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.2rem; box-shadow:var(--shadow); }
+.mercado-card h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.6rem; display:flex; align-items:center; gap:0.5rem; }
+.mercado-card ul { padding-left:1rem; font-size:0.83rem; color:var(--text2); line-height:1.9; }
+.tag-pill { display:inline-block; font-size:0.72rem; font-weight:700; padding:0.2rem 0.7rem; border-radius:20px; margin:0.15rem; }
+
+/* INSTITUCIONES */
+.inst-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; }
+.inst-card { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.2rem; box-shadow:var(--shadow); }
+.inst-card h4 { font-size:0.88rem; font-weight:700; margin-bottom:0.4rem; display:flex; align-items:center; gap:0.4rem; }
+.inst-card p { font-size:0.82rem; color:var(--text2); line-height:1.6; }
+.inst-scope { font-size:0.7rem; font-weight:700; padding:0.15rem 0.6rem; border-radius:20px; display:inline-block; margin-bottom:0.5rem; }
+.scope-es { background:#EEEDFE; color:#533ab7; }
+.scope-eu { background:#dbeafe; color:#1e40af; }
+.scope-int { background:#e1f5ee; color:#0f6e56; }
+
+/* GAMES */
+.games-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.2rem; }
+.game-launch { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; text-align:center; cursor:pointer; transition:all .2s; }
+.game-launch:hover { border-color:#533ab7; transform:translateY(-2px); box-shadow:var(--shadow); }
+.game-launch .g-icon { font-size:2.5rem; margin-bottom:0.5rem; }
+.game-launch h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.3rem; }
+.game-launch p { font-size:0.78rem; color:var(--text2); }
+
+/* MODAL */
+.modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center; }
+.modal-bg.show { display:flex; }
+.modal { background:var(--bg2); border-radius:16px; padding:2rem; max-width:540px; width:90%; max-height:85vh; overflow-y:auto; position:relative; }
+.modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text2); }
+.modal h2 { font-size:1.2rem; font-weight:700; margin-bottom:1.2rem; }
+
+/* AHORCADO */
+.hangman-word { display:flex; gap:0.4rem; flex-wrap:wrap; justify-content:center; margin:1rem 0; }
+.letter-box { width:32px; height:36px; border-bottom:2.5px solid var(--text); display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:700; text-transform:uppercase; }
+.hangman-keys { display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; margin:1rem 0; }
+.key-btn { padding:0.4rem 0.6rem; min-width:34px; border:1.5px solid var(--border); border-radius:7px; background:var(--bg2); cursor:pointer; font-size:0.85rem; font-weight:600; text-transform:uppercase; transition:all .15s; }
+.key-btn:hover:not(:disabled) { border-color:#533ab7; color:#533ab7; }
+.key-btn:disabled { opacity:0.35; cursor:not-allowed; }
+.key-btn.wrong { background:#fcebeb; border-color:#f09595; color:#a32d2d; }
+.key-btn.right { background:#eaf3de; border-color:#639922; color:#3b6d11; }
+.hangman-drawing { display:block; margin:0 auto 0.5rem; }
+.hangman-status { text-align:center; font-weight:700; font-size:0.95rem; margin:0.5rem 0; }
+.hint-text { text-align:center; font-size:0.8rem; color:var(--text2); background:var(--bg); border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; }
+.play-again { display:block; margin:0.5rem auto; padding:0.5rem 1.5rem; background:#533ab7; color:white; border:none; border-radius:8px; cursor:pointer; font-size:0.85rem; }
+
+/* SOPA */
+.grid-sopa { display:inline-grid; gap:2px; user-select:none; }
+.sopa-cell { width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:600; text-transform:uppercase; border-radius:4px; cursor:pointer; user-select:none; background:var(--bg); border:1px solid var(--border); transition:background .15s; }
+.sopa-cell.selected { background:#EEEDFE; border-color:#533ab7; color:#533ab7; }
+.sopa-cell.found { background:#eaf3de; border-color:#639922; color:#27500a; }
+.sopa-words { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.8rem; justify-content:center; }
+.sopa-word { padding:0.25rem 0.7rem; border-radius:20px; font-size:0.78rem; font-weight:600; background:var(--bg); border:1px solid var(--border); color:var(--text2); }
+.sopa-word.found { background:#eaf3de; border-color:#639922; color:#27500a; text-decoration:line-through; }
+.sopa-center { text-align:center; }
+
+/* QUIZ */
+.quiz-q { font-weight:600; font-size:0.95rem; margin-bottom:0.8rem; color:var(--text); }
+.quiz-options { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem; }
+.quiz-opt { padding:0.7rem 1rem; border:1.5px solid var(--border); border-radius:10px; background:var(--bg2); cursor:pointer; font-size:0.85rem; text-align:left; transition:all 0.2s; }
+.quiz-opt:hover { border-color:#533ab7; background:#f8f7ff; }
+.quiz-opt.selected { background:#eeedfe; border-color:#533ab7; font-weight:600; }
+.quiz-result-box { text-align:center; padding:1.5rem; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; color:#166534; font-weight:700; margin-top:1rem; }
+
+/* NIKE */
+.nike-card { background:white; border-radius:12px; border:1px solid #dbeafe; padding:1.5rem; margin-bottom:1rem; display:flex; gap:1.5rem; align-items:flex-start; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05); }
+.nike-icon-box { background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; width:80px; height:80px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:2rem; flex-shrink:0; font-weight:bold; color:#16a34a; }
+.nike-icon-box.precio { background:#eff6ff; border-color:#bfdbfe; color:#2563eb; }
+.nike-icon-box.dist { background:#fefbeb; border-color:#fef08a; color:#ca8a04; }
+.nike-icon-box.promo { background:#fff5f5; border-color:#feb2b2; color:#dc2626; }
+.nike-label { font-size:0.8rem; margin-top:2px; font-weight:700; color:#333; text-align:center; }
+.nike-content h4 { font-size:1rem; color:#1e293b; margin-bottom:0.5rem; }
+.nike-content ul { padding-left:1.2rem; font-size:0.88rem; color:#475569; line-height:1.6; }
+
+/* PROGRESS */
+.progress-bar { height:4px; background:var(--bg); border-radius:2px; margin-bottom:2rem; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,#533ab7,#0f6e56); border-radius:2px; }
+
+/* UT INDEX */
+.ut-list { display:grid; gap:0.8rem; margin-bottom:2rem; }
+.ut-item { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1rem 1.3rem; display:flex; align-items:center; gap:1rem; cursor:pointer; transition:all .2s; }
+.ut-item:hover { border-color:#533ab7; }
+.ut-num-badge { background:#EEEDFE; color:#533ab7; font-size:0.75rem; font-weight:800; padding:0.3rem 0.7rem; border-radius:20px; white-space:nowrap; }
+.ut-item h4 { font-size:0.9rem; font-weight:600; }
+.ut-item p { font-size:0.78rem; color:var(--text2); }
+
+@media(max-width:600px){
+  .porter-wrap { grid-template-columns:1fr 1fr; }
+  .porter-card.center { grid-column:1/3; grid-row:1; }
+  .nike-card { flex-direction:column; gap:0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-badge">🔒 RECURSOS EXCLUSIVOS</div>
+    <h1>Investigación Comercial</h1>
+    <p>Teoría marketing y publicidad · Pablo Jordán</p>
+    <input type="password" id="pwd-input" placeholder="Contraseña de acceso" onkeydown="if(event.key==='Enter')doLogin()">
+    <button onclick="doLogin()">Entrar</button>
+    <div class="login-error" id="login-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div>
+      <h1>PABLO JORDÁN PROFE</h1>
+      <span>Recursos de Marketing y Publicidad</span>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">Salir</button>
+  </header>
+  <div class="container">
+    <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
+
+    <!-- ÍNDICE UTs -->
+    <div class="ut-list" id="ut-list">
+      <div class="ut-item" onclick="showUT1()">
+        <span class="ut-num-badge">UT 1</span>
+        <div>
+          <h4>El sistema comercial y el entorno de la empresa</h4>
+          <p>Mercado · PESTEL · 5 Fuerzas de Porter · Instituciones · Disponible</p>
+        </div>
+        <span style="margin-left:auto;color:#533ab7;">→</span>
+      </div>
+      <div class="ut-item" onclick="alert('El contenido de la UT 2 estará listo muy pronto.')">
+        <span class="ut-num-badge">UT 2</span>
+        <div>
+          <h4>Investigación de mercados y fuentes de información</h4>
+          <p>Fuentes primarias y secundarias · Próximamente</p>
+        </div>
+        <span style="margin-left:auto;color:#aaa;">⏳</span>
+      </div>
+    </div>
+
+    <!-- UT1 -->
+    <div id="ut1-content" style="display:none">
+      <button onclick="backToIndex()" style="background:none;border:none;color:#533ab7;cursor:pointer;font-size:0.9rem;margin-bottom:1rem;">← Volver al índice</button>
+      <div class="ut-hero">
+        <div class="ut-num">Unidad de Trabajo 1</div>
+        <h2>El sistema comercial y el entorno de la empresa</h2>
+        <p>Variables controlables y no controlables · Mercado · Macroentorno PESTEL · Microentorno – 5 Fuerzas de Porter · Instituciones reguladoras</p>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('contenido',this)">📖 Contenido</div>
+        <div class="tab" onclick="switchTab('pestel',this)">🌍 PESTEL</div>
+        <div class="tab" onclick="switchTab('porter',this)">⚡ Porter</div>
+        <div class="tab" onclick="switchTab('mercado',this)">🏪 Mercado</div>
+        <div class="tab" onclick="switchTab('instituciones',this)">🏛️ Instituciones</div>
+        <div class="tab" onclick="switchTab('juegos',this)">🎮 Juegos</div>
+      </div>
+
+      <!-- TAB CONTENIDO -->
+      <div class="tab-content active" id="tab-contenido">
+        <div class="card">
+          <h3>El sistema comercial</h3>
+          <p>El sistema comercial engloba el conjunto de elementos que intervienen en el proceso de intercambio entre la empresa y el mercado. Se distinguen dos tipos de variables: las <strong>controlables</strong>, sobre las que la empresa puede actuar, y las <strong>no controlables</strong>, que vienen impuestas por el entorno.</p>
+        </div>
+        <p class="flip-hint">👆 Haz clic en cada tarjeta para ver el contenido</p>
+        <div class="flip-grid">
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="icon">🎯</div><h4>Variables controlables (4Ps)</h4></div>
+              <div class="flip-back"><p><strong>Producto:</strong> qué ofrecemos<br><strong>Precio:</strong> cuánto cuesta<br><strong>Distribución (Place):</strong> cómo llega al cliente<br><strong>Promoción:</strong> cómo lo comunicamos</p></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="icon">🌐</div><h4>Variables no controlables</h4></div>
+              <div class="flip-back"><p>Factores externos que la empresa <strong>no puede controlar</strong> pero debe analizar y adaptarse a ellos: el mercado y el entorno (macro y micro).</p></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="icon">📊</div><h4>Macroentorno PESTEL</h4></div>
+              <div class="flip-back"><p>Factores lejanos a la empresa que afectan a todo el sector: <strong>P</strong>olítico, <strong>E</strong>conómico, <strong>S</strong>ociocultural, <strong>T</strong>ecnológico, <strong>E</strong>cológico, <strong>L</strong>egal.</p></div>
+            </div>
+          </div>
+          <div class="flip-card" onclick="this.classList.toggle('flipped')">
+            <div class="flip-inner">
+              <div class="flip-front"><div class="icon">⚙️</div><h4>Microentorno – Porter</h4></div>
+              <div class="flip-back"><p>Factores cercanos que afectan directamente: competencia, clientes, proveedores, distribuidores. Modelo de las <strong>5 Fuerzas de Porter</strong>.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="margin-top:0.5rem">
+          <h3>💡 Caso Práctico: El Marketing Mix de Nike (4Ps)</h3>
+          <p style="margin-bottom:1.2rem;font-size:0.88rem;color:var(--text2)">Ejemplo real basado en las estrategias comerciales globales de la marca:</p>
+          <div class="nike-card"><div class="nike-icon-box">🛍️<div class="nike-label">Producto</div></div><div class="nike-content"><h4>Nike ofrece una <strong>amplia gama de productos</strong>:</h4><ul><li><strong>Calzado:</strong> Nike Air Max, Air Jordan, Nike Free.</li><li><strong>Ropa:</strong> sudaderas, pantalones, camisetas, chaquetas.</li><li><strong>Accesorios:</strong> mochilas, gorras, calcetines.</li></ul></div></div>
+          <div class="nike-card"><div class="nike-icon-box precio">🏷️<div class="nike-label">Precio</div></div><div class="nike-content"><h4>Nike utiliza <strong>estrategias de precios premium</strong>:</h4><ul><li>Precios altos basados en exclusividad y tecnología.</li><li>Descuentos en eventos clave como Black Friday.</li><li>Desde equipamiento básico hasta ediciones limitadas de lujo.</li></ul></div></div>
+          <div class="nike-card"><div class="nike-icon-box dist">🏪<div class="nike-label">Distribución</div></div><div class="nike-content"><h4>Nike usa <strong>múltiples canales de distribución</strong>:</h4><ul><li>Tiendas propias (<em>flagship stores</em>).</li><li>Minoristas y grandes almacenes (Foot Locker, El Corte Inglés).</li><li>Tienda en línea y apps móviles oficiales.</li></ul></div></div>
+          <div class="nike-card"><div class="nike-icon-box promo">📢<div class="nike-label">Promoción</div></div><div class="nike-content"><h4>Nike combina <strong>múltiples técnicas de comunicación</strong>:</h4><ul><li>Publicidad de gran impacto en TV y medios digitales.</li><li>Patrocinios icónicos con deportistas de élite.</li><li>Comunidades activas con apps como Nike Run Club.</li></ul></div></div>
+        </div>
+      </div>
+
+      <!-- TAB PESTEL -->
+      <div class="tab-content" id="tab-pestel">
+        <div class="card">
+          <h3>Análisis PESTEL — Macroentorno</h3>
+          <p>El análisis PESTEL es una herramienta estratégica que permite identificar y evaluar los factores del <strong>macroentorno</strong> que pueden afectar a la actividad de la empresa. Son variables que la empresa <strong>no puede controlar</strong>, pero cuyo conocimiento resulta imprescindible para anticipar amenazas y detectar oportunidades.</p>
+          <p style="margin-top:0.6rem">El término PESTEL es un acrónimo formado por las iniciales de seis dimensiones del entorno general: <strong>Político, Económico, Sociocultural, Tecnológico, Ecológico y Legal</strong>. Cada uno de estos factores puede influir de forma directa o indirecta sobre las decisiones de marketing y la estrategia comercial de cualquier empresa.</p>
+        </div>
+        <p class="flip-hint" style="margin-bottom:0.8rem">👇 Despliega cada factor para ver su contenido completo</p>
+        <div id="pestel-accordion"></div>
+
+        <div class="card" style="margin-top:1.5rem; border-left:4px solid #533ab7;">
+          <h3>🛒 Caso Práctico Interactivo: PC Componentes y el macroentorno PESTEL</h3>
+          <p style="margin-bottom:0.8rem"><strong>PC Componentes</strong> es una empresa murciana fundada en 2003 en Molina de Segura, líder en la venta de tecnología e informática en España y con presencia en Europa. Selecciona cada factor PESTEL para ver cómo le afecta:</p>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem" id="pcc-btns"></div>
+          <div id="pcc-detail-box" style="display:none;background:#f0f7ff;border:1px solid #b5d4f4;border-radius:10px;padding:1rem 1.2rem;font-size:0.88rem;color:#042c53;line-height:1.8"></div>
+        </div>
+      </div>
+
+      <!-- TAB PORTER -->
+      <div class="tab-content" id="tab-porter">
+        <div class="card">
+          <h3>Las 5 Fuerzas de Porter — Microentorno</h3>
+          <p>Michael Porter, profesor de la Harvard Business School, desarrolló en 1979 un modelo para analizar la <strong>intensidad competitiva</strong> de un sector y su atractivo. Su modelo identifica <strong>cinco fuerzas</strong> que determinan la rentabilidad a largo plazo de una industria.</p>
+          <p style="margin-top:0.6rem">A diferencia del análisis PESTEL —que estudia el macroentorno— las 5 fuerzas de Porter se centran en el <strong>microentorno</strong>: los agentes más cercanos a la empresa que interactúan directamente con ella. Cuanto mayor sea la intensidad de estas fuerzas, menor será la rentabilidad del sector.</p>
+        </div>
+        <p class="flip-hint" style="margin-bottom:0.8rem">👆 Haz clic en cada fuerza para ver su explicación</p>
+        <div class="porter-wrap" id="porter-grid"></div>
+        <div class="porter-detail" id="porter-detail"></div>
+
+        <div class="card" style="border-left:4px solid #185fa5;">
+          <h3>🛒 Caso Práctico: Las 5 Fuerzas en PC Componentes</h3>
+          <p style="margin-bottom:0.8rem">Veamos cómo se aplica el modelo de Porter al sector del comercio electrónico de tecnología en España, tomando a PC Componentes como referencia:</p>
+          <div id="porter-pcc-accordion"></div>
+        </div>
+      </div>
+
+      <!-- TAB MERCADO -->
+      <div class="tab-content" id="tab-mercado">
+        <div class="card">
+          <h3>El mercado: definición y estructura</h3>
+          <p>El <strong>mercado</strong> es el conjunto de compradores y vendedores que interactúan para intercambiar bienes o servicios. Desde el punto de vista del marketing, el mercado representa el conjunto de consumidores con una necesidad determinada, con capacidad económica para satisfacerla y con disposición para comprar.</p>
+          <p style="margin-top:0.6rem">Todo mercado tiene unos <strong>límites</strong> que lo definen y lo diferencian de otros:</p>
+          <ul style="padding-left:1.2rem;font-size:0.88rem;color:var(--text2);line-height:2;margin-top:0.3rem">
+            <li><strong>Límite físico o geográfico:</strong> local, regional, nacional, internacional.</li>
+            <li><strong>Límite temporal:</strong> estacional (turismo veraniego) o permanente.</li>
+            <li><strong>Límite de producto:</strong> el mercado de los smartphones o el de los coches eléctricos.</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Tipos de mercado según la demanda</h3>
+          <div class="mercado-grid">
+            <div class="mercado-card">
+              <h4>🎯 Mercado actual</h4>
+              <ul>
+                <li>Conjunto de consumidores que ya compran el producto en este momento.</li>
+                <li>Es la base real de la empresa hoy.</li>
+                <li>Ejemplo: clientes actuales de PC Componentes.</li>
+              </ul>
+            </div>
+            <div class="mercado-card">
+              <h4>🌱 Mercado potencial</h4>
+              <ul>
+                <li>Consumidores que aún no compran pero podrían llegar a hacerlo.</li>
+                <li>Representan una oportunidad de crecimiento.</li>
+                <li>Ejemplo: personas mayores que aún no compran tecnología online.</li>
+              </ul>
+            </div>
+            <div class="mercado-card">
+              <h4>🏹 Mercado objetivo (target)</h4>
+              <ul>
+                <li>Segmento específico al que la empresa dirige su estrategia comercial.</li>
+                <li>Se selecciona tras la segmentación.</li>
+                <li>Ejemplo: gamers de 18-35 años con alto poder adquisitivo.</li>
+              </ul>
+            </div>
+            <div class="mercado-card">
+              <h4>👤 Mercado individual</h4>
+              <ul>
+                <li>Estrategia personalizada para un solo cliente.</li>
+                <li>Propio del marketing B2B o el marketing de lujo.</li>
+                <li>Ejemplo: soluciones tecnológicas a medida para una empresa.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Clasificación de los mercados</h3>
+          <p style="margin-bottom:1rem;font-size:0.88rem;color:var(--text2)">Los mercados se pueden clasificar atendiendo a distintos criterios. Despliega cada uno para conocer sus tipos:</p>
+          <div id="market-accordion"></div>
+        </div>
+
+        <div class="card">
+          <h3>Estructura de la competencia en el mercado</h3>
+          <p style="margin-bottom:1rem;font-size:0.88rem;color:var(--text2)">Según el número de oferentes y demandantes, encontramos distintas estructuras de mercado:</p>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:0.85rem">
+              <thead>
+                <tr style="background:#533ab7;color:white">
+                  <th style="padding:0.7rem;text-align:left;border-radius:8px 0 0 0">Estructura</th>
+                  <th style="padding:0.7rem;text-align:left">Nº de vendedores</th>
+                  <th style="padding:0.7rem;text-align:left">Control del precio</th>
+                  <th style="padding:0.7rem;text-align:left;border-radius:0 8px 0 0">Ejemplo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background:#fafafa;border-bottom:1px solid #eee"><td style="padding:0.6rem 0.7rem;font-weight:600">Competencia perfecta</td><td style="padding:0.6rem 0.7rem">Muchos</td><td style="padding:0.6rem 0.7rem">Ninguno</td><td style="padding:0.6rem 0.7rem">Mercados agrícolas</td></tr>
+                <tr style="border-bottom:1px solid #eee"><td style="padding:0.6rem 0.7rem;font-weight:600">Competencia monopolística</td><td style="padding:0.6rem 0.7rem">Muchos (producto diferenciado)</td><td style="padding:0.6rem 0.7rem">Parcial</td><td style="padding:0.6rem 0.7rem">Restaurantes, ropa</td></tr>
+                <tr style="background:#fafafa;border-bottom:1px solid #eee"><td style="padding:0.6rem 0.7rem;font-weight:600">Oligopolio</td><td style="padding:0.6rem 0.7rem">Pocos</td><td style="padding:0.6rem 0.7rem">Alto</td><td style="padding:0.6rem 0.7rem">Telefonía móvil, banca</td></tr>
+                <tr><td style="padding:0.6rem 0.7rem;font-weight:600">Monopolio</td><td style="padding:0.6rem 0.7rem">Uno solo</td><td style="padding:0.6rem 0.7rem">Total</td><td style="padding:0.6rem 0.7rem">Correos, AENA (históricamente)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB INSTITUCIONES -->
+      <div class="tab-content" id="tab-instituciones">
+        <div class="card">
+          <h3>Instituciones que regulan la actividad comercial</h3>
+          <p>La actividad comercial de las empresas está regulada y supervisada por un amplio conjunto de organismos, tanto nacionales como europeos e internacionales. Su función es garantizar la libre competencia, proteger al consumidor y facilitar el comercio entre países.</p>
+        </div>
+
+        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.8rem;color:var(--text)">🇪🇸 Instituciones nacionales (España)</h4>
+        <div class="inst-grid" style="margin-bottom:1.5rem">
+          <div class="inst-card"><span class="inst-scope scope-es">Nacional</span><h4>🏛️ CNMC</h4><p><strong>Comisión Nacional de los Mercados y la Competencia.</strong> Vela por la competencia efectiva en los mercados españoles, sanciona prácticas colusorias (carteles) y abuso de posición dominante.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-es">Nacional</span><h4>🛡️ AECOSAN / AESAN</h4><p><strong>Agencia Española de Seguridad Alimentaria y Nutrición.</strong> Protege la seguridad de los consumidores en el ámbito alimentario y de los productos de consumo.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-es">Nacional</span><h4>📦 ICEX España</h4><p><strong>Instituto Español de Comercio Exterior.</strong> Apoya la internacionalización de las empresas españolas, facilitando el acceso a mercados extranjeros.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-es">Nacional</span><h4>⚖️ OCU</h4><p><strong>Organización de Consumidores y Usuarios.</strong> Asociación independiente que defiende los derechos e intereses de los consumidores, publica comparativas y denuncias de abusos.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-es">Nacional</span><h4>🏦 Banco de España</h4><p>Supervisa el sistema financiero y bancario. Regula la publicidad y las prácticas comerciales de bancos e instituciones de crédito.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-es">Nacional</span><h4>📡 CNMV</h4><p><strong>Comisión Nacional del Mercado de Valores.</strong> Supervisa los mercados de valores y la actividad de las empresas cotizadas, garantizando la transparencia.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-es">Nacional</span><h4>📋 AEPD</h4><p><strong>Agencia Española de Protección de Datos.</strong> Controla el cumplimiento del RGPD y la normativa de protección de datos, especialmente relevante en marketing digital.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-es">Nacional</span><h4>📢 Autocontrol</h4><p>Asociación para la Autorregulación de la Comunicación Comercial. Resuelve reclamaciones sobre publicidad engañosa o contraria a la ética sin necesidad de acudir a los tribunales.</p></div>
+        </div>
+
+        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.8rem;color:var(--text)">🇪🇺 Instituciones europeas</h4>
+        <div class="inst-grid" style="margin-bottom:1.5rem">
+          <div class="inst-card"><span class="inst-scope scope-eu">Unión Europea</span><h4>🏛️ Comisión Europea – DG COMP</h4><p>Dirección General de Competencia. Investiga y sanciona prácticas anticompetitivas en el mercado único europeo (multas a Google, Apple, Amazon...).</p></div>
+          <div class="inst-card"><span class="inst-scope scope-eu">Unión Europea</span><h4>🛒 BEUC</h4><p><strong>Organización Europea de Consumidores.</strong> Agrupa a las asociaciones nacionales de consumidores para defender sus intereses ante las instituciones europeas.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-eu">Unión Europea</span><h4>📊 Eurostat</h4><p>Oficina estadística de la UE. Publica datos sobre mercados, consumo, comercio exterior e indicadores económicos esenciales para la investigación comercial.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-eu">Unión Europea</span><h4>💻 EDPB</h4><p><strong>Comité Europeo de Protección de Datos.</strong> Supervisa la aplicación homogénea del RGPD en toda la UE, con impacto directo en el marketing digital y el email marketing.</p></div>
+        </div>
+
+        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.8rem;color:var(--text)">🌍 Instituciones internacionales</h4>
+        <div class="inst-grid">
+          <div class="inst-card"><span class="inst-scope scope-int">Internacional</span><h4>🌐 OMC</h4><p><strong>Organización Mundial del Comercio.</strong> Regula el comercio internacional entre países, negocia acuerdos y resuelve disputas comerciales a nivel global.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-int">Internacional</span><h4>💰 FMI</h4><p><strong>Fondo Monetario Internacional.</strong> Promueve la estabilidad financiera mundial. Sus informes sobre el entorno económico global son clave para el análisis PESTEL.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-int">Internacional</span><h4>🏦 Banco Mundial</h4><p>Financia proyectos de desarrollo y publica estudios sobre mercados emergentes. Facilita el acceso de empresas a nuevos mercados internacionales.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-int">Internacional</span><h4>📈 UNCTAD</h4><p>Conferencia de la ONU sobre Comercio y Desarrollo. Promueve el comercio como motor del desarrollo, publica estadísticas de flujos comerciales mundiales.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-int">Internacional</span><h4>🤝 OCDE</h4><p><strong>Organización para la Cooperación y el Desarrollo Económico.</strong> Establece estándares sobre competencia, consumidores, comercio electrónico y fiscalidad internacional.</p></div>
+          <div class="inst-card"><span class="inst-scope scope-int">Internacional</span><h4>📣 ICC</h4><p><strong>Cámara de Comercio Internacional.</strong> Elabora los <em>Incoterms</em> y el Código de Publicidad y Marketing, estándares globales para la actividad comercial y publicitaria.</p></div>
+        </div>
+      </div>
+
+      <!-- TAB JUEGOS -->
+      <div class="tab-content" id="tab-juegos">
+        <div class="card" style="margin-bottom:1.2rem">
+          <h3>🎮 Zona Interactiva de Repaso</h3>
+          <p>Pon a prueba tus conocimientos sobre investigación comercial de forma lúdica.</p>
+        </div>
+        <div class="games-grid">
+          <div class="game-launch" onclick="openAhorcado()"><div class="g-icon">🪢</div><h4>Ahorcado</h4><p>Adivina términos avanzados de investigación comercial</p></div>
+          <div class="game-launch" onclick="openSopa()"><div class="g-icon">🔍</div><h4>Sopa de letras</h4><p>Encuentra los conceptos ocultos en la cuadrícula</p></div>
+          <div class="game-launch" onclick="openQuiz()"><div class="g-icon">📝</div><h4>Quiz Exprés</h4><p>15 preguntas tipo test con corrección automática</p></div>
+        </div>
+      </div>
+    </div><!-- /ut1-content -->
+  </div>
+</div>
+
+<!-- MODALES -->
+<div class="modal-bg" id="modal-ahorcado"><div class="modal"><button class="modal-close" onclick="closeModal('modal-ahorcado')">✕</button><h2>🪢 Ahorcado — Vocabulario Avanzado</h2><div id="hangman-content"></div></div></div>
+<div class="modal-bg" id="modal-sopa"><div class="modal"><button class="modal-close" onclick="closeModal('modal-sopa')">✕</button><h2>🔍 Sopa de Letras</h2><div id="sopa-content"></div></div></div>
+<div class="modal-bg" id="modal-quiz"><div class="modal"><button class="modal-close" onclick="closeModal('modal-quiz')">✕</button><h2>📝 Quiz de Autoevaluación</h2><div id="quiz-content"></div></div></div>
+
+<script>
+/* AUTH */
+const PASSWORD = 'PabloPubli';
+function doLogin(){
+  if(document.getElementById('pwd-input').value===PASSWORD){
+    document.getElementById('login-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+  } else { document.getElementById('login-error').style.display='block'; }
+}
+function doLogout(){
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('pwd-input').value='';
+  document.getElementById('login-error').style.display='none';
+}
+function showUT1(){ document.getElementById('ut-list').style.display='none'; document.getElementById('ut1-content').style.display='block'; }
+function backToIndex(){ document.getElementById('ut-list').style.display='grid'; document.getElementById('ut1-content').style.display='none'; }
+function switchTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+/* ===== PESTEL DATA ===== */
+const pestelData = [
+  { letter:'P', label:'Factor Político', color:'#533ab7', content:`
+    <h4>¿Qué analiza?</h4>
+    <p>Estudia el grado en que el gobierno y las decisiones políticas influyen en la economía y en el entorno empresarial. Una situación política estable favorece la inversión y el comercio.</p>
+    <h4>Aspectos clave</h4>
+    <ul>
+      <li>Estabilidad del gobierno y del sistema político.</li>
+      <li>Política fiscal: tipos impositivos, deducciones, incentivos.</li>
+      <li>Regulación del comercio exterior: aranceles, cuotas de importación.</li>
+      <li>Subvenciones y ayudas públicas a empresas y sectores.</li>
+      <li>Legislación laboral: salario mínimo, contratación, despido.</li>
+      <li>Relaciones diplomáticas y acuerdos comerciales internacionales.</li>
+      <li>Riesgo político en mercados internacionales.</li>
+    </ul>
+    <h4>Importancia para el marketing</h4>
+    <p>Las políticas gubernamentales pueden abrir o cerrar mercados, modificar los costes de producción y afectar a la estrategia de precios o distribución internacional.</p>
+  `},
+  { letter:'E', label:'Factor Económico', color:'#0f6e56', content:`
+    <h4>¿Qué analiza?</h4>
+    <p>Examina las variables macroeconómicas que afectan al poder adquisitivo de los consumidores y al coste de los factores productivos de la empresa.</p>
+    <h4>Aspectos clave</h4>
+    <ul>
+      <li>PIB (Producto Interior Bruto) y tasa de crecimiento económico.</li>
+      <li>Tasa de inflación: encarece materias primas y reduce el poder adquisitivo.</li>
+      <li>Tipo de interés: afecta al crédito empresarial y al consumo familiar.</li>
+      <li>Tipo de cambio: fundamental para importaciones y exportaciones.</li>
+      <li>Tasa de desempleo: reduce la renta disponible de los hogares.</li>
+      <li>Ciclos económicos: expansión, auge, recesión y depresión.</li>
+      <li>Nivel de renta y distribución de la riqueza en la sociedad.</li>
+    </ul>
+    <h4>Importancia para el marketing</h4>
+    <p>Una economía en recesión obliga a estrategias de precios bajos y productos de primera necesidad; en expansión favorece el consumo de productos premium.</p>
+  `},
+  { letter:'S', label:'Factor Sociocultural', color:'#993556', content:`
+    <h4>¿Qué analiza?</h4>
+    <p>Estudia las tendencias sociales, demográficas y culturales que moldean el comportamiento del consumidor. Es quizás el factor más difícil de cuantificar pero uno de los más relevantes.</p>
+    <h4>Aspectos clave</h4>
+    <ul>
+      <li>Cambios demográficos: envejecimiento de la población, tasa de natalidad.</li>
+      <li>Estructura del hogar: auge de hogares unipersonales.</li>
+      <li>Nivel educativo: condiciona el tipo de productos demandados.</li>
+      <li>Valores culturales dominantes: sostenibilidad, salud, bienestar.</li>
+      <li>Hábitos de consumo y estilos de vida.</li>
+      <li>Diversidad cultural y multiculturalismo en el mercado.</li>
+      <li>Actitudes hacia el trabajo, el ocio y el consumo responsable.</li>
+      <li>Influencia de los medios de comunicación y redes sociales.</li>
+    </ul>
+    <h4>Importancia para el marketing</h4>
+    <p>Comprender los valores y hábitos de la sociedad permite diseñar productos, mensajes y canales adaptados a las necesidades reales de los consumidores.</p>
+  `},
+  { letter:'T', label:'Factor Tecnológico', color:'#185fa5', content:`
+    <h4>¿Qué analiza?</h4>
+    <p>Evalúa el impacto de los avances tecnológicos en la producción, distribución y comunicación de la empresa. La tecnología puede ser tanto una oportunidad como una amenaza si la empresa no se adapta.</p>
+    <h4>Aspectos clave</h4>
+    <ul>
+      <li>Inversión en I+D+i (Investigación, Desarrollo e Innovación).</li>
+      <li>Digitalización de procesos productivos y administrativos.</li>
+      <li>Automatización y robótica: impacto en el empleo y los costes.</li>
+      <li>Comercio electrónico y nuevos canales de distribución digital.</li>
+      <li>Big Data e Inteligencia Artificial aplicada al marketing.</li>
+      <li>Ciberseguridad y protección de datos del cliente.</li>
+      <li>Velocidad de la obsolescencia tecnológica.</li>
+      <li>Tecnologías emergentes: IoT, blockchain, realidad aumentada.</li>
+    </ul>
+    <h4>Importancia para el marketing</h4>
+    <p>La tecnología transforma los canales de comunicación, la personalización de ofertas y la experiencia del cliente. Las empresas que no innovan quedan fuera del mercado.</p>
+  `},
+  { letter:'E', label:'Factor Ecológico / Medioambiental', color:'#3b6d11', content:`
+    <h4>¿Qué analiza?</h4>
+    <p>Considera el impacto medioambiental de la actividad empresarial y la creciente presión social, legal y gubernamental para adoptar prácticas sostenibles.</p>
+    <h4>Aspectos clave</h4>
+    <ul>
+      <li>Legislación medioambiental y límites de emisiones de CO₂.</li>
+      <li>Cambio climático y sus efectos en la cadena de suministro.</li>
+      <li>Gestión de residuos y economía circular.</li>
+      <li>Demanda creciente de productos ecológicos y sostenibles.</li>
+      <li>Energías renovables y eficiencia energética.</li>
+      <li>Huella de carbono y etiquetado ecológico.</li>
+      <li>Responsabilidad Social Empresarial (RSE) como ventaja competitiva.</li>
+    </ul>
+    <h4>Importancia para el marketing</h4>
+    <p>El consumidor actual valora la sostenibilidad. Una mala imagen medioambiental daña la reputación; al contrario, el marketing verde puede ser un factor diferenciador potente.</p>
+  `},
+  { letter:'L', label:'Factor Legal', color:'#854f0b', content:`
+    <h4>¿Qué analiza?</h4>
+    <p>Examina el marco jurídico que regula la actividad comercial, publicitaria y empresarial. Es diferente del factor político (que estudia la influencia del gobierno en general) porque se centra en la legislación vigente.</p>
+    <h4>Aspectos clave</h4>
+    <ul>
+      <li>Ley de Defensa de la Competencia: prohíbe acuerdos colusorios y abusos.</li>
+      <li>Normativa de protección al consumidor (LGDCU en España).</li>
+      <li>Reglamento General de Protección de Datos (RGPD): impacto en email marketing, cookies, datos de clientes.</li>
+      <li>Legislación sobre publicidad engañosa y comparativa.</li>
+      <li>Propiedad intelectual e industrial: marcas, patentes, derechos de autor.</li>
+      <li>Normativa de comercio electrónico (Ley de Servicios de la Sociedad de la Información).</li>
+      <li>Regulación de precios en sectores estratégicos.</li>
+    </ul>
+    <h4>Importancia para el marketing</h4>
+    <p>El incumplimiento legal acarrea sanciones económicas y reputacionales graves. El departamento de marketing debe conocer la normativa publicitaria y de protección de datos para actuar dentro de la legalidad.</p>
+  `}
+];
+
+const pestelEl = document.getElementById('pestel-accordion');
+pestelData.forEach((d,i) => {
+  pestelEl.innerHTML += `
+  <div class="pestel-item">
+    <div class="pestel-header" onclick="toggleAccordion('pestel-body-${i}',this)">
+      <span class="pestel-badge" style="background:${d.color}">${d.letter}</span>
+      <span>${d.label}</span>
+      <span class="pestel-arrow">▼</span>
+    </div>
+    <div class="pestel-body" id="pestel-body-${i}">${d.content}</div>
+  </div>`;
+});
+
+function toggleAccordion(id, header){
+  const body = document.getElementById(id);
+  body.classList.toggle('open');
+  header.classList.toggle('open');
+}
+
+/* PC COMPONENTES PESTEL INTERACTIVO */
+const pccPestel = [
+  { letter:'P', label:'Político', color:'#533ab7', text:`<span class="pcc-label">PC Componentes · Factor Político</span><br><strong>Oportunidad:</strong> los fondos Next Generation EU y las ayudas a la digitalización han impulsado la demanda de tecnología en empresas y administraciones públicas, beneficiando directamente a PC Componentes.<br><strong>Amenaza:</strong> tensiones geopolíticas entre EEUU y China afectan a los aranceles sobre semiconductores y componentes electrónicos, encareciendo el stock de productos clave.` },
+  { letter:'E', label:'Económico', color:'#0f6e56', text:`<span class="pcc-label">PC Componentes · Factor Económico</span><br><strong>Oportunidad:</strong> el auge del teletrabajo y la educación online generó un pico histórico de demanda de portátiles y periféricos en 2020-2022, disparando las ventas.<br><strong>Amenaza:</strong> la inflación de 2022-2023 encareció los costes logísticos y de almacenamiento, y redujo el poder adquisitivo de los hogares, presionando los márgenes.` },
+  { letter:'S', label:'Sociocultural', color:'#993556', text:`<span class="pcc-label">PC Componentes · Factor Sociocultural</span><br><strong>Oportunidad:</strong> el crecimiento de la cultura gamer y el auge del PC gaming entre jóvenes de 16-35 años ha creado un segmento de alto valor dispuesto a pagar por componentes premium (tarjetas gráficas RTX, monitores 4K...).<br><strong>Oportunidad:</strong> el consumidor valora cada vez más las reseñas de usuarios y la comunidad online, donde PC Componentes tiene una reputación muy sólida.` },
+  { letter:'T', label:'Tecnológico', color:'#185fa5', text:`<span class="pcc-label">PC Componentes · Factor Tecnológico</span><br><strong>Oportunidad:</strong> PC Componentes fue pionera en el e-commerce tecnológico en España y ha desarrollado una app móvil y un sistema de recomendaciones avanzado que fideliza al cliente.<br><strong>Amenaza:</strong> la irrupción de Amazon y AliExpress con precios muy agresivos y logística ultrarrápida representa un reto tecnológico y logístico constante.` },
+  { letter:'E', label:'Ecológico', color:'#3b6d11', text:`<span class="pcc-label">PC Componentes · Factor Ecológico</span><br><strong>Oportunidad:</strong> PC Componentes ha apostado por la gestión responsable de residuos electrónicos (RAEE) y ofrece servicios de recogida de equipos usados, mejorando su imagen de marca.<br><strong>Amenaza:</strong> la normativa de eficiencia energética de la UE encarece el diseño de productos y obliga a los fabricantes (y distribuidores) a adaptar continuamente su catálogo.` },
+  { letter:'L', label:'Legal', color:'#854f0b', text:`<span class="pcc-label">PC Componentes · Factor Legal</span><br><strong>Oportunidad:</strong> la aprobación de la <em>Ley del Mercado Digital</em> europea (DMA) puede limitar el abuso de posición dominante de grandes plataformas como Amazon, lo que favorece a competidores como PC Componentes.<br><strong>Amenaza:</strong> el RGPD impone estrictos requisitos en el uso de datos para campañas de email marketing y publicidad personalizada, lo que exige mayor inversión en cumplimiento normativo.` }
+];
+
+const pccBtnsEl = document.getElementById('pcc-btns');
+pccPestel.forEach((p,i) => {
+  const btn = document.createElement('button');
+  btn.textContent = p.letter + ' · ' + p.label;
+  btn.style.cssText = `background:${p.color};color:white;border:none;padding:0.5rem 1rem;border-radius:20px;cursor:pointer;font-size:0.82rem;font-weight:600;transition:opacity .2s`;
+  btn.onmouseenter = () => btn.style.opacity='0.8';
+  btn.onmouseleave = () => btn.style.opacity='1';
+  btn.onclick = () => {
+    document.querySelectorAll('#pcc-btns button').forEach(b=>b.style.outline='none');
+    btn.style.outline = '3px solid #1a0f3d';
+    const box = document.getElementById('pcc-detail-box');
+    box.style.display='block';
+    box.innerHTML = p.text;
+  };
+  pccBtnsEl.appendChild(btn);
+});
+
+/* ===== PORTER DATA ===== */
+const porterData = [
+  { id:'nuevos', label:'🚪 Amenaza de nuevos entrantes', pos:'tl',
+    detail:`<h4>🚪 Amenaza de nuevos entrantes</h4>
+    <p>Esta fuerza mide la facilidad con la que nuevas empresas pueden entrar a competir en el sector. Si las <strong>barreras de entrada</strong> son altas, la amenaza es baja y el sector resulta más atractivo para los competidores actuales.</p>
+    <p><strong>Principales barreras de entrada:</strong></p>
+    <ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem">
+      <li>Economías de escala: las empresas grandes producen más barato.</li>
+      <li>Diferenciación de producto: fidelidad de los clientes existentes.</li>
+      <li>Requisitos de capital: inversión inicial elevada.</li>
+      <li>Acceso a canales de distribución.</li>
+      <li>Política gubernamental y licencias.</li>
+      <li>Ventajas en costes independientes de la escala (patentes, know-how).</li>
+    </ul>`
+  },
+  { id:'sustitutos', label:'🔄 Amenaza de productos sustitutivos', pos:'tc',
+    detail:`<h4>🔄 Amenaza de productos sustitutivos</h4>
+    <p>Los <strong>productos sustitutivos</strong> son aquellos que, perteneciendo a otro sector, satisfacen la misma necesidad del cliente. Su presencia limita el precio máximo que el sector puede cobrar.</p>
+    <p><strong>Factores que aumentan esta amenaza:</strong></p>
+    <ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem">
+      <li>Bajo coste de cambio para el cliente (switching cost).</li>
+      <li>El sustitutivo ofrece mejor relación calidad-precio.</li>
+      <li>Alta rentabilidad del sector sustitutivo incentiva la innovación.</li>
+      <li>Ejemplo clásico: el tren de alta velocidad como sustituto del avión.</li>
+      <li>Ejemplo digital: el streaming como sustituto del DVD.</li>
+    </ul>`
+  },
+  { id:'proveedores', label:'📦 Poder de negociación de los proveedores', pos:'tr',
+    detail:`<h4>📦 Poder negociador de los proveedores</h4>
+    <p>Cuando los proveedores tienen mucho poder, pueden <strong>imponer condiciones</strong> desfavorables: subir precios, reducir calidad o alargar plazos de entrega, dañando la rentabilidad del sector comprador.</p>
+    <p><strong>El poder del proveedor es alto cuando:</strong></p>
+    <ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem">
+      <li>Hay pocos proveedores de un insumo clave.</li>
+      <li>El coste de cambiar de proveedor es muy elevado.</li>
+      <li>El proveedor puede integrarse hacia delante (vender directamente al cliente final).</li>
+      <li>El producto del proveedor es único o muy diferenciado.</li>
+      <li>El sector comprador no representa un cliente importante para el proveedor.</li>
+    </ul>`
+  },
+  { id:'compradores', label:'🛒 Poder de negociación de los clientes', pos:'bl',
+    detail:`<h4>🛒 Poder negociador de los clientes</h4>
+    <p>Los clientes con alto poder de negociación pueden <strong>forzar bajadas de precio</strong>, exigir mayor calidad o mejores condiciones de servicio, reduciendo el margen del sector.</p>
+    <p><strong>El poder del comprador es alto cuando:</strong></p>
+    <ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem">
+      <li>Pocos compradores adquieren grandes volúmenes.</li>
+      <li>Los productos del sector son estandarizados (poco diferenciados).</li>
+      <li>El coste de cambiar de proveedor es bajo para el comprador.</li>
+      <li>El comprador dispone de información completa sobre precios y costes.</li>
+      <li>El comprador podría integrarse hacia atrás (fabricar él mismo el producto).</li>
+    </ul>`
+  },
+  { id:'rivalidad', label:'⚔️ Rivalidad entre competidores existentes', pos:'center',
+    detail:`<h4>⚔️ Rivalidad entre competidores existentes</h4>
+    <p>Es la <strong>fuerza central</strong> del modelo. Mide la intensidad de la competencia entre las empresas que ya operan en el sector. Una competencia muy intensa provoca guerras de precios, saturación publicitaria y reducción de márgenes.</p>
+    <p><strong>Factores que intensifican la rivalidad:</strong></p>
+    <ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem">
+      <li>Muchos competidores de tamaño similar.</li>
+      <li>Crecimiento lento del sector: las empresas luchan por cuota de mercado.</li>
+      <li>Costes fijos elevados (obligan a producir mucho para cubrir costes).</li>
+      <li>Baja diferenciación: el cliente percibe los productos como similares.</li>
+      <li>Altas barreras de salida: difícil abandonar el sector.</li>
+    </ul>`
+  },
+  { id:'distribucion', label:'🚚 Distribuidores e intermediarios', pos:'br',
+    detail:`<h4>🚚 Distribuidores e intermediarios</h4>
+    <p>Los <strong>distribuidores</strong> actúan como intermediarios entre el fabricante y el cliente final. Su poder varía según su concentración y su capacidad para prescindir del fabricante.</p>
+    <p><strong>El poder del distribuidor aumenta cuando:</strong></p>
+    <ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem">
+      <li>Hay pocas grandes cadenas de distribución (hipermercados, plataformas).</li>
+      <li>El distribuidor puede crear su propia marca blanca.</li>
+      <li>El fabricante depende del distribuidor para llegar al cliente.</li>
+      <li>El canal de distribución tiene gran influencia sobre la decisión de compra.</li>
+      <li>El e-commerce ha revolucionado el poder de los distribuidores digitales (Amazon).</li>
+    </ul>`
+  }
+];
+
+const posMap = { tl:[1,1], tc:[2,1], tr:[3,1], bl:[1,3], center:[2,2], br:[3,3] };
+const porterGrid = document.getElementById('porter-grid');
+porterData.forEach(p => {
+  const [col,row] = posMap[p.pos];
+  const isCenter = p.pos === 'center';
+  const div = document.createElement('div');
+  div.className = 'porter-card' + (isCenter?' center':'');
+  div.style.cssText = `grid-column:${col};grid-row:${row}`;
+  div.innerHTML = `<h4>${p.label}</h4><p style="font-size:0.72rem;color:${isCenter?'rgba(255,255,255,0.7)':'var(--text2)'}">Clic para ampliar</p>`;
+  div.onclick = () => {
+    const det = document.getElementById('porter-detail');
+    det.innerHTML = p.detail;
+    det.classList.add('show');
+    document.querySelectorAll('.porter-card').forEach(c=>c.classList.remove('active'));
+    div.classList.add('active');
+  };
+  porterGrid.appendChild(div);
+});
+
+/* PORTER PCC ACCORDION */
+const porterPCC = [
+  { label:'🚪 Amenaza de nuevos entrantes — PC Componentes', content:`<strong>Valoración: MEDIA-BAJA</strong><br>La gran inversión necesaria en logística, almacenes y tecnología de e-commerce supone una barrera importante. Además, PC Componentes ha construido una marca con enorme reputación durante más de 20 años, muy difícil de replicar. Sin embargo, gigantes internacionales como Amazon ya están en el mercado.` },
+  { label:'🔄 Amenaza de sustitutivos — PC Componentes', content:`<strong>Valoración: BAJA</strong><br>La tecnología informática no tiene sustitutos directos: un servidor, una GPU o un SSD no pueden ser reemplazados por otro tipo de producto. No obstante, el auge de la nube (cloud computing) podría reducir a largo plazo la necesidad de hardware local en empresas.` },
+  { label:'📦 Poder de los proveedores — PC Componentes', content:`<strong>Valoración: ALTA</strong><br>PC Componentes depende de fabricantes como Intel, AMD, NVIDIA, Samsung o Asus. Estos gigantes tecnológicos tienen un enorme poder de fijación de precios y de asignación de stock. Durante la escasez de chips de 2020-2022, PC Componentes sufrió roturas de stock y disparada de precios que no podía controlar.` },
+  { label:'🛒 Poder de los clientes — PC Componentes', content:`<strong>Valoración: MEDIA</strong><br>El cliente individual tiene bajo poder de negociación (compra poca cantidad). Sin embargo, el cliente tiene mucha información gracias a comparadores de precios, foros y reseñas online, lo que le permite comparar fácilmente y cambiar de tienda con un solo clic. Esto obliga a PC Componentes a ser muy competitiva en precio y servicio.` },
+  { label:'⚔️ Rivalidad del sector — PC Componentes', content:`<strong>Valoración: ALTA</strong><br>PC Componentes compite directamente con Amazon, MediaMarkt, El Corte Inglés Online, Coolmod, Alternate y numerosas tiendas especializadas. La rivalidad es intensa porque los productos son muy comparables y el cliente decide principalmente por precio, disponibilidad y rapidez de entrega.` },
+  { label:'🚚 Distribuidores — PC Componentes', content:`<strong>Valoración: BAJA (es su fortaleza)</strong><br>PC Componentes actúa como distribuidor final directamente al consumidor, controlando su propio canal de venta online y sus almacenes en Murcia. Esto elimina intermediarios y le permite tener mejores márgenes y mayor control sobre la experiencia del cliente.` }
+];
+
+const ppAcc = document.getElementById('porter-pcc-accordion');
+porterPCC.forEach((p,i) => {
+  ppAcc.innerHTML += `
+  <div class="pestel-item">
+    <div class="pestel-header" onclick="toggleAccordion('ppcc-${i}',this)">
+      <span>${p.label}</span><span class="pestel-arrow">▼</span>
+    </div>
+    <div class="pestel-body" id="ppcc-${i}" style="font-size:0.87rem;line-height:1.8">${p.content}</div>
+  </div>`;
+});
+
+/* MERCADO ACCORDION */
+const marketCriteria = [
+  { title:'Por el tipo de comprador o demandante', items:[
+    '<strong>Mercado de consumo:</strong> compran particulares para uso personal (supermercado, ropa, tecnología).',
+    '<strong>Mercado industrial o B2B:</strong> empresas que compran para producir otros bienes o servicios.',
+    '<strong>Mercado de revendedores:</strong> mayoristas y minoristas que compran para vender.',
+    '<strong>Mercado institucional o gubernamental:</strong> administraciones públicas (hospitales, ayuntamientos).',
+    '<strong>Mercado internacional:</strong> compradores de otros países.'
+  ]},
+  { title:'Por el ámbito geográfico', items:[
+    '<strong>Local:</strong> municipio o comarca (panadería del barrio).',
+    '<strong>Regional:</strong> comunidad autónoma (Región de Murcia).',
+    '<strong>Nacional:</strong> todo el territorio español.',
+    '<strong>Internacional:</strong> varios países.',
+    '<strong>Global o mundial:</strong> presencia en todo el mundo (Coca-Cola, Apple).'
+  ]},
+  { title:'Por el tipo de producto o servicio', items:[
+    '<strong>Mercado de bienes físicos:</strong> productos tangibles (coches, alimentos).',
+    '<strong>Mercado de servicios:</strong> intangibles (banca, seguros, hostelería).',
+    '<strong>Mercado de ideas y derechos:</strong> patentes, licencias, derechos de autor.',
+    '<strong>Mercado de capitales:</strong> acciones, bonos, divisas.'
+  ]},
+  { title:'Por el nivel de competencia existente', items:[
+    '<strong>Competencia perfecta:</strong> muchos compradores y vendedores, producto homogéneo, ninguno fija el precio (mercados agrícolas).',
+    '<strong>Competencia monopolística:</strong> muchos competidores con productos diferenciados (restaurantes, ropa).',
+    '<strong>Oligopolio:</strong> pocos vendedores con gran poder de mercado (telefonía, automóviles, banca).',
+    '<strong>Monopolio:</strong> un único vendedor que fija el precio (históricamente RTVE, Correos).'
+  ]},
+  { title:'Por la naturaleza de la demanda', items:[
+    '<strong>Mercado de demanda elástica:</strong> el consumidor es sensible al precio (electrónica de consumo).',
+    '<strong>Mercado de demanda inelástica:</strong> el precio no altera apenas la cantidad demandada (medicamentos, tabaco).',
+    '<strong>Mercado estacional:</strong> demanda concentrada en épocas del año (turismo, juguetes en Navidad).',
+    '<strong>Mercado permanente:</strong> demanda constante a lo largo del año (alimentación básica).'
+  ]},
+  { title:'Por el grado de novedad del producto', items:[
+    '<strong>Mercado de productos nuevos:</strong> innovaciones que crean su propia demanda (primer iPhone en 2007).',
+    '<strong>Mercado de productos maduros:</strong> mercados consolidados con crecimiento lento (refrescos, detergentes).',
+    '<strong>Mercado de productos en declive:</strong> demanda en retroceso (reproductores de DVD, fax).'
+  ]}
+];
+
+const macc = document.getElementById('market-accordion');
+marketCriteria.forEach((m,i) => {
+  macc.innerHTML += `
+  <div class="pestel-item">
+    <div class="pestel-header" onclick="toggleAccordion('macc-${i}',this)">
+      <span>${m.title}</span><span class="pestel-arrow">▼</span>
+    </div>
+    <div class="pestel-body" id="macc-${i}">
+      <ul style="padding-left:1rem;line-height:1.9">${m.items.map(x=>`<li>${x}</li>`).join('')}</ul>
+    </div>
+  </div>`;
+});
+
+/* ===== AHORCADO — PALABRAS MÁS DIFÍCILES ===== */
+const words = [
+  { word:'MACROENTORNO', hint:'Conjunto de factores externos lejanos a la empresa (PESTEL)' },
+  { word:'OLIGOPOLIO', hint:'Estructura de mercado con pocos vendedores y alta concentración' },
+  { word:'COMPETITIVIDAD', hint:'Capacidad de una empresa para mantener ventajas sobre sus rivales' },
+  { word:'DISTRIBUCION', hint:'Variable de las 4Ps que gestiona cómo llega el producto al cliente' },
+  { word:'SUMINISTRADOR', hint:'Empresa que proporciona insumos o materias primas a otra empresa' },
+  { word:'INSTITUCIONES', hint:'Organismos que regulan la actividad comercial (CNMC, OMC...)' },
+  { word:'SEGMENTACION', hint:'Proceso de dividir el mercado en grupos con características comunes' },
+  { word:'INTERNACIONALIZACION', hint:'Proceso de expansión de una empresa a mercados extranjeros' },
+  { word:'MICROENTORNO', hint:'Factores del entorno cercano a la empresa (Porter)' },
+  { word:'MONOPOLIO', hint:'Estructura de mercado con un único vendedor que fija el precio' },
+  { word:'DIFERENCIACION', hint:'Estrategia de hacer que el producto sea percibido como único' },
+  { word:'RIVALIDAD', hint:'Fuerza central del modelo de Porter: competencia entre empresas del sector' },
+  { word:'POSICIONAMIENTO', hint:'Lugar que ocupa un producto en la mente del consumidor respecto a la competencia' },
+  { word:'INELASTICIDAD', hint:'Propiedad de una demanda que no varía significativamente con el precio' },
+];
+
+let hState = {};
+function openAhorcado(){ openModal('modal-ahorcado'); startHangman(); }
+function startHangman(){
+  const e = words[Math.floor(Math.random()*words.length)];
+  hState = { word:e.word, hint:e.hint, guessed:[], wrong:0, maxWrong:7 };
+  renderHangman();
+}
+function renderHangman(){
+  const {word,hint,guessed,wrong,maxWrong} = hState;
+  const won = word.split('').every(l=>l===' '||guessed.includes(l));
+  const lost = wrong >= maxWrong;
+  const parts = [
+    wrong>0?`<line x1="80" y1="130" x2="130" y2="130" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/>`:null,
+    wrong>1?`<line x1="100" y1="130" x2="100" y2="10" stroke="var(--text)" stroke-width="2.5" stroke-linecap="round"/>`:null,
+    wrong>2?`<line x1="100" y1="10" x2="140" y2="10" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>`:null,
+    wrong>3?`<line x1="140" y1="10" x2="140" y2="28" stroke="var(--text)" stroke-width="1.5" stroke-dasharray="4,3"/>`:null,
+    wrong>4?`<circle cx="140" cy="38" r="10" stroke="var(--text)" stroke-width="2" fill="none"/>`:null,
+    wrong>5?`<line x1="140" y1="48" x2="140" y2="82" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/><line x1="140" y1="58" x2="122" y2="72" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/><line x1="140" y1="58" x2="158" y2="72" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>`:null,
+    wrong>6?`<line x1="140" y1="82" x2="124" y2="105" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/><line x1="140" y1="82" x2="156" y2="105" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>`:null
+  ].filter(Boolean).join('');
+
+  let html = `<div class="hint-text">💡 Pista: ${hint}</div>
+  <svg class="hangman-drawing" width="200" height="140" viewBox="0 0 200 140"><rect x="0" y="125" width="200" height="5" rx="2" fill="var(--border)"/>${parts}</svg>
+  <div class="hangman-word">${word.split('').map(l=>l===' '?'<div style="width:16px"></div>':`<div class="letter-box">${guessed.includes(l)?l:''}</div>`).join('')}</div>
+  <div class="hangman-status" style="color:${won?'#3b6d11':lost?'#a32d2d':'var(--text2)'}">
+    ${won?'🎉 ¡Correcto! La palabra era: '+word:lost?'❌ Game over. Era: '+word:'Errores: '+wrong+'/'+maxWrong+' · Restantes: '+(maxWrong-wrong)}
+  </div>
+  ${won||lost?`<button class="play-again" onclick="startHangman()">Jugar de nuevo</button>`:''}
+  <div class="hangman-keys">
+    ${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l=>{
+      const isG=guessed.includes(l);
+      const cls=isG?(word.includes(l)?'right':'wrong'):'';
+      return `<button class="key-btn ${cls}" ${isG||won||lost?'disabled':''} onclick="guessLetter('${l}')">${l}</button>`;
+    }).join('')}
+  </div>`;
+  document.getElementById('hangman-content').innerHTML = html;
+}
+function guessLetter(l){
+  if(hState.guessed.includes(l)) return;
+  hState.guessed.push(l);
+  if(!hState.word.includes(l)) hState.wrong++;
+  renderHangman();
+}
+
+/* ===== SOPA DE LETRAS ===== */
+const sopaWords = ['PESTEL','PORTER','MERCADO','MONOPOLIO','DEMANDA','PRECIO','PRODUCTO','ENTORNO','SECTOR','MARCA','COMPETENCIA','OFERTA'];
+let sopaState = {};
+function openSopa(){ openModal('modal-sopa'); buildSopa(); }
+function buildSopa(){
+  const SIZE=13, grid=Array.from({length:SIZE},()=>Array(SIZE).fill(''));
+  const placed=[], dirs=[[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
+  [...sopaWords].sort(()=>Math.random()-0.5).forEach(word=>{
+    let tries=0,ok=false;
+    while(!ok&&tries<200){
+      tries++;
+      const dir=dirs[Math.floor(Math.random()*dirs.length)];
+      const r=Math.floor(Math.random()*SIZE),c=Math.floor(Math.random()*SIZE);
+      let cells=[];
+      for(let i=0;i<word.length;i++){
+        const nr=r+dir[0]*i,nc=c+dir[1]*i;
+        if(nr<0||nr>=SIZE||nc<0||nc>=SIZE) break;
+        if(grid[nr][nc]&&grid[nr][nc]!==word[i]) break;
+        cells.push([nr,nc]);
+      }
+      if(cells.length===word.length){ cells.forEach(([nr,nc],i)=>grid[nr][nc]=word[i]); placed.push({word,cells}); ok=true; }
+    }
+  });
+  const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!grid[r][c]) grid[r][c]=alpha[Math.floor(Math.random()*alpha.length)];
+  sopaState={SIZE,grid,placed,found:[],selecting:[],mouseDown:false};
+  renderSopa();
+}
+function renderSopa(){
+  const {SIZE,grid,placed,found}=sopaState;
+  const allCells={};
+  placed.forEach(p=>{ if(found.includes(p.word)) p.cells.forEach(([r,c])=>allCells[r+','+c]='found'); });
+  sopaState.selecting.forEach(([r,c])=>{ if(!allCells[r+','+c]) allCells[r+','+c]='selected'; });
+  let html=`<div class="sopa-center"><div class="grid-sopa" style="grid-template-columns:repeat(${SIZE},26px)">`;
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++){
+    const cls=allCells[r+','+c]||'';
+    html+=`<div class="sopa-cell ${cls}" onmousedown="startSel(${r},${c})" onmousemove="moveSel(${r},${c})" onmouseup="endSel()">${grid[r][c]}</div>`;
+  }
+  html+=`</div><div class="sopa-words">`;
+  sopaWords.forEach(w=>{ html+=`<span class="sopa-word ${found.includes(w)?'found':''}">${w}</span>`; });
+  html+=`</div>`;
+  if(found.length===sopaWords.length) html+=`<div style="text-align:center;margin-top:1rem;font-weight:700;color:#3b6d11">🎉 ¡Todas las palabras encontradas!</div><button class="play-again" onclick="buildSopa()">Jugar otra vez</button>`;
+  html+=`</div>`;
+  document.getElementById('sopa-content').innerHTML=html;
+  document.getElementById('sopa-content').onmouseleave=()=>{ sopaState.mouseDown=false; sopaState.selecting=[]; renderSopa(); };
+}
+function startSel(r,c){ sopaState.mouseDown=true; sopaState.startCell=[r,c]; sopaState.selecting=[[r,c]]; renderSopa(); }
+function moveSel(r,c){
+  if(!sopaState.mouseDown) return;
+  const [sr,sc]=sopaState.startCell, dr=r-sr, dc=c-sc;
+  const len=Math.max(Math.abs(dr),Math.abs(dc));
+  if(len===0){ sopaState.selecting=[[sr,sc]]; renderSopa(); return; }
+  let dR=0,dC=0;
+  if(Math.abs(dr)>=Math.abs(dc)) dR=dr>0?1:-1;
+  if(Math.abs(dc)>=Math.abs(dr)) dC=dc>0?1:-1;
+  sopaState.selecting=[];
+  for(let i=0;i<=len;i++) sopaState.selecting.push([sr+dR*i,sc+dC*i]);
+  renderSopa();
+}
+function endSel(){
+  sopaState.mouseDown=false;
+  const sel=sopaState.selecting, {grid,placed,found}=sopaState;
+  if(sel.length<2){ sopaState.selecting=[]; renderSopa(); return; }
+  const str=sel.map(([r,c])=>grid[r][c]).join('');
+  const hit=placed.find(p=>p.word===str||p.word===str.split('').reverse().join(''));
+  if(hit&&!found.includes(hit.word)) sopaState.found.push(hit.word);
+  sopaState.selecting=[]; renderSopa();
+}
+
+/* ===== QUIZ — 15 PREGUNTAS ===== */
+const quizQuestions=[
+  {q:"¿Qué significan las siglas del análisis PESTEL?",o:["Político, Económico, Social, Tecnológico, Ecológico y Legal","Precio, Empresa, Sector, Técnica, Estadística y Logística","Planificación, Estrategia, Segmentación, Targeting, Entorno y Logística"],a:0},
+  {q:"Las 4Ps del Marketing Mix hacen referencia a...",o:["Producto, Precio, Distribución (Place) y Promoción","Público, Posicionamiento, Precio y Publicidad","Planificación, Producción, Precio y Promoción"],a:0},
+  {q:"El análisis PESTEL estudia el macroentorno. ¿Cuál de los siguientes factores NO pertenece al PESTEL?",o:["La tasa de inflación del país","El poder negociador de los proveedores","La legislación sobre protección de datos"],a:1},
+  {q:"Si en un mercado hay un único vendedor que controla el precio y no tiene competencia, estamos ante...",o:["Un oligopolio","Una competencia monopolística","Un monopolio"],a:2},
+  {q:"¿Cuál de las siguientes es una de las 5 Fuerzas de Porter?",o:["La tasa de desempleo del país","La amenaza de productos sustitutivos","La política fiscal del gobierno"],a:1},
+  {q:"El RGPD es especialmente relevante para el marketing porque...",o:["Regula los precios máximos de los productos en la UE","Establece normas sobre el uso de datos personales de los clientes","Prohíbe la publicidad comparativa entre marcas"],a:1},
+  {q:"¿Qué organismo español vela por la libre competencia en los mercados y puede sancionar prácticas colusorias?",o:["AEPD","OCU","CNMC"],a:2},
+  {q:"En el modelo de Porter, ¿cuál es la fuerza competitiva CENTRAL que aglutina a las demás?",o:["La amenaza de nuevos entrantes","La rivalidad entre los competidores existentes","El poder de los proveedores"],a:1},
+  {q:"Si la demanda de un producto no varía prácticamente aunque suba mucho su precio, decimos que es...",o:["Demanda elástica","Demanda inelástica","Demanda estacional"],a:1},
+  {q:"El 'mercado potencial' se refiere a...",o:["Los clientes que ya están comprando el producto hoy","Los consumidores que podrían llegar a comprar el producto en el futuro","El segmento al que la empresa dirige su publicidad"],a:1},
+  {q:"¿Cuál de las siguientes instituciones internacionales regula el comercio entre países a nivel global?",o:["CNMC","OMC (Organización Mundial del Comercio)","AEPD"],a:1},
+  {q:"El 'poder de negociación de los proveedores' es ALTO cuando...",o:["Hay muchos proveedores que compiten entre sí","El proveedor vende un insumo único y difícil de sustituir","El cliente compra grandes volúmenes con frecuencia"],a:1},
+  {q:"La empresa PC Componentes de Molina de Segura (Murcia) opera principalmente en...",o:["El mercado de servicios financieros","El mercado de tecnología e informática online (e-commerce)","El mercado de distribución alimentaria"],a:1},
+  {q:"¿Qué tipo de mercado existiría si cuatro empresas de telefonía móvil controlaran el 90% del mercado español?",o:["Competencia perfecta","Monopolio","Oligopolio"],a:2},
+  {q:"El factor 'Ecológico' del análisis PESTEL incluye...",o:["El tipo de interés del Banco Central Europeo","La normativa medioambiental y la presión social hacia la sostenibilidad","El nivel de desempleo juvenil del país"],a:1}
+];
+
+let userAnswers=[];
+function openQuiz(){ openModal('modal-quiz'); userAnswers=Array(quizQuestions.length).fill(null); renderQuiz(); }
+function renderQuiz(){
+  let html=`<div style="display:flex;flex-direction:column;gap:1rem;">`;
+  quizQuestions.forEach((q,qi)=>{
+    html+=`<div><p class="quiz-q">${qi+1}. ${q.q}</p><div class="quiz-options">`;
+    q.o.forEach((opt,oi)=>{
+      html+=`<button class="quiz-opt ${userAnswers[qi]===oi?'selected':''}" onclick="selectQuizOpt(${qi},${oi})">${opt}</button>`;
+    });
+    html+=`</div></div>`;
+  });
+  const allDone=userAnswers.every(a=>a!==null);
+  if(allDone){
+    let score=0; userAnswers.forEach((ans,i)=>{ if(ans===quizQuestions[i].a) score++; });
+    const nota=(score/quizQuestions.length*10).toFixed(1);
+    const emoji=nota>=9?'🏆':nota>=7?'🎉':nota>=5?'👍':'💪';
+    html+=`<div class="quiz-result-box">${emoji} Resultado: ${score} / ${quizQuestions.length} correctas · Nota: ${nota}/10<br><small style="font-weight:400;font-size:0.82rem;margin-top:0.3rem;display:block">${nota>=5?'¡Aprobado! Sigue repasando.':'Vuelve a repasar los apuntes y vuelve a intentarlo.'}</small></div>`;
+  }
+  html+=`</div>`;
+  document.getElementById('quiz-content').innerHTML=html;
+}
+function selectQuizOpt(qi,oi){ userAnswers[qi]=oi; renderQuiz(); }
+</script>
+</body>
+</html>
