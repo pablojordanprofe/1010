@@ -269,33 +269,48 @@ header span { font-size:0.75rem; opacity:0.6; }
       <p style="margin-top:0.6rem;font-size:0.82rem;color:var(--text2)">👇 Haz clic en cada subsistema para ver su explicación detallada</p>
     </div>
 
-    <!-- DIAGRAMA INTERACTIVO -->
-    <div style="background:linear-gradient(135deg,#f0f9fc,#e8f4f8);border-radius:14px;padding:1.5rem;margin-bottom:1.2rem;border:1px solid #9fd3e8">
-      <div style="text-align:center;font-size:0.8rem;font-weight:700;color:var(--teal2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:1rem">Sistema de Información de Marketing — Haz clic para explorar</div>
-      <div class="sim-diagram">
-        <div class="sim-box" style="background:#0f6e8c;color:white" onclick="showSim(0,this)">
-          <h4 style="color:white">🧠 Sistema de Inteligencia</h4>
-          <p style="color:rgba(255,255,255,0.8)">Subsistema de inteligencia de marketing</p>
-        </div>
-        <div class="sim-box" style="background:#0a3d55;color:white" onclick="showSim(1,this)">
-          <h4 style="color:white">🗄️ Sistema de Registro</h4>
-          <p style="color:rgba(255,255,255,0.8)">Subsistema de datos internos</p>
-        </div>
-        <div class="sim-box" style="background:#0f6e56;color:white" onclick="showSim(2,this)">
-          <h4 style="color:white">🔬 Investigación Comercial</h4>
-          <p style="color:rgba(255,255,255,0.8)">Subsistema de inteligencia de marketing</p>
-        </div>
-        <div class="sim-box" style="background:#533ab7;color:white" onclick="showSim(3,this)">
-          <h4 style="color:white">📊 Sistema de Análisis</h4>
-          <p style="color:rgba(255,255,255,0.8)">Subsistema de apoyo a decisiones</p>
-        </div>
-      </div>
-      <div class="sim-detail" id="sim-detail"></div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.5rem;font-size:0.75rem;color:var(--teal2)">
-        <span>← Entorno (Macro y Microentorno)</span>
-        <span>Toma de decisiones →</span>
-      </div>
+   
+code
+<!-- DIAGRAMA FLUJO SIM — reemplaza el bloque anterior -->
+<div style="background:linear-gradient(135deg,#f0f9fc,#e8f4f8);border-radius:14px;padding:1.5rem;margin-bottom:1.2rem;border:1px solid #9fd3e8">
+  <div style="text-align:center;font-size:0.8rem;font-weight:700;color:var(--teal2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:1rem">Flujo de información en el SIM — Haz clic en cada subsistema para ver qué información recibe, procesa y genera</div>
+
+  <!-- FILA ENTRADAS -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.6rem;font-size:0.75rem;font-weight:600;color:var(--teal2)">
+    <span>⬅️ ENTORNO EXTERNO (Macro y Microentorno)</span>
+    <span>ENTORNO INTERNO ➡️</span>
+  </div>
+
+  <div class="sim-diagram">
+    <div class="sim-box" style="background:#0f6e8c;color:white" onclick="showSim(0,this)">
+      <div style="font-size:1.4rem;margin-bottom:0.3rem">🧠</div>
+      <h4 style="color:white">Sistema de Inteligencia</h4>
+      <p style="color:rgba(255,255,255,0.75);font-size:0.72rem;margin-top:0.2rem">Clic para ver el flujo</p>
     </div>
+    <div class="sim-box" style="background:#0a3d55;color:white" onclick="showSim(1,this)">
+      <div style="font-size:1.4rem;margin-bottom:0.3rem">🗄️</div>
+      <h4 style="color:white">Sistema de Registro</h4>
+      <p style="color:rgba(255,255,255,0.75);font-size:0.72rem;margin-top:0.2rem">Clic para ver el flujo</p>
+    </div>
+    <div class="sim-box" style="background:#0f6e56;color:white" onclick="showSim(2,this)">
+      <div style="font-size:1.4rem;margin-bottom:0.3rem">🔬</div>
+      <h4 style="color:white">Investigación Comercial</h4>
+      <p style="color:rgba(255,255,255,0.75);font-size:0.72rem;margin-top:0.2rem">Clic para ver el flujo</p>
+    </div>
+    <div class="sim-box" style="background:#533ab7;color:white" onclick="showSim(3,this)">
+      <div style="font-size:1.4rem;margin-bottom:0.3rem">📊</div>
+      <h4 style="color:white">Sistema de Análisis</h4>
+      <p style="color:rgba(255,255,255,0.75);font-size:0.72rem;margin-top:0.2rem">Clic para ver el flujo</p>
+    </div>
+  </div>
+
+  <div class="sim-detail" id="sim-detail"></div>
+
+  <!-- FLECHA SALIDA -->
+  <div style="text-align:center;margin-top:0.8rem;font-size:0.78rem;font-weight:600;color:var(--teal2)">
+    ⬇️ TOMA DE DECISIONES DE MARKETING: Planificación · Ejecución · Control de resultados
+  </div>
+</div>
 
     <div id="sim-acc"></div>
   </div>
@@ -472,12 +487,99 @@ tiposInfo.forEach((t,i)=>{
 });
 
 /* SIM SUBSISTEMAS DETALLE */
+<script>
 const simDetails=[
-  {title:'🧠 Sistema de Inteligencia de Marketing',color:'#0f6e8c',badge:'Nacional · Externo',detail:`<p>Mantiene un <strong>flujo constante de información</strong> desde los diferentes ámbitos del macroentorno y microentorno hacia el SIM. A través de él, la empresa puede contar con información continua sobre:</p><ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem"><li>Cambios generados por los competidores.</li><li>Modificaciones de los gustos de los consumidores.</li><li>Aparición de nuevas tecnologías.</li><li>Cambios en las condiciones económicas y legales.</li><li>Información relativa a proveedores, competencia y grupos de interés.</li></ul><p style="margin-top:0.6rem"><strong>Características clave:</strong> Se centra en datos sobre fenómenos del entorno (fuentes externas). <strong>También lo tienen las empresas pequeñas.</strong></p>`},
-  {title:'🗄️ Sistema de Registro (Datos Internos)',color:'#0a3d55',badge:'Interno · Básico',detail:`<p>Recoge datos que se generan como consecuencia de la <strong>actividad principal de la empresa</strong>: datos de ventas, accesos a servidores, pedidos, cantidades y costes de producción. Para obtenerlos, el SIM debe estar conectado a:</p><ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem"><li>La estructura contable de la organización.</li><li>Los sistemas CRM (gestión de clientes).</li><li>El registro de actividad de servidores.</li></ul><p style="margin-top:0.6rem"><strong>Características clave:</strong> Es el sistema más básico. Incluye datos sobre pedidos, precios, ventas, pagos y deudas con proveedores. <strong>Lo tienen todas las empresas, incluso las pequeñas.</strong></p>`},
-  {title:'🔬 Sistema de Investigación Comercial',color:'#0f6e56',badge:'Externo · Específico',detail:`<p>Pone en marcha <strong>investigaciones específicas</strong> cuando la información disponible no es suficiente para cumplir con los objetivos del SIM. Debe disponer de los recursos necesarios para, por ejemplo, poner en marcha una encuesta a clientes actuales o potenciales.</p><ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem"><li>Formado por procedimientos de diseño, recogida y análisis de datos.</li><li>Orientado a la resolución de un problema específico de marketing.</li><li>Las empresas pequeñas suelen <strong>subcontratarlo</strong> a empresas especializadas.</li></ul><p style="margin-top:0.6rem"><strong>Ayuda a tomar decisiones</strong> sobre temas concretos cuando los otros subsistemas no son suficientes.</p>`},
-  {title:'📊 Sistema de Análisis (Apoyo a Decisiones)',color:'#533ab7',badge:'Analítico · Avanzado',detail:`<p>Examina todos los datos de los otros tres sistemas y los pone a disposición de los responsables de forma <strong>óptima, entendible y manejable</strong>. Utiliza software capaz de realizar:</p><ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem"><li>Análisis estadísticos univariables y multivariables.</li><li>Sistemas de modelización para identificar las mejores alternativas de decisión.</li><li>Técnicas matemáticas y econométricas para prever proyectos futuros.</li></ul><p style="margin-top:0.6rem"><strong>Sistemas expertos:</strong> son capaces de aprender de sus propias decisiones mediante Inteligencia Artificial. Es el sistema más complejo y sofisticado del SIM.</p>`}
+  {
+    title:'🧠 Sistema de Inteligencia — Flujo de información',
+    color:'#0f6e8c',
+    detail:`
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-top:0.5rem">
+        <div style="background:#d4eef6;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e8c">
+          <div style="font-size:0.72rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">📥 Qué recibe</div>
+          <p style="font-size:0.8rem;color:#042c53;line-height:1.5">Información del <strong>macroentorno</strong> (PESTEL) y <strong>microentorno</strong>: noticias del sector, movimientos de la competencia, cambios en gustos del consumidor, nuevas tecnologías, cambios legales.</p>
+        </div>
+        <div style="background:#e8f4f8;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e8c">
+          <div style="font-size:0.72rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">⚙️ Qué procesa</div>
+          <p style="font-size:0.8rem;color:#042c53;line-height:1.5">Filtra, clasifica y organiza la información externa en un <strong>flujo continuo y estructurado</strong>. Detecta señales de amenazas u oportunidades en el entorno.</p>
+        </div>
+        <div style="background:#d4eef6;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e8c">
+          <div style="font-size:0.72rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">📤 Qué genera</div>
+          <p style="font-size:0.8rem;color:#042c53;line-height:1.5">Alertas tempranas sobre cambios del mercado, informes de vigilancia competitiva y resúmenes del entorno para alimentar al <strong>Sistema de Análisis</strong>.</p>
+        </div>
+      </div>
+      <div style="margin-top:0.8rem;background:#f0f9fc;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:#042c53">
+        <strong>💡 Ejemplo real:</strong> Un responsable de marketing de Zara monitoriza cada semana las tendencias en redes sociales, los lanzamientos de H&M y los cambios en aranceles textiles. Toda esa información alimenta su sistema de inteligencia.
+      </div>`
+  },
+  {
+    title:'🗄️ Sistema de Registro — Flujo de información',
+    color:'#0a3d55',
+    detail:`
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-top:0.5rem">
+        <div style="background:#dbeafe;border-radius:8px;padding:0.8rem;border-left:3px solid #0a3d55">
+          <div style="font-size:0.72rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">📥 Qué recibe</div>
+          <p style="font-size:0.8rem;color:#042c53;line-height:1.5">Datos generados por la actividad diaria: <strong>pedidos, facturas, devoluciones, niveles de stock, datos del CRM, historial de ventas por producto, zona y cliente.</strong></p>
+        </div>
+        <div style="background:#e8f1fb;border-radius:8px;padding:0.8rem;border-left:3px solid #0a3d55">
+          <div style="font-size:0.72rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">⚙️ Qué procesa</div>
+          <p style="font-size:0.8rem;color:#042c53;line-height:1.5">Organiza los datos según el <strong>ciclo pedido-envío-factura</strong>. Conecta la información de distintos departamentos: ventas, logística, contabilidad, atención al cliente.</p>
+        </div>
+        <div style="background:#dbeafe;border-radius:8px;padding:0.8rem;border-left:3px solid #0a3d55">
+          <div style="font-size:0.72rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">📤 Qué genera</div>
+          <p style="font-size:0.8rem;color:#042c53;line-height:1.5">Informes de ventas, control de inventario, detección de productos estrella o en declive, análisis de rentabilidad por segmento o región.</p>
+        </div>
+      </div>
+      <div style="margin-top:0.8rem;background:#eff6ff;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:#042c53">
+        <strong>💡 Ejemplo real:</strong> PC Componentes consulta a diario su sistema de registro para ver qué productos se están vendiendo más, cuáles tienen stock bajo y en qué regiones hay más demanda, ajustando así su publicidad online.
+      </div>`
+  },
+  {
+    title:'🔬 Investigación Comercial — Flujo de información',
+    color:'#0f6e56',
+    detail:`
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-top:0.5rem">
+        <div style="background:#dcfce7;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e56">
+          <div style="font-size:0.72rem;font-weight:700;color:#14532d;text-transform:uppercase;margin-bottom:0.3rem">📥 Qué recibe</div>
+          <p style="font-size:0.8rem;color:#14532d;line-height:1.5">Un <strong>problema o pregunta específica</strong> de marketing que los otros subsistemas no pueden resolver con los datos existentes. También recibe el presupuesto asignado para la investigación.</p>
+        </div>
+        <div style="background:#e8faf0;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e56">
+          <div style="font-size:0.72rem;font-weight:700;color:#14532d;text-transform:uppercase;margin-bottom:0.3rem">⚙️ Qué procesa</div>
+          <p style="font-size:0.8rem;color:#14532d;line-height:1.5">Diseña y ejecuta la investigación: encuestas, entrevistas, focus groups, observación. Recoge datos <strong>primarios</strong> específicos para el problema planteado.</p>
+        </div>
+        <div style="background:#dcfce7;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e56">
+          <div style="font-size:0.72rem;font-weight:700;color:#14532d;text-transform:uppercase;margin-bottom:0.3rem">📤 Qué genera</div>
+          <p style="font-size:0.8rem;color:#14532d;line-height:1.5">Informes de investigación con hallazgos, conclusiones y recomendaciones concretas para la toma de decisiones. Alimenta directamente al <strong>Sistema de Análisis</strong>.</p>
+        </div>
+      </div>
+      <div style="margin-top:0.8rem;background:#f0fdf4;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:#14532d">
+        <strong>💡 Ejemplo real:</strong> Mercadona quiere lanzar una nueva línea de productos ecológicos y encarga una encuesta a 2.000 clientes para saber qué disposición tienen a pagar más por ellos. Eso es investigación comercial aplicada.
+      </div>`
+  },
+  {
+    title:'📊 Sistema de Análisis — Flujo de información',
+    color:'#533ab7',
+    detail:`
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-top:0.5rem">
+        <div style="background:#ede9fe;border-radius:8px;padding:0.8rem;border-left:3px solid #533ab7">
+          <div style="font-size:0.72rem;font-weight:700;color:#3b0764;text-transform:uppercase;margin-bottom:0.3rem">📥 Qué recibe</div>
+          <p style="font-size:0.8rem;color:#3b0764;line-height:1.5">Todos los datos de los <strong>otros tres subsistemas</strong>: datos internos, información del entorno e informes de investigación comercial.</p>
+        </div>
+        <div style="background:#f3f0ff;border-radius:8px;padding:0.8rem;border-left:3px solid #533ab7">
+          <div style="font-size:0.72rem;font-weight:700;color:#3b0764;text-transform:uppercase;margin-bottom:0.3rem">⚙️ Qué procesa</div>
+          <p style="font-size:0.8rem;color:#3b0764;line-height:1.5">Aplica <strong>técnicas estadísticas</strong> (univariables y multivariables), modelos econométricos y sistemas expertos con IA para transformar datos en conocimiento accionable.</p>
+        </div>
+        <div style="background:#ede9fe;border-radius:8px;padding:0.8rem;border-left:3px solid #533ab7">
+          <div style="font-size:0.72rem;font-weight:700;color:#3b0764;text-transform:uppercase;margin-bottom:0.3rem">📤 Qué genera</div>
+          <p style="font-size:0.8rem;color:#3b0764;line-height:1.5">Previsiones de ventas, simulaciones de escenarios, recomendaciones de precio óptimo, segmentaciones de mercado y dashboards para los directivos.</p>
+        </div>
+      </div>
+      <div style="margin-top:0.8rem;background:#faf5ff;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:#3b0764">
+        <strong>💡 Ejemplo real:</strong> Amazon usa su sistema de análisis (con IA) para predecir qué productos comprará cada usuario en los próximos días y pre-posicionar el stock en los almacenes más cercanos antes de que el cliente haga el pedido.
+      </div>`
+  }
 ];
+</script>;
+  
 const simAcc=document.getElementById('sim-acc');
 simDetails.forEach((s,i)=>{
   simAcc.innerHTML+=`<div class="acc-item"><div class="acc-header" onclick="toggleAcc('sacc-${i}',this)"><span class="acc-badge" style="background:${s.color}">${i+1}</span><span>${s.title}</span><span class="acc-arrow">▼</span></div><div class="acc-body" id="sacc-${i}">${s.detail}</div></div>`;
