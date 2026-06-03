@@ -759,13 +759,13 @@ function flipMem(idx){
   const {cards,flipped,matched}=memState;
   const c=cards[idx];
   if(flipped.includes(idx)||matched.includes(c.pair)||flipped.length>=2) return;
-  memState.flipped=[...flipped,idx];
+  memState.flipped=[...memState.flipped, idx];
   renderMemoria();
   if(memState.flipped.length===2){
     memState.moves++;
     const [a,b]=memState.flipped.map(i=>cards[i]);
     if(a.pair===b.pair&&a.type!==b.type){
-      memState.matched=[...memState.matched,a.pair];
+      memState.matched=[...memState.matched, a.pair];
       memState.flipped=[];
       renderMemoria();
     } else {
