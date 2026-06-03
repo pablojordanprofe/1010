@@ -40,6 +40,7 @@ header span { font-size:0.75rem; opacity:0.6; }
 .card p { font-size:0.9rem; line-height:1.7; color:var(--text2); }
 .card ul { padding-left:1.2rem; font-size:0.88rem; color:var(--text2); line-height:2; margin-top:0.5rem; }
 
+/* FLIP */
 .flip-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:1.5rem; }
 .flip-card { height:170px; perspective:1000px; cursor:pointer; }
 .flip-inner { position:relative; width:100%; height:100%; transition:transform 0.6s; transform-style:preserve-3d; }
@@ -52,6 +53,7 @@ header span { font-size:0.75rem; opacity:0.6; }
 .flip-back p { font-size:0.8rem; line-height:1.5; }
 .flip-hint { font-size:0.72rem; color:var(--text2); text-align:center; margin-bottom:1rem; }
 
+/* ACORDEÓN */
 .acc-item { border:1px solid var(--border); border-radius:10px; margin-bottom:0.6rem; overflow:hidden; }
 .acc-header { padding:1rem 1.2rem; display:flex; align-items:center; gap:0.8rem; cursor:pointer; font-weight:600; font-size:0.9rem; user-select:none; transition:background .2s; }
 .acc-header:hover { background:var(--bg); }
@@ -64,50 +66,59 @@ header span { font-size:0.75rem; opacity:0.6; }
 .acc-body ul { padding-left:1rem; line-height:1.9; }
 .acc-body li { margin-bottom:0.2rem; }
 
+/* SIM DIAGRAM */
 .sim-diagram { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0; }
-.sim-box { border-radius:12px; padding:1.2rem; cursor:pointer; transition:all .2s; border:2px solid transparent; text-align:center; }
-.sim-box:hover { transform:translateY(-2px); opacity:0.9; }
-.sim-box.active { border-color:#fff; box-shadow:0 0 0 3px rgba(255,255,255,0.4); }
-.sim-box h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.3rem; }
-.sim-box p { font-size:0.72rem; line-height:1.4; }
-.sim-detail { background:#e8f4f8; border:1px solid #9fd3e8; border-radius:10px; padding:1.2rem 1.4rem; font-size:0.88rem; line-height:1.8; color:#0a3d55; display:none; margin-top:1rem; }
+.sim-box { border-radius:12px; padding:1.2rem; cursor:pointer; transition:all .2s; border:2px solid transparent; }
+.sim-box:hover { transform:translateY(-2px); }
+.sim-box.active { border-color: #0a3d55; box-shadow:0 0 0 3px rgba(10,61,85,0.15); }
+.sim-box h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.4rem; }
+.sim-box p { font-size:0.75rem; line-height:1.4; }
+.sim-detail { background:#e8f4f8; border:1px solid #9fd3e8; border-radius:10px; padding:1.2rem 1.4rem; font-size:0.88rem; line-height:1.8; color:#0a3d55; display:none; margin-bottom:1rem; }
 .sim-detail.show { display:block; }
-.sim-detail h4 { font-size:0.95rem; font-weight:700; margin-bottom:0.6rem; }
+.sim-detail h4 { font-size:0.95rem; font-weight:700; margin-bottom:0.6rem; color:#0a3d55; }
+.sim-detail ul { padding-left:1.2rem; line-height:2; }
+.sim-tag { display:inline-block; font-size:0.7rem; font-weight:700; padding:0.15rem 0.6rem; border-radius:20px; margin-bottom:0.5rem; }
 
+/* IDONEIDAD GRID */
 .idon-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; margin-bottom:1.2rem; }
 .idon-card { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.2rem; box-shadow:var(--shadow); display:flex; gap:0.8rem; align-items:flex-start; }
 .idon-icon { font-size:1.6rem; flex-shrink:0; margin-top:0.1rem; }
 .idon-card h4 { font-size:0.88rem; font-weight:700; margin-bottom:0.3rem; }
 .idon-card p { font-size:0.82rem; color:var(--text2); line-height:1.5; }
 
+/* INVESTIGACIÓN COMERCIAL */
 .ic-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin-bottom:1.2rem; }
 .ic-card { border-radius:12px; padding:1.2rem; border:1px solid var(--border); }
 .ic-card h4 { font-size:0.88rem; font-weight:700; margin-bottom:0.5rem; }
 .ic-card ul { padding-left:1rem; font-size:0.82rem; color:var(--text2); line-height:1.8; }
 
+/* TIMELINE FASES */
 .timeline { position:relative; padding-left:2rem; margin:1rem 0; }
 .timeline::before { content:''; position:absolute; left:0.6rem; top:0; bottom:0; width:2px; background:linear-gradient(180deg,var(--teal),var(--green)); border-radius:2px; }
 .tl-item { position:relative; margin-bottom:1.2rem; }
-.tl-dot { position:absolute; left:-1.55rem; top:0.3rem; width:14px; height:14px; border-radius:50%; background:var(--teal); border:2px solid white; box-shadow:0 0 0 2px var(--teal); }
+.tl-dot { position:absolute; left:-1.55rem; top:0.3rem; width:14px; height:14px; border-radius:50%; background:var(--teal); border:2px solid white; box-shadow:0 0 0 2px var(--teal); flex-shrink:0; }
 .tl-content h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
 .tl-content p { font-size:0.82rem; color:var(--text2); line-height:1.6; }
 
+/* CARACTERÍSTICAS IC */
 .carac-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:0.8rem; margin-bottom:1.2rem; }
 .carac-card { background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:1rem; text-align:center; box-shadow:var(--shadow); }
 .carac-card .c-icon { font-size:1.8rem; margin-bottom:0.4rem; }
 .carac-card h4 { font-size:0.85rem; font-weight:700; margin-bottom:0.3rem; }
 .carac-card p { font-size:0.78rem; color:var(--text2); line-height:1.4; }
 
+/* ÉTICA / ESOMAR */
 .etica-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
 .etica-card { border-radius:12px; padding:1.2rem; border:1px solid var(--border); background:var(--bg2); }
 .etica-card h4 { font-size:0.88rem; font-weight:700; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.4rem; }
 .etica-card ul { padding-left:1rem; font-size:0.82rem; color:var(--text2); line-height:1.8; }
-.codigo-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.8rem; margin-top:1rem; }
+.codigo-steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:0.8rem; margin-top:1rem; }
 .codigo-step { background:var(--bg); border-radius:10px; padding:1rem; border:1px solid var(--border); }
 .codigo-step .step-num { font-size:1.5rem; font-weight:800; color:var(--teal); margin-bottom:0.3rem; }
 .codigo-step h4 { font-size:0.82rem; font-weight:700; margin-bottom:0.3rem; }
 .codigo-step p { font-size:0.76rem; color:var(--text2); line-height:1.4; }
 
+/* JUEGOS */
 .games-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.2rem; }
 .game-launch { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1.5rem; text-align:center; cursor:pointer; transition:all .2s; }
 .game-launch:hover { border-color:var(--teal); transform:translateY(-2px); box-shadow:var(--shadow); }
@@ -115,12 +126,14 @@ header span { font-size:0.75rem; opacity:0.6; }
 .game-launch h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.3rem; }
 .game-launch p { font-size:0.78rem; color:var(--text2); }
 
+/* MODAL */
 .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:center; justify-content:center; }
 .modal-bg.show { display:flex; }
 .modal { background:var(--bg2); border-radius:16px; padding:2rem; max-width:560px; width:90%; max-height:85vh; overflow-y:auto; position:relative; }
 .modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text2); }
 .modal h2 { font-size:1.2rem; font-weight:700; margin-bottom:1.2rem; }
 
+/* AHORCADO */
 .hangman-word { display:flex; gap:0.4rem; flex-wrap:wrap; justify-content:center; margin:1rem 0; }
 .letter-box { width:32px; height:36px; border-bottom:2.5px solid var(--text); display:flex; align-items:center; justify-content:center; font-size:1.1rem; font-weight:700; text-transform:uppercase; }
 .hangman-keys { display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; margin:1rem 0; }
@@ -134,6 +147,7 @@ header span { font-size:0.75rem; opacity:0.6; }
 .hint-text { text-align:center; font-size:0.8rem; color:var(--text2); background:var(--bg); border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; }
 .play-again { display:block; margin:0.5rem auto; padding:0.5rem 1.5rem; background:var(--teal); color:white; border:none; border-radius:8px; cursor:pointer; font-size:0.85rem; }
 
+/* SOPA */
 .grid-sopa { display:inline-grid; gap:2px; user-select:none; }
 .sopa-cell { width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:600; text-transform:uppercase; border-radius:4px; cursor:pointer; user-select:none; background:var(--bg); border:1px solid var(--border); transition:background .15s; }
 .sopa-cell.selected { background:#d4eef6; border-color:var(--teal); color:var(--teal2); }
@@ -143,6 +157,7 @@ header span { font-size:0.75rem; opacity:0.6; }
 .sopa-word.found { background:#eaf3de; border-color:#639922; color:#27500a; text-decoration:line-through; }
 .sopa-center { text-align:center; }
 
+/* QUIZ */
 .quiz-q { font-weight:600; font-size:0.95rem; margin-bottom:0.8rem; color:var(--text); }
 .quiz-options { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem; }
 .quiz-opt { padding:0.7rem 1rem; border:1.5px solid var(--border); border-radius:10px; background:var(--bg2); cursor:pointer; font-size:0.85rem; text-align:left; transition:all 0.2s; }
@@ -150,6 +165,7 @@ header span { font-size:0.75rem; opacity:0.6; }
 .quiz-opt.selected { background:#d4eef6; border-color:var(--teal); font-weight:600; }
 .quiz-result-box { text-align:center; padding:1.5rem; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:12px; color:#166534; font-weight:700; margin-top:1rem; }
 
+/* MEMORIA */
 .memory-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem; margin:1rem 0; }
 .mem-card { height:70px; perspective:600px; cursor:pointer; }
 .mem-inner { position:relative; width:100%; height:100%; transition:transform 0.4s; transform-style:preserve-3d; }
@@ -199,30 +215,48 @@ header span { font-size:0.75rem; opacity:0.6; }
       <p>En un entorno comercial cada vez más competitivo y cambiante, los responsables de marketing necesitan tomar decisiones rápidas y fundamentadas. La información es el recurso más valioso para reducir la incertidumbre y minimizar el riesgo de error.</p>
       <p style="margin-top:0.6rem">Sin información de calidad, las empresas actúan a ciegas: lanzan productos que no responden a necesidades reales, fijan precios inadecuados o eligen canales equivocados. Con información precisa y oportuna, pueden <strong>anticiparse a los cambios del mercado</strong> y tomar ventaja sobre la competencia.</p>
     </div>
+
     <div class="card">
       <h3>Tipos de información en marketing</h3>
       <p style="margin-bottom:1rem;font-size:0.88rem;color:var(--text2)">La información que necesita el departamento de marketing se puede clasificar según tres criterios:</p>
       <div id="tipos-info-acc"></div>
     </div>
+
     <div class="card" style="border-left:4px solid var(--teal)">
       <h3>📡 ¿Qué es el SIM?</h3>
-      <p>Un <strong>Sistema de Información de Marketing (SIM)</strong> está formado por un conjunto de recursos tanto humanos (personas) como materiales (hardware y software) y procedimientos que van a <strong>recoger, clasificar, evaluar y distribuir</strong> la información que necesitan los responsables de marketing para tomar buenas decisiones. Dicha información debe ser de calidad: <strong>oportuna y precisa</strong>.</p>
+      <p>Un <strong>Sistema de Información de Marketing (SIM)</strong> está formado por un conjunto de recursos tanto humanos (personas) como materiales (hardware y software) y procedimientos que van a <strong>recoger, clasificar, evaluar y distribuir</strong> la información que necesitan los responsables de marketing para tomar buenas decisiones.</p>
+      <p style="margin-top:0.8rem">Dicha información debe ser de calidad: <strong>oportuna y precisa</strong>.</p>
       <p style="margin-top:0.8rem">Los SIM son capaces de determinar qué necesidades de información tiene el proceso de toma de decisiones de marketing en cada empresa. Organizan los flujos de información para satisfacer dichas necesidades, tanto desde dentro de la organización como desde el exterior.</p>
       <p style="margin-top:0.8rem">Al contar con datos precisos y en muchas ocasiones en <strong>tiempo real</strong>, los responsables del marketing pueden identificar rápidamente las tendencias del mercado, ajustar sus estrategias y anticiparse a los cambios en el entorno competitivo. Además, esta capacidad de reacción permite <strong>optimizar recursos, reducir costes y mejorar la eficiencia operativa</strong>.</p>
     </div>
+
     <p class="flip-hint" style="margin-bottom:0.8rem">👆 Haz clic en cada tarjeta para ampliar</p>
     <div class="flip-grid">
-      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="icon">🎯</div><h4>Finalidad del SIM</h4></div><div class="flip-back"><p>Proporcionar información continua, fiable y relevante para que los directivos de marketing puedan <strong>planificar, ejecutar y controlar</strong> las estrategias comerciales.</p></div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="icon">🎯</div><h4>Finalidad del SIM</h4></div><div class="flip-back"><p>Proporcionar información continua, fiable y relevante para que los directivos de marketing puedan <strong>planificar, ejecutar y controlar</strong> las estrategias comerciales de la empresa.</p></div></div></div>
       <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="icon">👥</div><h4>Recursos humanos</h4></div><div class="flip-back"><p>Analistas, investigadores de mercado, técnicos de datos y directivos de marketing que gestionan, interpretan y utilizan la información del SIM.</p></div></div></div>
-      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="icon">💻</div><h4>Recursos materiales</h4></div><div class="flip-back"><p>Hardware (servidores, ordenadores) y software (CRM, ERP, Google Analytics, Tableau, SPSS...) que procesan y almacenan los datos.</p></div></div></div>
-      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="icon">🔄</div><h4>Flujo de información</h4></div><div class="flip-back"><p>El SIM recoge datos del entorno y del interior de la empresa, los procesa y los pone a disposición de los decisores en el momento y formato adecuados.</p></div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="icon">💻</div><h4>Recursos materiales</h4></div><div class="flip-back"><p>Hardware (servidores, ordenadores) y software (CRM, ERP, herramientas de análisis como Google Analytics, Tableau, SPSS...) que procesan y almacenan los datos.</p></div></div></div>
+      <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="icon">🔄</div><h4>Flujo de información</h4></div><div class="flip-back"><p>El SIM recoge datos del entorno (macro y micro) y del interior de la empresa, los procesa y los pone a disposición de los decisores en el momento y formato adecuados.</p></div></div></div>
     </div>
+
     <div class="card" style="background:linear-gradient(135deg,#f0f9fc,#e8f4f8);border-color:#9fd3e8">
       <h3>🔗 El SIM y el tamaño de la empresa</h3>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.8rem;margin-top:0.8rem">
-        <div style="background:white;border-radius:10px;padding:1rem;border:1px solid #9fd3e8"><div style="font-size:1.4rem;margin-bottom:0.3rem">🏪</div><h4 style="font-size:0.88rem;font-weight:700;margin-bottom:0.3rem">Empresa pequeña</h4><p style="font-size:0.8rem;color:var(--text2);line-height:1.5">Usa el sistema de registro y el de inteligencia de forma básica. La investigación comercial suele <strong>subcontratarse</strong>.</p></div>
-        <div style="background:white;border-radius:10px;padding:1rem;border:1px solid #9fd3e8"><div style="font-size:1.4rem;margin-bottom:0.3rem">🏢</div><h4 style="font-size:0.88rem;font-weight:700;margin-bottom:0.3rem">Empresa mediana</h4><p style="font-size:0.8rem;color:var(--text2);line-height:1.5">Cuenta con los cuatro subsistemas pero con menor sofisticación. Puede tener un departamento de marketing propio.</p></div>
-        <div style="background:white;border-radius:10px;padding:1rem;border:1px solid #9fd3e8"><div style="font-size:1.4rem;margin-bottom:0.3rem">🏭</div><h4 style="font-size:0.88rem;font-weight:700;margin-bottom:0.3rem">Gran empresa</h4><p style="font-size:0.8rem;color:var(--text2);line-height:1.5">SIM complejo con los cuatro subsistemas plenamente desarrollados, Big Data e Inteligencia Artificial integrados.</p></div>
+      <p style="margin-bottom:0.8rem;font-size:0.88rem;color:var(--text2)">No todas las empresas tienen el mismo SIM. Su complejidad depende del tamaño y los recursos disponibles:</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.8rem">
+        <div style="background:white;border-radius:10px;padding:1rem;border:1px solid #9fd3e8">
+          <div style="font-size:1.4rem;margin-bottom:0.3rem">🏪</div>
+          <h4 style="font-size:0.88rem;font-weight:700;margin-bottom:0.3rem">Empresa pequeña</h4>
+          <p style="font-size:0.8rem;color:var(--text2);line-height:1.5">Usa el sistema de registro (datos internos) y el de inteligencia de forma básica. La investigación comercial suele <strong>subcontratarse</strong> a empresas especializadas.</p>
+        </div>
+        <div style="background:white;border-radius:10px;padding:1rem;border:1px solid #9fd3e8">
+          <div style="font-size:1.4rem;margin-bottom:0.3rem">🏢</div>
+          <h4 style="font-size:0.88rem;font-weight:700;margin-bottom:0.3rem">Empresa mediana</h4>
+          <p style="font-size:0.8rem;color:var(--text2);line-height:1.5">Cuenta con los cuatro subsistemas pero con menor sofisticación. Puede tener un departamento de marketing propio que gestione el SIM.</p>
+        </div>
+        <div style="background:white;border-radius:10px;padding:1rem;border:1px solid #9fd3e8">
+          <div style="font-size:1.4rem;margin-bottom:0.3rem">🏭</div>
+          <h4 style="font-size:0.88rem;font-weight:700;margin-bottom:0.3rem">Gran empresa</h4>
+          <p style="font-size:0.8rem;color:var(--text2);line-height:1.5">SIM complejo y sofisticado con los cuatro subsistemas plenamente desarrollados, sistemas expertos, Big Data e Inteligencia Artificial integrados.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -231,48 +265,39 @@ header span { font-size:0.75rem; opacity:0.6; }
   <div class="tab-content" id="tab-estructura">
     <div class="card">
       <h3>Estructura del SIM</h3>
-      <p>El Sistema de Información de Marketing se articula en <strong>cuatro subsistemas</strong> que trabajan de forma coordinada. Reciben información del entorno (macro y microentorno) y la transforman en conocimiento útil para la toma de decisiones: planificación, ejecución y control de resultados.</p>
+      <p>El Sistema de Información de Marketing se articula en <strong>cuatro subsistemas</strong> que trabajan de forma coordinada. Reciben información del entorno (macro y microentorno) y la transforman en conocimiento útil para la toma de decisiones de marketing: planificación, ejecución y control de resultados.</p>
+      <p style="margin-top:0.6rem;font-size:0.82rem;color:var(--text2)">👇 Haz clic en cada subsistema para ver su explicación detallada</p>
     </div>
 
-    <!-- ACORDEONES PRIMERO: TEORÍA DETALLADA -->
-    <p class="flip-hint" style="margin-bottom:0.8rem">👇 Despliega cada subsistema para ver su teoría completa</p>
-    <div id="sim-acc"></div>
-
-    <!-- DIAGRAMA FLUJO DESPUÉS: QUÉ RECIBE, PROCESA Y GENERA -->
-    <div class="card" style="margin-top:1.5rem;border-left:4px solid var(--teal)">
-      <h3>🔄 ¿Cómo fluye la información en el SIM?</h3>
-      <p style="margin-bottom:1rem;font-size:0.88rem;color:var(--text2)">Haz clic en cada subsistema para ver qué información <strong>recibe</strong>, cómo la <strong>procesa</strong> y qué <strong>genera</strong> como resultado, con un ejemplo real de empresa.</p>
-      <div style="display:flex;justify-content:space-between;font-size:0.73rem;font-weight:600;color:var(--teal2);margin-bottom:0.6rem">
-        <span>⬅️ ENTORNO EXTERNO (Macro y Microentorno)</span>
-        <span>ENTORNO INTERNO ➡️</span>
-      </div>
+    <!-- DIAGRAMA INTERACTIVO -->
+    <div style="background:linear-gradient(135deg,#f0f9fc,#e8f4f8);border-radius:14px;padding:1.5rem;margin-bottom:1.2rem;border:1px solid #9fd3e8">
+      <div style="text-align:center;font-size:0.8rem;font-weight:700;color:var(--teal2);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:1rem">Sistema de Información de Marketing — Haz clic para explorar</div>
       <div class="sim-diagram">
         <div class="sim-box" style="background:#0f6e8c;color:white" onclick="showSim(0,this)">
-          <div style="font-size:1.6rem;margin-bottom:0.3rem">🧠</div>
-          <h4 style="color:white">Sistema de Inteligencia</h4>
-          <p style="color:rgba(255,255,255,0.75)">Clic para ver el flujo</p>
+          <h4 style="color:white">🧠 Sistema de Inteligencia</h4>
+          <p style="color:rgba(255,255,255,0.8)">Subsistema de inteligencia de marketing</p>
         </div>
         <div class="sim-box" style="background:#0a3d55;color:white" onclick="showSim(1,this)">
-          <div style="font-size:1.6rem;margin-bottom:0.3rem">🗄️</div>
-          <h4 style="color:white">Sistema de Registro</h4>
-          <p style="color:rgba(255,255,255,0.75)">Clic para ver el flujo</p>
+          <h4 style="color:white">🗄️ Sistema de Registro</h4>
+          <p style="color:rgba(255,255,255,0.8)">Subsistema de datos internos</p>
         </div>
         <div class="sim-box" style="background:#0f6e56;color:white" onclick="showSim(2,this)">
-          <div style="font-size:1.6rem;margin-bottom:0.3rem">🔬</div>
-          <h4 style="color:white">Investigación Comercial</h4>
-          <p style="color:rgba(255,255,255,0.75)">Clic para ver el flujo</p>
+          <h4 style="color:white">🔬 Investigación Comercial</h4>
+          <p style="color:rgba(255,255,255,0.8)">Subsistema de inteligencia de marketing</p>
         </div>
         <div class="sim-box" style="background:#533ab7;color:white" onclick="showSim(3,this)">
-          <div style="font-size:1.6rem;margin-bottom:0.3rem">📊</div>
-          <h4 style="color:white">Sistema de Análisis</h4>
-          <p style="color:rgba(255,255,255,0.75)">Clic para ver el flujo</p>
+          <h4 style="color:white">📊 Sistema de Análisis</h4>
+          <p style="color:rgba(255,255,255,0.8)">Subsistema de apoyo a decisiones</p>
         </div>
       </div>
       <div class="sim-detail" id="sim-detail"></div>
-      <div style="text-align:center;margin-top:0.8rem;font-size:0.75rem;font-weight:600;color:var(--teal2)">
-        ⬇️ TOMA DE DECISIONES DE MARKETING: Planificación · Ejecución · Control de resultados
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.5rem;font-size:0.75rem;color:var(--teal2)">
+        <span>← Entorno (Macro y Microentorno)</span>
+        <span>Toma de decisiones →</span>
       </div>
     </div>
+
+    <div id="sim-acc"></div>
   </div>
 
   <!-- TAB IDONEIDAD -->
@@ -289,41 +314,73 @@ header span { font-size:0.75rem; opacity:0.6; }
     <div class="card">
       <h3>¿Qué es la investigación comercial?</h3>
       <p>La <strong>investigación comercial</strong> es la función que vincula al consumidor con el vendedor a través de la información. Se utiliza para <strong>identificar y definir las oportunidades y los problemas</strong> asociados al marketing.</p>
-      <p style="margin-top:0.6rem">Para ello, la investigación comercial: identifica el objeto de estudio, establece el presupuesto, determina qué información será necesario recopilar, diseña los métodos para recogerla, gestiona el proceso de recogida de datos y su análisis, y comunica los hallazgos y sus implicaciones para la toma de decisiones.</p>
+      <p style="margin-top:0.6rem">Para ello, la investigación comercial:</p>
+      <ul style="padding-left:1.2rem;font-size:0.88rem;color:var(--text2);line-height:2;margin-top:0.3rem">
+        <li>Identifica el objeto de estudio.</li>
+        <li>Establece el presupuesto disponible.</li>
+        <li>Determina qué información será necesario recopilar.</li>
+        <li>Diseña los métodos para recogerla.</li>
+        <li>Gestiona el proceso de recogida de datos y su análisis.</li>
+        <li>Comunica los hallazgos y sus implicaciones para la toma de decisiones.</li>
+      </ul>
     </div>
+
     <div class="card">
       <h3>Tipos de investigación según su finalidad</h3>
       <div class="ic-grid">
-        <div class="ic-card" style="background:#f0f9fc;border-color:#9fd3e8"><h4>🔭 Básica o descriptiva</h4><ul><li>Objetivo: <strong>ampliar el conocimiento</strong> general sobre el mercado.</li><li>No resuelve un problema concreto de empresa.</li><li>Se publica y está disponible para todos.</li><li>Ej: estudio sobre tendencias de consumo en jóvenes de 18-25 años en España.</li></ul></div>
-        <div class="ic-card" style="background:#f0fdf4;border-color:#bbf7d0"><h4>🎯 Aplicada</h4><ul><li>Objetivo: <strong>resolver un problema específico</strong> de empresa.</li><li>Encargada y financiada por una empresa concreta.</li><li>Sus resultados son confidenciales.</li><li>Ej: ¿qué packaging prefieren los clientes para el nuevo producto?</li></ul></div>
+        <div class="ic-card" style="background:#f0f9fc;border-color:#9fd3e8">
+          <h4>🔭 Investigación básica o descriptiva</h4>
+          <ul>
+            <li>Su objetivo es <strong>ampliar el conocimiento</strong> general sobre el mercado o el comportamiento del consumidor.</li>
+            <li>No busca resolver un problema concreto de la empresa.</li>
+            <li>Ejemplo: estudio sobre tendencias de consumo en jóvenes de 18-25 años en España.</li>
+            <li>Se publica para que esté disponible para cualquier empresa o investigador.</li>
+          </ul>
+        </div>
+        <div class="ic-card" style="background:#f0fdf4;border-color:#bbf7d0">
+          <h4>🎯 Investigación aplicada</h4>
+          <ul>
+            <li>Su objetivo es <strong>resolver un problema específico</strong> de la empresa.</li>
+            <li>Encargada y financiada por una empresa concreta.</li>
+            <li>Ejemplo: ¿qué packaging prefieren los clientes para el nuevo producto de la marca X?</li>
+            <li>Sus resultados son confidenciales y de uso exclusivo de quien la encarga.</li>
+          </ul>
+        </div>
       </div>
     </div>
+
     <div class="card">
       <h3>Fases del proceso de investigación comercial</h3>
+      <p style="margin-bottom:1rem;font-size:0.88rem;color:var(--text2)">Toda investigación comercial sigue un proceso sistemático y ordenado:</p>
       <div class="timeline">
-        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h4>1. Definición del problema y objetivos</h4><p>Se identifica qué se quiere investigar y por qué. Una mala definición condena al fracaso toda la investigación.</p></div></div>
-        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h4>2. Desarrollo del plan de investigación</h4><p>Se decide qué fuentes usar, el método de recogida de datos, el tipo de muestreo y el presupuesto.</p></div></div>
-        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h4>3. Recogida de información</h4><p>Se ejecuta el trabajo de campo: encuestas, entrevistas, observación, grupos de discusión...</p></div></div>
-        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h4>4. Análisis e interpretación de datos</h4><p>Se procesan los datos con herramientas estadísticas para extraer conclusiones significativas.</p></div></div>
-        <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-content"><h4>5. Presentación de resultados</h4><p>Se elabora un informe con los hallazgos y sus implicaciones para la toma de decisiones de marketing.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h4>1. Definición del problema y objetivos</h4><p>Se identifica qué se quiere investigar y por qué. Una mala definición del problema condena al fracaso toda la investigación.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h4>2. Desarrollo del plan de investigación</h4><p>Se decide qué fuentes de información se usarán (primarias o secundarias), el método de recogida de datos, el tipo de muestreo y el presupuesto.</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h4>3. Recogida de información</h4><p>Se ejecuta el trabajo de campo: encuestas, entrevistas, observación, grupos de discusión, análisis de datos secundarios...</p></div></div>
+        <div class="tl-item"><div class="tl-dot"></div><div class="tl-content"><h4>4. Análisis e interpretación de datos</h4><p>Se procesan los datos obtenidos con herramientas estadísticas para extraer conclusiones significativas.</p></div></div>
+        <div class="tl-item"><div class="tl-dot" style="background:var(--green)"></div><div class="tl-content"><h4>5. Presentación de resultados</h4><p>Se elabora un informe claro con los hallazgos y sus implicaciones para la toma de decisiones de marketing.</p></div></div>
       </div>
     </div>
+
     <div class="card">
       <h3>Características de calidad de la información comercial</h3>
+      <p style="margin-bottom:1rem;font-size:0.88rem;color:var(--text2)">La información obtenida mediante investigación comercial debe cumplir estas características:</p>
       <div class="carac-grid">
-        <div class="carac-card"><div class="c-icon">🎯</div><h4>Objetiva</h4><p>Sin sesgos ni contaminación. Refleja la realidad tal como es.</p></div>
-        <div class="carac-card"><div class="c-icon">⚖️</div><h4>Neutral</h4><p>El investigador no influye en los resultados con sus opiniones.</p></div>
-        <div class="carac-card"><div class="c-icon">🕐</div><h4>Actual</h4><p>Datos actualizados que reflejan la situación presente del mercado.</p></div>
-        <div class="carac-card"><div class="c-icon">🔍</div><h4>Detallada</h4><p>Con el nivel de profundidad necesario para cada decisión.</p></div>
-        <div class="carac-card"><div class="c-icon">⚠️</div><h4>Con limitaciones</h4><p>Indica sus posibles errores, márgenes de confianza y limitaciones metodológicas.</p></div>
-        <div class="carac-card"><div class="c-icon">🔄</div><h4>Sistemática</h4><p>Obtenida mediante un proceso ordenado y replicable.</p></div>
+        <div class="carac-card"><div class="c-icon">🎯</div><h4>Objetiva</h4><p>Sin sesgos ni contaminación externa. Refleja la realidad tal como es.</p></div>
+        <div class="carac-card"><div class="c-icon">⚖️</div><h4>Neutral</h4><p>El investigador no debe influir en los resultados con sus opiniones o intereses.</p></div>
+        <div class="carac-card"><div class="c-icon">🕐</div><h4>Actual</h4><p>Los datos deben estar actualizados para reflejar la situación presente del mercado.</p></div>
+        <div class="carac-card"><div class="c-icon">🔍</div><h4>Detallada</h4><p>Con el nivel de profundidad necesario para la toma de decisiones específica.</p></div>
+        <div class="carac-card"><div class="c-icon">⚠️</div><h4>Con limitaciones</h4><p>Debe indicar sus posibles errores, márgenes de confianza y limitaciones metodológicas.</p></div>
+        <div class="carac-card"><div class="c-icon">🔄</div><h4>Sistemática</h4><p>Obtenida mediante un proceso ordenado y replicable, no de forma aleatoria o casual.</p></div>
         <div class="carac-card"><div class="c-icon">💰</div><h4>Eficiente</h4><p>Los beneficios que aporta deben ser superiores al coste de obtenerla.</p></div>
-        <div class="carac-card"><div class="c-icon">📌</div><h4>Relevante</h4><p>Solo la información importante y necesaria para el problema.</p></div>
+        <div class="carac-card"><div class="c-icon">📌</div><h4>Relevante</h4><p>Solo la información importante y necesaria para el problema en cuestión.</p></div>
       </div>
     </div>
+
     <div class="card" style="border-left:4px solid var(--teal)">
       <h3>🇪🇸 La investigación comercial en España</h3>
-      <p>En España el sector está representado por <strong>ANEIMO</strong> (Asociación Nacional de Empresas de Investigación de Mercados y Opinión) y <strong>AEDEMO</strong> (Asociación Española de Estudios de Mercado, Marketing y Opinión). Las principales empresas que operan en España son: <strong>Kantar, Nielsen, Ipsos, GfK, Metroscopia</strong> y <strong>40dB</strong>. El <strong>INE</strong> es la fuente pública de referencia para datos estadísticos.</p>
+      <p>En España el sector de la investigación comercial está representado principalmente por <strong>ANEIMO</strong> (Asociación Nacional de Empresas de Investigación de Mercados y Opinión) y <strong>AEDEMO</strong> (Asociación Española de Estudios de Mercado, Marketing y Opinión).</p>
+      <p style="margin-top:0.6rem">Las principales empresas de investigación que operan en España son: <strong>Kantar</strong>, <strong>Nielsen</strong>, <strong>Ipsos</strong>, <strong>GfK</strong>, <strong>Metroscopia</strong> y <strong>40dB</strong>, entre otras.</p>
+      <p style="margin-top:0.6rem">El Instituto Nacional de Estadística (<strong>INE</strong>) es la fuente pública de referencia para datos estadísticos sobre la sociedad y la economía española, siendo una de las principales fuentes secundarias para la investigación comercial.</p>
     </div>
   </div>
 
@@ -331,11 +388,14 @@ header span { font-size:0.75rem; opacity:0.6; }
   <div class="tab-content" id="tab-etica">
     <div class="card">
       <h3>Aspectos éticos de la investigación comercial</h3>
-      <p>La investigación comercial trabaja con <strong>personas y datos personales</strong>, por lo que debe regirse por principios éticos que protejan los derechos de los participantes, garanticen la calidad de los datos y mantengan la confianza en la profesión. El incumplimiento puede dar lugar a <strong>sanciones legales</strong> (RGPD), daño reputacional y pérdida de confianza de los consumidores.</p>
+      <p>La investigación comercial trabaja con <strong>personas y datos personales</strong>, por lo que debe regirse por principios éticos que protejan los derechos de los participantes, garanticen la calidad de los datos y mantengan la confianza en la profesión.</p>
+      <p style="margin-top:0.6rem">El incumplimiento de los estándares éticos puede dar lugar a <strong>sanciones legales</strong> (violación del RGPD, por ejemplo), daño reputacional para la empresa y pérdida de confianza de los consumidores.</p>
     </div>
+
     <div class="card" style="border-left:4px solid var(--gold)">
       <h3>📋 El Código CCI/ESOMAR</h3>
       <p style="margin-bottom:0.8rem"><strong>ESOMAR</strong> (European Society for Opinion and Market Research) es la organización mundial de referencia en investigación de mercados. Junto con la <strong>ICC</strong> (Cámara de Comercio Internacional), ha desarrollado el <strong>Código Internacional de Investigación de Mercados y Social</strong>, que establece los estándares éticos que deben seguir todos los profesionales del sector a nivel mundial.</p>
+      <p style="margin-bottom:1rem;font-size:0.88rem;color:var(--text2)">El código se estructura en cinco partes:</p>
       <div class="codigo-steps">
         <div class="codigo-step"><div class="step-num">1</div><h4>Introducción</h4><p>Propósito del código y ámbito de aplicación.</p></div>
         <div class="codigo-step"><div class="step-num">2</div><h4>Principios generales</h4><p>Descripción de los principios básicos que rigen la investigación.</p></div>
@@ -344,111 +404,35 @@ header span { font-size:0.75rem; opacity:0.6; }
         <div class="codigo-step"><div class="step-num">5</div><h4>Implementación</h4><p>Mecanismos para asegurar el cumplimiento y gestionar violaciones.</p></div>
       </div>
     </div>
+
     <div class="card">
       <h3>Objetivos del Código CCI/ESOMAR</h3>
       <div class="etica-grid">
         <div class="etica-card" style="border-color:#b5d4f4;background:#f0f7ff"><h4>🛡️ Proteger a los participantes</h4><ul><li>Garantizar la privacidad y confidencialidad.</li><li>Obtener el consentimiento informado antes de incluirlos en el estudio.</li></ul></div>
         <div class="etica-card" style="border-color:#fde68a;background:#fffbeb"><h4>⚖️ Promover la ética</h4><ul><li>Asegurar que las investigaciones se realicen de manera ética y profesional.</li><li>Mantener la integridad y calidad de los datos recogidos.</li></ul></div>
         <div class="etica-card" style="border-color:#bbf7d0;background:#f0fdf4"><h4>🔍 Fomentar la transparencia</h4><ul><li>Claridad en la metodología y presentación de resultados.</li><li>Responsabilidad de investigadores y organizaciones.</li></ul></div>
-        <div class="etica-card" style="border-color:#e9d5ff;background:#faf5ff"><h4>🎓 Competencia profesional</h4><ul><li>Mantener altos estándares de conocimiento en la práctica.</li><li>Facilitar el desarrollo profesional continuo.</li></ul></div>
+        <div class="etica-card" style="border-color:#e9d5ff;background:#faf5ff"><h4>🎓 Asegurar competencia profesional</h4><ul><li>Mantener altos estándares de conocimiento en la práctica.</li><li>Facilitar el desarrollo profesional continuo.</li></ul></div>
       </div>
     </div>
+
     <div class="card">
       <h3>Principios básicos del Código</h3>
       <div class="etica-grid">
-        <div class="etica-card"><h4>🔒 Privacidad y confidencialidad</h4><ul><li>Proteger la identidad y datos personales de los participantes.</li><li>Usar la información solo para los fines declarados.</li></ul></div>
-        <div class="etica-card"><h4>✋ Consentimiento informado</h4><ul><li>Obtener el permiso explícito antes de incluir a alguien en el estudio.</li><li>Explicar los posibles riesgos y beneficios de participar.</li></ul></div>
-        <div class="etica-card"><h4>💬 Transparencia y honestidad</h4><ul><li>Informar claramente sobre el propósito de la investigación.</li><li>No inducir a engaño ni manipular la información.</li></ul></div>
-        <div class="etica-card"><h4>⚖️ Legalidad</h4><ul><li>Cumplir todas las leyes aplicables (RGPD, LSSI...).</li><li>Respetar normativas sobre protección de datos.</li></ul></div>
-        <div class="etica-card"><h4>🏅 Profesionalidad</h4><ul><li>Realizar la investigación con altos estándares de calidad.</li><li>Asumir responsabilidad sobre la integridad de los datos.</li></ul></div>
+        <div class="etica-card"><h4>🔒 Privacidad y confidencialidad</h4><ul><li>Proteger la identidad y datos personales de los participantes.</li><li>Usar la información recolectada solo para los fines declarados.</li></ul></div>
+        <div class="etica-card"><h4>✋ Consentimiento informado</h4><ul><li>Obtener el consentimiento explícito antes de incluir a alguien en el estudio.</li><li>Explicar los posibles riesgos y beneficios de participar.</li></ul></div>
+        <div class="etica-card"><h4>💬 Transparencia y honestidad</h4><ul><li>Informar claramente a los participantes sobre el propósito.</li><li>No inducir a engaño ni manipular la información presentada.</li></ul></div>
+        <div class="etica-card"><h4>⚖️ Legalidad</h4><ul><li>Cumplir todas las leyes aplicables (RGPD, LSSI...).</li><li>Respetar normativas locales e internacionales sobre protección de datos.</li></ul></div>
+        <div class="etica-card"><h4>🏅 Profesionalidad</h4><ul><li>Realizar la investigación con altos estándares de calidad.</li><li>Asumir responsabilidad sobre la integridad de los datos e informes.</li></ul></div>
         <div class="etica-card"><h4>🦺 Seguridad de los participantes</h4><ul><li>Asegurar que la participación no cause daño o incomodidad.</li><li>Tomar medidas para mitigar cualquier riesgo potencial.</li></ul></div>
       </div>
     </div>
-
-  <div class="card" style="background:linear-gradient(135deg,#fff8e6,#fffdf7);border:2px solid #f0c96a">
-  <h3>📚 Amplía tus conocimientos sobre ética profesional</h3>
-
-  <p style="margin-bottom:1rem">
-    El Código Internacional <strong>ICC/ESOMAR</strong> es el documento de referencia mundial
-    para garantizar que la investigación de mercados se realiza de forma ética,
-    transparente y respetando los derechos de las personas participantes.
-  </p>
-
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem">
-
-    <div style="background:white;padding:1rem;border-radius:12px;border:1px solid #e5e7eb">
-      <div style="font-size:2rem;margin-bottom:0.5rem">📄</div>
-      <h4 style="margin-bottom:0.5rem">Código ICC/ESOMAR</h4>
-      <p style="font-size:0.85rem;color:#6b6a64;margin-bottom:0.8rem">
-        Consulta la versión oficial del código ético internacional utilizado por
-        investigadores de mercados de todo el mundo.
-      </p>
-
-      <a href="https://esocorpwebsitestg.blob.core.windows.net/strapi-uploads/uploads/ICC_Esomar_International_Code_on_Market_Opinion_and_Social_Research_and_Data_Analytics_Spanish_14652f4b87.pdf"
-         target="_blank"
-         style="display:inline-block;background:#0f6e8c;color:white;padding:0.6rem 1rem;border-radius:8px;text-decoration:none;font-weight:600">
-         📥 Abrir PDF oficial
-      </a>
-    </div>
-
-    <div style="background:white;padding:1rem;border-radius:12px;border:1px solid #e5e7eb">
-      <div style="font-size:2rem;margin-bottom:0.5rem">🌐</div>
-      <h4 style="margin-bottom:0.5rem">Web oficial de ESOMAR</h4>
-      <p style="font-size:0.85rem;color:#6b6a64;margin-bottom:0.8rem">
-        Accede a recursos, guías éticas, publicaciones y actualizaciones del sector.
-      </p>
-
-      <a href="https://esomar.org"
-         target="_blank"
-         style="display:inline-block;background:#533ab7;color:white;padding:0.6rem 1rem;border-radius:8px;text-decoration:none;font-weight:600">
-         🔗 Visitar ESOMAR
-      </a>
-    </div>
-
   </div>
 
-  <div style="margin-top:1rem;background:#f0f9fc;border-left:4px solid #0f6e8c;padding:1rem;border-radius:8px">
-    <strong>💡 Curiosidad:</strong> El Código ICC/ESOMAR se aplica en más de 130 países
-    y sirve como referencia para investigaciones de mercado, estudios de opinión,
-    analítica de datos y estudios sociales.
-  </div>
-</div>
-
-  <div class="card">
-  <h3>🕰️ Evolución de la ética en la investigación comercial</h3>
-
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h4>1948</h4>
-        <p>Creación de ESOMAR como organización internacional de investigación de mercados.</p>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h4>1976</h4>
-        <p>Publicación de las primeras versiones conjuntas del Código ICC/ESOMAR.</p>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <h4>Actualidad</h4>
-        <p>El código incorpora principios relacionados con protección de datos, investigación online e inteligencia artificial.</p>
-      </div>
-    </div>
-  </div>
-  </div>
-    
   <!-- TAB JUEGOS -->
   <div class="tab-content" id="tab-juegos">
     <div class="card" style="margin-bottom:1.2rem">
       <h3>🎮 Zona Interactiva de Repaso — UT2</h3>
-      <p>Cuatro juegos para repasar el SIM y la investigación comercial de forma divertida.</p>
+      <p>Tres juegos para repasar el SIM y la investigación comercial de forma divertida.</p>
     </div>
     <div class="games-grid">
       <div class="game-launch" onclick="openAhorcado()"><div class="g-icon">🪢</div><h4>Ahorcado</h4><p>Términos clave del SIM e investigación comercial</p></div>
@@ -457,6 +441,7 @@ header span { font-size:0.75rem; opacity:0.6; }
       <div class="game-launch" onclick="openMemoria()"><div class="g-icon">🃏</div><h4>Memoria</h4><p>Relaciona cada subsistema del SIM con su descripción</p></div>
     </div>
   </div>
+</div>
 
 <!-- MODALES -->
 <div class="modal-bg" id="modal-ahorcado"><div class="modal"><button class="modal-close" onclick="closeModal('modal-ahorcado')">✕</button><h2>🪢 Ahorcado — UT2</h2><div id="hangman-content"></div></div></div>
@@ -478,62 +463,30 @@ function toggleAcc(id,h){ document.getElementById(id).classList.toggle('open'); 
 /* TIPOS DE INFORMACIÓN */
 const tiposInfo=[
   {title:'Según su naturaleza',color:'#0f6e8c',items:['<strong>Cuantitativa:</strong> expresada en números y cifras (ventas, cuota de mercado, precio medio).','<strong>Cualitativa:</strong> describe percepciones, opiniones, motivaciones y actitudes de los consumidores.']},
-  {title:'Según su origen',color:'#0f6e56',items:['<strong>Interna:</strong> generada dentro de la propia empresa (datos de ventas, CRM, contabilidad, informes internos).','<strong>Externa:</strong> procede del entorno de la empresa (publicaciones sectoriales, estadísticas del INE, informes de competidores).']},
-  {title:'Según su disponibilidad',color:'#533ab7',items:['<strong>Primaria:</strong> recogida específicamente para el estudio en cuestión (encuesta propia, entrevistas, focus groups). Más costosa pero más precisa.','<strong>Secundaria:</strong> ya existe y fue recogida previamente para otro fin (INE, Eurostat, informes sectoriales). Más barata y rápida, pero puede estar desactualizada.']}
+  {title:'Según su origen',color:'#0f6e56',items:['<strong>Interna:</strong> generada dentro de la propia empresa (datos de ventas, CRM, contabilidad, informes de empleados).','<strong>Externa:</strong> procede del entorno de la empresa (publicaciones sectoriales, estadísticas del INE, informes de competidores).']},
+  {title:'Según su disponibilidad',color:'#533ab7',items:['<strong>Primaria:</strong> recogida específicamente para el estudio en cuestión (encuesta propia, entrevistas, grupos de discusión). Es más costosa pero más precisa.','<strong>Secundaria:</strong> ya existe y fue recogida previamente para otro fin (INE, Eurostat, informes sectoriales). Más barata y rápida, pero puede estar desactualizada.']}
 ];
 const tia=document.getElementById('tipos-info-acc');
 tiposInfo.forEach((t,i)=>{
   tia.innerHTML+=`<div class="acc-item"><div class="acc-header" onclick="toggleAcc('ti-${i}',this)"><span class="acc-badge" style="background:${t.color}">${i+1}</span><span>${t.title}</span><span class="acc-arrow">▼</span></div><div class="acc-body" id="ti-${i}"><ul style="padding-left:1rem;line-height:2">${t.items.map(x=>`<li>${x}</li>`).join('')}</ul></div></div>`;
 });
 
-/* SIM ACORDEONES — TEORÍA DETALLADA */
-const simAccData=[
-  {title:'🧠 1. Sistema de Inteligencia de Marketing',color:'#0f6e8c',content:`<p>También conocido como <strong>subsistema de inteligencia de marketing</strong>. Mantiene un flujo constante de información desde los diferentes ámbitos del macroentorno y microentorno hacia el SIM.</p><h4>¿Qué información recoge?</h4><ul><li>Cambios generados por los competidores.</li><li>Modificaciones de los gustos de los consumidores.</li><li>Aparición de nuevas tecnologías.</li><li>Cambios en las condiciones económicas y legales.</li><li>Información sobre proveedores, competencia y grupos de interés.</li></ul><h4>Características clave</h4><ul><li>Se centra en fuentes de información <strong>externa</strong>.</li><li>Proporciona un flujo <strong>continuo</strong> de información del entorno.</li><li><strong>También lo tienen las empresas pequeñas.</strong></li></ul>`},
-  {title:'🗄️ 2. Sistema de Registro (Datos Internos)',color:'#0a3d55',content:`<p>También conocido como <strong>subsistema de datos internos</strong>. Recoge datos generados como consecuencia de la actividad principal de la empresa: datos de ventas, accesos a servidores, pedidos, cantidades y costes de producción.</p><h4>¿Qué necesita para funcionar?</h4><ul><li>Conexión a la estructura <strong>contable</strong> de la organización.</li><li>Integración con los sistemas <strong>CRM</strong>.</li><li>Registro de actividad de servidores y plataformas digitales.</li></ul><h4>Características clave</h4><ul><li>Es el sistema <strong>más básico</strong> del SIM.</li><li>Incluye datos sobre pedidos, precios, ventas, pagos y deudas.</li><li>Su núcleo es el <strong>ciclo pedido-envío-factura</strong>.</li><li><strong>Lo tienen todas las empresas, incluso las pequeñas.</strong></li></ul>`},
-  {title:'🔬 3. Sistema de Investigación Comercial',color:'#0f6e56',content:`<p>Pone en marcha investigaciones específicas cuando la información disponible <strong>no es suficiente</strong> para cumplir con los objetivos del SIM. Puede, por ejemplo, poner en marcha una encuesta a clientes actuales o potenciales.</p><h4>¿Qué hace?</h4><ul><li>Diseña, recoge y analiza datos relevantes para un problema específico.</li><li>Trabaja tanto con fuentes primarias como secundarias.</li><li>Puede usar encuestas, entrevistas, focus groups u observación.</li></ul><h4>Características clave</h4><ul><li>Información <strong>puntual y específica</strong>, no continua.</li><li>Las empresas pequeñas suelen <strong>subcontratarlo</strong>.</li><li>Complementa a los otros subsistemas cuando no son suficientes.</li></ul>`},
-  {title:'📊 4. Sistema de Análisis (Apoyo a Decisiones)',color:'#533ab7',content:`<p>También conocido como <strong>subsistema de apoyo a las decisiones de marketing</strong>. Examina todos los datos de los otros tres subsistemas y los pone a disposición de los responsables de forma <strong>óptima, entendible y manejable</strong>.</p><h4>¿Qué herramientas utiliza?</h4><ul><li>Software de análisis estadístico univariable y multivariable.</li><li>Sistemas de modelización econométrica.</li><li>Sistemas expertos con Inteligencia Artificial (aprenden de sus propias decisiones).</li><li>Banco estadístico + banco de modelos.</li></ul><h4>Características clave</h4><ul><li>Es el sistema <strong>más complejo</strong> del SIM.</li><li>Transforma datos en conocimiento accionable para decidir.</li><li>Permite hacer <strong>previsiones de proyectos futuros</strong>.</li></ul>`}
+/* SIM SUBSISTEMAS DETALLE */
+const simDetails=[
+  {title:'🧠 Sistema de Inteligencia de Marketing',color:'#0f6e8c',badge:'Nacional · Externo',detail:`<p>Mantiene un <strong>flujo constante de información</strong> desde los diferentes ámbitos del macroentorno y microentorno hacia el SIM. A través de él, la empresa puede contar con información continua sobre:</p><ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem"><li>Cambios generados por los competidores.</li><li>Modificaciones de los gustos de los consumidores.</li><li>Aparición de nuevas tecnologías.</li><li>Cambios en las condiciones económicas y legales.</li><li>Información relativa a proveedores, competencia y grupos de interés.</li></ul><p style="margin-top:0.6rem"><strong>Características clave:</strong> Se centra en datos sobre fenómenos del entorno (fuentes externas). <strong>También lo tienen las empresas pequeñas.</strong></p>`},
+  {title:'🗄️ Sistema de Registro (Datos Internos)',color:'#0a3d55',badge:'Interno · Básico',detail:`<p>Recoge datos que se generan como consecuencia de la <strong>actividad principal de la empresa</strong>: datos de ventas, accesos a servidores, pedidos, cantidades y costes de producción. Para obtenerlos, el SIM debe estar conectado a:</p><ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem"><li>La estructura contable de la organización.</li><li>Los sistemas CRM (gestión de clientes).</li><li>El registro de actividad de servidores.</li></ul><p style="margin-top:0.6rem"><strong>Características clave:</strong> Es el sistema más básico. Incluye datos sobre pedidos, precios, ventas, pagos y deudas con proveedores. <strong>Lo tienen todas las empresas, incluso las pequeñas.</strong></p>`},
+  {title:'🔬 Sistema de Investigación Comercial',color:'#0f6e56',badge:'Externo · Específico',detail:`<p>Pone en marcha <strong>investigaciones específicas</strong> cuando la información disponible no es suficiente para cumplir con los objetivos del SIM. Debe disponer de los recursos necesarios para, por ejemplo, poner en marcha una encuesta a clientes actuales o potenciales.</p><ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem"><li>Formado por procedimientos de diseño, recogida y análisis de datos.</li><li>Orientado a la resolución de un problema específico de marketing.</li><li>Las empresas pequeñas suelen <strong>subcontratarlo</strong> a empresas especializadas.</li></ul><p style="margin-top:0.6rem"><strong>Ayuda a tomar decisiones</strong> sobre temas concretos cuando los otros subsistemas no son suficientes.</p>`},
+  {title:'📊 Sistema de Análisis (Apoyo a Decisiones)',color:'#533ab7',badge:'Analítico · Avanzado',detail:`<p>Examina todos los datos de los otros tres sistemas y los pone a disposición de los responsables de forma <strong>óptima, entendible y manejable</strong>. Utiliza software capaz de realizar:</p><ul style="padding-left:1.2rem;line-height:2;margin-top:0.4rem"><li>Análisis estadísticos univariables y multivariables.</li><li>Sistemas de modelización para identificar las mejores alternativas de decisión.</li><li>Técnicas matemáticas y econométricas para prever proyectos futuros.</li></ul><p style="margin-top:0.6rem"><strong>Sistemas expertos:</strong> son capaces de aprender de sus propias decisiones mediante Inteligencia Artificial. Es el sistema más complejo y sofisticado del SIM.</p>`}
 ];
 const simAcc=document.getElementById('sim-acc');
-simAccData.forEach((s,i)=>{
-  simAcc.innerHTML+=`<div class="acc-item"><div class="acc-header" onclick="toggleAcc('sacc-${i}',this)"><span class="acc-badge" style="background:${s.color}">${i+1}</span><span>${s.title}</span><span class="acc-arrow">▼</span></div><div class="acc-body" id="sacc-${i}">${s.content}</div></div>`;
+simDetails.forEach((s,i)=>{
+  simAcc.innerHTML+=`<div class="acc-item"><div class="acc-header" onclick="toggleAcc('sacc-${i}',this)"><span class="acc-badge" style="background:${s.color}">${i+1}</span><span>${s.title}</span><span class="acc-arrow">▼</span></div><div class="acc-body" id="sacc-${i}">${s.detail}</div></div>`;
 });
-
-/* SIM DIAGRAMA FLUJO */
-const simFlows=[
-  {title:'🧠 Sistema de Inteligencia — Flujo de información',color:'#0f6e8c',
-   detail:`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-top:0.5rem">
-    <div style="background:#d4eef6;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e8c"><div style="font-size:0.7rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">📥 Qué recibe</div><p style="font-size:0.8rem;color:#042c53;line-height:1.5">Información del <strong>macroentorno</strong> (PESTEL) y <strong>microentorno</strong>: noticias del sector, movimientos de la competencia, cambios en gustos del consumidor, nuevas tecnologías, cambios legales.</p></div>
-    <div style="background:#e8f4f8;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e8c"><div style="font-size:0.7rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">⚙️ Qué procesa</div><p style="font-size:0.8rem;color:#042c53;line-height:1.5">Filtra, clasifica y organiza la información externa en un <strong>flujo continuo y estructurado</strong>. Detecta señales de amenazas u oportunidades en el entorno.</p></div>
-    <div style="background:#d4eef6;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e8c"><div style="font-size:0.7rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">📤 Qué genera</div><p style="font-size:0.8rem;color:#042c53;line-height:1.5">Alertas tempranas sobre cambios del mercado, informes de vigilancia competitiva y resúmenes del entorno para alimentar al Sistema de Análisis.</p></div>
-   </div>
-   <div style="margin-top:0.8rem;background:#f0f9fc;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:#042c53"><strong>💡 Ejemplo real:</strong> Un responsable de marketing de Zara monitoriza cada semana las tendencias en redes sociales, los lanzamientos de H&M y los cambios en aranceles textiles. Toda esa información alimenta su sistema de inteligencia.</div>`},
-  {title:'🗄️ Sistema de Registro — Flujo de información',color:'#0a3d55',
-   detail:`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-top:0.5rem">
-    <div style="background:#dbeafe;border-radius:8px;padding:0.8rem;border-left:3px solid #0a3d55"><div style="font-size:0.7rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">📥 Qué recibe</div><p style="font-size:0.8rem;color:#042c53;line-height:1.5">Datos generados por la actividad diaria: <strong>pedidos, facturas, devoluciones, niveles de stock, datos del CRM, historial de ventas</strong> por producto, zona y cliente.</p></div>
-    <div style="background:#e8f1fb;border-radius:8px;padding:0.8rem;border-left:3px solid #0a3d55"><div style="font-size:0.7rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">⚙️ Qué procesa</div><p style="font-size:0.8rem;color:#042c53;line-height:1.5">Organiza los datos según el <strong>ciclo pedido-envío-factura</strong>. Conecta información de ventas, logística, contabilidad y atención al cliente.</p></div>
-    <div style="background:#dbeafe;border-radius:8px;padding:0.8rem;border-left:3px solid #0a3d55"><div style="font-size:0.7rem;font-weight:700;color:#0a3d55;text-transform:uppercase;margin-bottom:0.3rem">📤 Qué genera</div><p style="font-size:0.8rem;color:#042c53;line-height:1.5">Informes de ventas, control de inventario, detección de productos estrella o en declive, análisis de rentabilidad por segmento o región.</p></div>
-   </div>
-   <div style="margin-top:0.8rem;background:#eff6ff;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:#042c53"><strong>💡 Ejemplo real:</strong> PC Componentes consulta a diario su sistema de registro para ver qué productos se están vendiendo más, cuáles tienen stock bajo y en qué regiones hay más demanda, ajustando así su publicidad online.</div>`},
-  {title:'🔬 Investigación Comercial — Flujo de información',color:'#0f6e56',
-   detail:`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-top:0.5rem">
-    <div style="background:#dcfce7;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e56"><div style="font-size:0.7rem;font-weight:700;color:#14532d;text-transform:uppercase;margin-bottom:0.3rem">📥 Qué recibe</div><p style="font-size:0.8rem;color:#14532d;line-height:1.5">Un <strong>problema o pregunta específica</strong> de marketing que los otros subsistemas no pueden resolver. También recibe el presupuesto asignado para la investigación.</p></div>
-    <div style="background:#e8faf0;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e56"><div style="font-size:0.7rem;font-weight:700;color:#14532d;text-transform:uppercase;margin-bottom:0.3rem">⚙️ Qué procesa</div><p style="font-size:0.8rem;color:#14532d;line-height:1.5">Diseña y ejecuta la investigación: encuestas, entrevistas, focus groups, observación. Recoge datos <strong>primarios</strong> específicos para el problema planteado.</p></div>
-    <div style="background:#dcfce7;border-radius:8px;padding:0.8rem;border-left:3px solid #0f6e56"><div style="font-size:0.7rem;font-weight:700;color:#14532d;text-transform:uppercase;margin-bottom:0.3rem">📤 Qué genera</div><p style="font-size:0.8rem;color:#14532d;line-height:1.5">Informes con hallazgos, conclusiones y recomendaciones concretas para la toma de decisiones. Alimenta directamente al Sistema de Análisis.</p></div>
-   </div>
-   <div style="margin-top:0.8rem;background:#f0fdf4;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:#14532d"><strong>💡 Ejemplo real:</strong> Mercadona quiere lanzar una nueva línea de productos ecológicos y encarga una encuesta a 2.000 clientes para saber qué disposición tienen a pagar más por ellos. Eso es investigación comercial aplicada.</div>`},
-  {title:'📊 Sistema de Análisis — Flujo de información',color:'#533ab7',
-   detail:`<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.8rem;margin-top:0.5rem">
-    <div style="background:#ede9fe;border-radius:8px;padding:0.8rem;border-left:3px solid #533ab7"><div style="font-size:0.7rem;font-weight:700;color:#3b0764;text-transform:uppercase;margin-bottom:0.3rem">📥 Qué recibe</div><p style="font-size:0.8rem;color:#3b0764;line-height:1.5">Todos los datos de los <strong>otros tres subsistemas</strong>: datos internos, información del entorno e informes de investigación comercial.</p></div>
-    <div style="background:#f3f0ff;border-radius:8px;padding:0.8rem;border-left:3px solid #533ab7"><div style="font-size:0.7rem;font-weight:700;color:#3b0764;text-transform:uppercase;margin-bottom:0.3rem">⚙️ Qué procesa</div><p style="font-size:0.8rem;color:#3b0764;line-height:1.5">Aplica <strong>técnicas estadísticas</strong> (univariables y multivariables), modelos econométricos y sistemas expertos con IA para transformar datos en conocimiento accionable.</p></div>
-    <div style="background:#ede9fe;border-radius:8px;padding:0.8rem;border-left:3px solid #533ab7"><div style="font-size:0.7rem;font-weight:700;color:#3b0764;text-transform:uppercase;margin-bottom:0.3rem">📤 Qué genera</div><p style="font-size:0.8rem;color:#3b0764;line-height:1.5">Previsiones de ventas, simulaciones de escenarios, recomendaciones de precio óptimo, segmentaciones de mercado y dashboards para los directivos.</p></div>
-   </div>
-   <div style="margin-top:0.8rem;background:#faf5ff;border-radius:8px;padding:0.7rem;font-size:0.8rem;color:#3b0764"><strong>💡 Ejemplo real:</strong> Amazon usa su sistema de análisis (con IA) para predecir qué productos comprará cada usuario en los próximos días y pre-posicionar el stock en los almacenes más cercanos antes de que el cliente haga el pedido.</div>`}
-];
 
 function showSim(i,el){
   const det=document.getElementById('sim-detail');
-  const d=simFlows[i];
-  det.innerHTML=`<h4 style="color:${d.color};margin-bottom:0.8rem">${d.title}</h4>${d.detail}`;
+  const d=simDetails[i];
+  det.innerHTML=`<h4 style="color:${d.color}">${d.title}</h4>${d.detail}`;
   det.classList.add('show');
   document.querySelectorAll('.sim-box').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
@@ -542,25 +495,25 @@ function showSim(i,el){
 /* IDONEIDAD */
 const idonData=[
   {icon:'📐',title:'Dimensión adecuada',desc:'Un SIM sobredimensionado genera más costes de los necesarios; si es demasiado pequeño, no dispondrá de recursos para proporcionar la información adecuada.'},
-  {icon:'🤝',title:'Conveniente',desc:'La información debe ser fácil de entender y manejar. Debe permitir la interacción con el decisor y estar bien integrado en la estructura organizativa.'},
-  {icon:'⚙️',title:'Capacidad de procesamiento',desc:'El hardware y el software deben ser lo suficientemente potentes para procesar todos los datos que se requieran.'},
-  {icon:'⏰',title:'Oportunidad',desc:'La información se debe entregar cuando se necesita para la toma de decisiones, ni antes ni después.'},
+  {icon:'🤝',title:'Conveniente',desc:'La información que proporciona debe ser fácil de entender y manejar. Debe permitir la interacción con el decisor y estar bien integrado en la estructura organizativa.'},
+  {icon:'⚙️',title:'Capacidad de procesamiento',desc:'El hardware y el software en los que se basa deben ser lo suficientemente potentes para procesar todos los datos que se requieran.'},
+  {icon:'⏰',title:'Oportunidad',desc:'La información se debe entregar cuando se necesita para la toma de decisiones, ni antes (puede quedar obsoleta) ni después (ya no sirve).'},
   {icon:'🔓',title:'Disponibilidad',desc:'Se debe poder tener acceso a la información siempre que sea necesario, desde cualquier lugar y en cualquier momento.'},
   {icon:'🔧',title:'Flexibilidad',desc:'La información se debe poder entregar con el nivel de detalle y profundidad que requiera cada toma de decisiones concreta.'},
-  {icon:'🔒',title:'Seguridad',desc:'El sistema debe estar protegido frente a intentos de acceso por parte de personas no autorizadas.'},
-  {icon:'🎯',title:'Precisión',desc:'La información que proporciona a los responsables de marketing no debe tener errores.'},
-  {icon:'🔗',title:'Integración',desc:'El SIM debe estar bien conectado con otras áreas y sistemas de la empresa (contabilidad, producción, RRHH, CRM...).'},
+  {icon:'🔒',title:'Seguridad',desc:'El sistema debe estar protegido frente a intentos de acceso por parte de personas no autorizadas. La información es un activo valioso.'},
+  {icon:'🎯',title:'Precisión',desc:'La información que proporciona a los responsables de marketing no debe tener errores. La toma de decisiones basada en datos incorrectos puede ser fatal.'},
+  {icon:'🔗',title:'Integración',desc:'El SIM debe estar bien conectado con otras áreas y sistemas de la empresa (contabilidad, producción, RRHH, CRM...) para obtener una visión global.'},
 ];
 const ig=document.getElementById('idon-grid');
 idonData.forEach(d=>{
   ig.innerHTML+=`<div class="idon-card"><div class="idon-icon">${d.icon}</div><div><h4>${d.title}</h4><p>${d.desc}</p></div></div>`;
 });
 
-/* AHORCADO */
+/* ===== AHORCADO ===== */
 const words=[
   {word:'SUBSISTEMA',hint:'Cada una de las partes que componen el SIM'},
-  {word:'INTELIGENCIA',hint:'Subsistema que recoge información del entorno externo'},
-  {word:'CONSENTIMIENTO',hint:'Principio ético: los participantes deben otorgarlo antes de participar'},
+  {word:'INTELIGENCIA',hint:'Subsistema que recoge información del entorno externo de la empresa'},
+  {word:'CONSENTIMIENTO',hint:'Principio ético: los participantes deben otorgarlo antes de participar en una investigación'},
   {word:'CONFIDENCIALIDAD',hint:'Principio ético que protege la identidad de los participantes'},
   {word:'INVESTIGACION',hint:'Función que vincula al consumidor con el vendedor a través de la información'},
   {word:'CUANTITATIVA',hint:'Tipo de información expresada en números y cifras'},
@@ -611,7 +564,7 @@ function guessLetter(l){
   renderHangman();
 }
 
-/* SOPA */
+/* ===== SOPA ===== */
 const sopaWords=['SIM','ESOMAR','REGISTRO','ANALISIS','PRIMARIA','SECUNDARIA','ENCUESTA','INTELIGENCIA','OBJETIVO','PRECISION','FIABILIDAD','CRM'];
 let sopaState={};
 function openSopa(){ openModal('modal-sopa'); buildSopa(); }
@@ -680,19 +633,19 @@ function endSel(){
   sopaState.selecting=[]; renderSopa();
 }
 
-/* QUIZ */
+/* ===== QUIZ ===== */
 const quizQ=[
   {q:"¿Qué significa SIM en marketing?",o:["Sistema de Investigación de Mercados","Sistema de Información de Marketing","Subsistema de Inteligencia de Marketing"],a:1},
-  {q:"¿Cuál de los subsistemas del SIM es el más básico y lo tienen incluso las empresas pequeñas?",o:["Sistema de análisis","Sistema de investigación comercial","Sistema de registro (datos internos)"],a:2},
-  {q:"El subsistema de inteligencia de marketing recoge principalmente...",o:["Datos de ventas internas de la empresa","Información continua del macroentorno y microentorno","Estudios de mercado encargados por la empresa"],a:1},
+  {q:"¿Cuál de los cuatro subsistemas del SIM es el más básico y lo tienen incluso las empresas pequeñas?",o:["Sistema de análisis","Sistema de investigación comercial","Sistema de registro (datos internos)"],a:2},
+  {q:"El subsistema de inteligencia de marketing se ocupa principalmente de...",o:["Analizar los datos internos de ventas de la empresa","Recoger información continua del macroentorno y microentorno","Realizar encuestas a clientes para resolver problemas específicos"],a:1},
   {q:"La información 'primaria' en investigación comercial es...",o:["La que ya existe y fue recogida para otro fin","La que se recoge específicamente para el estudio en cuestión","La que proviene de fuentes estadísticas oficiales como el INE"],a:1},
-  {q:"¿Qué organización ha desarrollado el Código CCI/ESOMAR?",o:["La Comisión Europea y el INE","La ICC y ESOMAR","ANEIMO y AEDEMO"],a:1},
-  {q:"Una empresa pequeña que necesita investigación comercial habitualmente...",o:["La realiza internamente con su propio personal","La subcontrata a empresas especializadas","Prescinde de ella porque es demasiado cara"],a:1},
+  {q:"¿Qué organización ha desarrollado el Código CCI/ESOMAR?",o:["La Comisión Europea y el INE","La ICC (Cámara de Comercio Internacional) y ESOMAR","ANEIMO y AEDEMO"],a:1},
+  {q:"Una empresa pequeña que necesita investigación comercial habitualmente...",o:["La realiza internamente con su propio personal","La subcontrata a empresas especializadas en investigación","Prescinde de ella porque es demasiado cara"],a:1},
   {q:"La característica de 'oportunidad' del SIM significa que...",o:["La información debe estar disponible 24 horas al día","La información se debe entregar en el momento en que se necesita para decidir","El SIM debe aprovechar las oportunidades del mercado"],a:1},
   {q:"¿Cuál de estas NO es una característica de la información de investigación comercial?",o:["Objetiva","Exclusiva para grandes empresas","Sistemática"],a:1},
   {q:"El sistema de análisis del SIM se caracteriza por...",o:["Recoger únicamente datos de ventas internas","Usar técnicas estadísticas y sistemas expertos capaces de aprender","Diseñar encuestas y grupos de discusión"],a:1},
-  {q:"La investigación 'básica o descriptiva' se diferencia de la 'aplicada' en que...",o:["Es más cara y confidencial","Amplía el conocimiento general y no resuelve un problema específico de empresa","Solo la realizan organismos públicos como el INE"],a:1},
-  {q:"El principio de 'consentimiento informado' del Código ESOMAR implica...",o:["Que el investigador conozca bien el tema de estudio","Obtener el permiso explícito del participante antes de incluirlo en el estudio","Que los resultados sean informados a las autoridades"],a:1},
+  {q:"La investigación comercial 'básica o descriptiva' se diferencia de la 'aplicada' en que...",o:["Es más cara y confidencial","Amplía el conocimiento general y no resuelve un problema específico de empresa","Solo la realizan organismos públicos como el INE"],a:1},
+  {q:"El principio de 'consentimiento informado' en el Código ESOMAR implica...",o:["Que el investigador conozca bien el tema de estudio","Obtener el permiso explícito del participante antes de incluirlo en el estudio","Que los resultados sean informados a las autoridades"],a:1},
   {q:"¿Qué tipo de información es un informe de ventas mensual generado por el CRM de la empresa?",o:["Información primaria y externa","Información secundaria e interna","Información cualitativa y externa"],a:1},
   {q:"El sistema de análisis del SIM también se denomina...",o:["Subsistema de datos internos","Subsistema de apoyo a las decisiones de marketing","Subsistema de inteligencia de marketing"],a:1},
   {q:"¿Cuál de estas es una fuente de información secundaria externa?",o:["Los datos de ventas del último trimestre de la empresa","Una encuesta encargada a sus clientes","Las estadísticas del INE sobre consumo de los hogares españoles"],a:2},
@@ -718,7 +671,7 @@ function renderQuiz(){
 }
 function selectQ(qi,oi){ userAnswers[qi]=oi; renderQuiz(); }
 
-/* MEMORIA */
+/* ===== MEMORIA ===== */
 const memPairs=[
   {key:'🧠 Sistema de Inteligencia',val:'Recoge info del macroentorno y microentorno'},
   {key:'🗄️ Sistema de Registro',val:'Datos internos: ventas, pedidos, CRM'},
@@ -744,12 +697,14 @@ function renderMemoria(){
   let html=`<div class="mem-status">Intentos: ${moves} ${allMatched?'· 🎉 ¡Completado!':''}</div>`;
   html+=`<div class="memory-grid">`;
   cards.forEach((c,idx)=>{
-    const isFlipped=flipped.includes(idx), isMatched=matched.includes(c.pair);
+    const isFlipped=flipped.includes(idx);
+    const isMatched=matched.includes(c.pair);
     html+=`<div class="mem-card ${isFlipped||isMatched?'flipped':''} ${isMatched?'matched':''}" onclick="flipMem(${idx})">
       <div class="mem-inner">
         <div class="mem-front">?</div>
         <div class="mem-back" style="font-size:${c.text.length>20?'0.62rem':'0.72rem'}">${c.text}</div>
-      </div></div>`;
+      </div>
+    </div>`;
   });
   html+=`</div>`;
   if(allMatched) html+=`<button class="play-again" style="margin-top:1rem" onclick="buildMemoria()">Jugar otra vez</button>`;
@@ -759,13 +714,13 @@ function flipMem(idx){
   const {cards,flipped,matched}=memState;
   const c=cards[idx];
   if(flipped.includes(idx)||matched.includes(c.pair)||flipped.length>=2) return;
-  memState.flipped=[...memState.flipped, idx];
+  memState.flipped=[...flipped,idx];
   renderMemoria();
   if(memState.flipped.length===2){
     memState.moves++;
     const [a,b]=memState.flipped.map(i=>cards[i]);
-    if(a.pair===b.pair&&a.type!==b.type){
-      memState.matched=[...memState.matched, a.pair];
+    if(a.pair===b.pair && a.type!==b.type){
+      memState.matched=[...memState.matched,a.pair];
       memState.flipped=[];
       renderMemoria();
     } else {
