@@ -167,12 +167,12 @@ header span { font-size:0.75rem; opacity:0.6; }
   </div>
 
   <div class="tabs">
-    <div class="tab active" onclick="switchTab('contenido',this)">📖 Contenido</div>
-    <div class="tab" onclick="switchTab('pestel',this)">🌍 PESTEL</div>
-    <div class="tab" onclick="switchTab('porter',this)">⚡ Porter</div>
-    <div class="tab" onclick="switchTab('mercado',this)">🏪 Mercado</div>
-    <div class="tab" onclick="switchTab('instituciones',this)">🏛️ Instituciones</div>
-    <div class="tab" onclick="switchTab('juegos',this)">🎮 Juegos</div>
+    <div class="tab active" onclick="switchTab('contenido',this)">INTRODUCCIÓN</div>
+    <div class="tab" onclick="switchTab('pestel',this)">ANÁLISIS PESTEL</div>
+    <div class="tab" onclick="switchTab('porter',this)">5 FUERZAS DE PORTER</div>
+    <div class="tab" onclick="switchTab('mercado',this)">MERCADO</div>
+    <div class="tab" onclick="switchTab('instituciones',this)">INSTITUCIONES</div>
+    <div class="tab" onclick="switchTab('juegos',this)">JUEGOS</div>
   </div>
 
   <!-- TAB CONTENIDO -->
@@ -189,7 +189,7 @@ header span { font-size:0.75rem; opacity:0.6; }
       <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner"><div class="flip-front"><div class="icon">⚙️</div><h4>Microentorno – Porter</h4></div><div class="flip-back"><p>Factores cercanos: competencia, clientes, proveedores, distribuidores. Modelo de las <strong>5 Fuerzas de Porter</strong>.</p></div></div></div>
     </div>
     <div class="card">
-      <h3>💡 Caso Práctico: El Marketing Mix de Nike (4Ps)</h3>
+      <h3>Ejemplo práctico: MARKETING MIX - NIKE</h3>
       <p style="margin-bottom:1.2rem;font-size:0.88rem;color:var(--text2)">Ejemplo real basado en las estrategias comerciales globales de la marca:</p>
       <div class="nike-card"><div class="nike-icon-box prod">🛍️<div class="nike-label">Producto</div></div><div class="nike-content"><h4>Nike ofrece una <strong>amplia gama de productos</strong>:</h4><ul><li><strong>Calzado:</strong> Air Max, Air Jordan, Nike Free.</li><li><strong>Ropa:</strong> sudaderas, camisetas, chaquetas.</li><li><strong>Accesorios:</strong> mochilas, gorras, calcetines.</li></ul></div></div>
       <div class="nike-card"><div class="nike-icon-box precio">🏷️<div class="nike-label">Precio</div></div><div class="nike-content"><h4>Nike utiliza <strong>estrategias de precios premium</strong>:</h4><ul><li>Precios altos basados en exclusividad y tecnología.</li><li>Descuentos en eventos clave como Black Friday.</li><li>Desde equipamiento básico hasta ediciones limitadas.</li></ul></div></div>
@@ -208,7 +208,7 @@ header span { font-size:0.75rem; opacity:0.6; }
     <p class="flip-hint" style="margin-bottom:0.8rem">👇 Despliega cada factor para ver su contenido completo</p>
     <div id="pestel-accordion"></div>
     <div class="card" style="margin-top:1.5rem;border-left:4px solid #533ab7;">
-      <h3>🛒 Caso Práctico Interactivo: PC Componentes y el PESTEL</h3>
+      <h3>EJEMPLO RESUELTO: Análisis PESTEL de PC Componentes</h3>
       <p style="margin-bottom:0.8rem"><strong>PC Componentes</strong>, empresa murciana de Molina de Segura fundada en 2003, líder en tecnología e informática online en España. Selecciona cada factor para ver cómo le afecta:</p>
       <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1rem" id="pcc-btns"></div>
       <div id="pcc-detail-box" style="display:none;background:#f0f7ff;border:1px solid #b5d4f4;border-radius:10px;padding:1rem 1.2rem;font-size:0.88rem;color:#042c53;line-height:1.8"></div>
