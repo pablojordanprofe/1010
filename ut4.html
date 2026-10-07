@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UT4 · Información secundaria · Pablo Jordán</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:#f6f5f1; --bg2:#ffffff; --text:#16181d; --text2:#5f636b;
+  --border:rgba(0,0,0,0.1); --navy:#12355b; --navy2:#0b2440;
+  --coral:#e4572e; --coral2:#c2401b; --mint:#1f9e8f; --amber:#e8a33d; --violet:#6a4cc2;
+  --card-r:14px; --shadow:0 2px 12px rgba(0,0,0,0.07);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+h1,h2,h3,.display { font-family:'Sora','Segoe UI',system-ui,sans-serif; letter-spacing:-0.01em; }
+
+header { background:var(--navy2); color:white; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+header h1 { font-size:1.05rem; font-weight:800; }
+header span { font-size:0.75rem; opacity:0.6; }
+.back-btn { background:rgba(255,255,255,0.15); border:none; color:white; padding:0.4rem 1rem; border-radius:8px; cursor:pointer; font-size:0.8rem; text-decoration:none; display:inline-block; transition:background .2s; }
+.back-btn:hover { background:rgba(255,255,255,0.25); }
+.scroll-progress { position:absolute; left:0; bottom:0; height:3px; width:0; background:linear-gradient(90deg,var(--coral),var(--amber)); }
+
+.container { max-width:980px; margin:0 auto; padding:2rem 1.5rem; }
+
+/* HERO */
+.ut-hero { background:radial-gradient(circle at 85% 20%,rgba(228,87,46,0.55),transparent 45%),linear-gradient(135deg,#0b2440 0%,#12355b 60%,#1b4a7a 100%); border-radius:20px; padding:2.6rem 2.5rem 2rem; color:white; margin-bottom:1.5rem; position:relative; overflow:hidden; }
+.ut-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,0.13) 1px,transparent 1.5px); background-size:18px 18px; mask-image:linear-gradient(90deg,transparent 30%,#000); -webkit-mask-image:linear-gradient(90deg,transparent 30%,#000); }
+.hero-tag { display:inline-block; background:var(--coral); color:white; font-weight:800; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:20px; margin-bottom:0.8rem; position:relative; }
+.ut-hero h2 { font-size:2.3rem; font-weight:800; line-height:1.05; margin-bottom:0.6rem; position:relative; }
+.ut-hero h2 em { font-style:normal; background:linear-gradient(90deg,#ffb38f,#ffd27a); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.typing { font-size:1rem; opacity:.9; min-height:1.6rem; position:relative; font-weight:500; }
+.typing::after { content:'▍'; animation:blink 1s steps(1) infinite; margin-left:2px; color:#ffb38f; }
+@keyframes blink { 50%{opacity:0} }
+.hero-chips { position:absolute; right:1.5rem; top:1.4rem; display:flex; flex-direction:column; gap:0.45rem; align-items:flex-end; pointer-events:none; }
+.hchip { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); backdrop-filter:blur(4px); border-radius:20px; padding:0.25rem 0.75rem; font-size:0.72rem; font-weight:600; animation:floaty 6s ease-in-out infinite; }
+.hchip:nth-child(2){ animation-delay:-2s; margin-right:1.2rem } .hchip:nth-child(3){ animation-delay:-4s }
+@keyframes floaty { 50%{ transform:translateY(-7px) } }
+.badges { display:flex; flex-wrap:wrap; gap:0.45rem; margin-top:1.3rem; position:relative; align-items:center; }
+.badges-label { font-size:0.72rem; font-weight:700; opacity:.75; margin-right:0.2rem; text-transform:uppercase; letter-spacing:.6px; }
+.badge { font-size:0.74rem; font-weight:700; padding:0.3rem 0.7rem; border-radius:20px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.35); color:rgba(255,255,255,0.55); transition:all .4s var(--ease); }
+.badge.got { background:var(--amber); color:#3b2600; border:1px solid var(--amber); transform:scale(1.05); box-shadow:0 4px 14px rgba(232,163,61,0.45); }
+
+/* TABS + TRANSICIONES */
+.tabs { display:flex; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap; position:sticky; top:64px; z-index:60; background:rgba(246,245,241,0.93); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); padding:0.6rem 0; }
+.tab { padding:0.55rem 1.1rem; border:1.5px solid var(--border); border-radius:30px; background:var(--bg2); cursor:pointer; font-size:0.84rem; font-weight:600; color:var(--text2); transition:all .25s var(--ease); user-select:none; }
+.tab:hover { border-color:var(--coral); color:var(--coral); }
+.tab.active { background:var(--navy); color:white; border-color:var(--navy); box-shadow:0 4px 14px rgba(18,53,91,0.3); transform:translateY(-1px); }
+.tab-content { display:none; }
+.tab-content.active { display:block; animation:fadeIn .45s var(--ease); }
+.tab-content.active > * { animation:rise .55s var(--ease) both; }
+.tab-content.active > *:nth-child(2){animation-delay:.07s} .tab-content.active > *:nth-child(3){animation-delay:.14s}
+.tab-content.active > *:nth-child(4){animation-delay:.21s} .tab-content.active > *:nth-child(5){animation-delay:.28s}
+.tab-content.active > *:nth-child(n+6){animation-delay:.33s}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+.swap { animation:rise .4s var(--ease); }
+
+/* BASE */
+.card { background:var(--bg2); border-radius:var(--card-r); border:1px solid var(--border); padding:1.5rem; margin-bottom:1.2rem; box-shadow:var(--shadow); }
+.card h3 { font-size:1.08rem; font-weight:700; margin-bottom:0.8rem; }
+.card p { font-size:0.9rem; line-height:1.7; color:var(--text2); }
+.card p + p { margin-top:0.6rem; }
+.sec-num { display:inline-flex; width:28px; height:28px; border-radius:50%; background:var(--coral); color:white; font-size:0.8rem; font-weight:800; align-items:center; justify-content:center; margin-right:0.4rem; vertical-align:middle; font-family:'Sora',sans-serif; }
+.kicker { font-size:0.72rem; font-weight:800; color:var(--coral); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.3rem; }
+.hint { font-size:0.75rem; color:var(--text2); margin:0 0 0.7rem; }
+.grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+.grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+.btn { border:none; border-radius:10px; padding:0.6rem 1.1rem; font-size:0.83rem; font-weight:700; cursor:pointer; transition:all .2s; font-family:inherit; display:inline-flex; align-items:center; gap:0.4rem; text-decoration:none; }
+.btn-navy { background:var(--navy); color:white; } .btn-navy:hover { background:var(--navy2); }
+.btn-coral { background:var(--coral); color:white; } .btn-coral:hover { background:var(--coral2); }
+.btn-ghost { background:var(--bg); color:var(--text); border:1.5px solid var(--border); } .btn-ghost:hover { border-color:var(--coral); color:var(--coral); }
+.ext { display:inline-flex; align-items:center; gap:0.3rem; font-size:0.76rem; font-weight:700; color:var(--navy); background:#e9eff6; border-radius:20px; padding:0.25rem 0.7rem; text-decoration:none; transition:all .2s; margin:0.15rem 0.2rem 0.15rem 0; border:1px solid #cddbea; }
+.ext:hover { background:var(--navy); color:white; transform:translateY(-1px); }
+.exam-tip { background:#fff4e0; border:1px solid #f6d49a; border-radius:12px; padding:0.85rem 1rem; font-size:0.83rem; color:#6b4200; line-height:1.6; margin-bottom:1.2rem; }
+.curio { background:#eef0ff; border:1px solid #c9cdf7; border-radius:12px; padding:0.85rem 1rem; font-size:0.83rem; color:#2c2c6b; line-height:1.6; margin-bottom:1.2rem; }
+.case { background:#fff7f3; border:1px solid #f7c9b6; border-radius:12px; padding:0.85rem 1rem; font-size:0.84rem; color:#6b2a14; line-height:1.6; }
+.case b { color:var(--coral2); }
+.pill { display:inline-block; font-size:0.68rem; font-weight:800; padding:0.15rem 0.55rem; border-radius:20px; text-transform:uppercase; letter-spacing:.4px; }
+
+/* INTRO */
+.versus { display:grid; grid-template-columns:1fr auto 1fr; gap:0.8rem; align-items:stretch; }
+.vs-col { border-radius:14px; padding:1.1rem; }
+.vs-col h4 { font-family:'Sora',sans-serif; font-size:1rem; margin-bottom:0.6rem; }
+.vs-row { display:flex; justify-content:space-between; gap:0.6rem; font-size:0.82rem; padding:0.45rem 0; border-bottom:1px dashed rgba(0,0,0,0.1); }
+.vs-row span:first-child { color:var(--text2); }
+.vs-row span:last-child { font-weight:700; text-align:right; }
+.vs-mid { display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:800; font-size:1.1rem; color:var(--coral); }
+.roadmap { display:grid; grid-template-columns:repeat(4,1fr); gap:0.7rem; counter-reset:rm; }
+.rm-step { position:relative; background:var(--bg2); border:1.5px solid var(--border); border-radius:14px; padding:1rem 0.9rem; cursor:pointer; transition:all .3s var(--ease); }
+.rm-step:hover { border-color:var(--coral); transform:translateY(-4px); box-shadow:0 10px 24px rgba(0,0,0,0.08); }
+.rm-step .n { font-family:'Sora',sans-serif; font-size:1.6rem; font-weight:800; color:var(--coral); line-height:1; }
+.rm-step h5 { font-size:0.86rem; font-weight:800; margin:0.4rem 0 0.25rem; }
+.rm-step p { font-size:0.75rem; color:var(--text2); line-height:1.45; }
+.rm-step .go { font-size:0.72rem; font-weight:800; color:var(--navy); margin-top:0.5rem; display:block; }
+
+/* CLASIFICADOR */
+.cls-item { font-size:1rem; font-weight:700; background:var(--bg); border-radius:12px; padding:1.1rem; margin:0.8rem 0; border:1px solid var(--border); text-align:center; }
+.cls-opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:0.5rem; }
+.cls-opt { padding:0.7rem; border-radius:10px; border:1.5px solid var(--border); background:var(--bg2); cursor:pointer; font-weight:700; font-size:0.82rem; transition:all .2s; font-family:inherit; }
+.cls-opt:hover:not(:disabled) { border-color:var(--coral); color:var(--coral); transform:translateY(-2px); }
+.cls-opt.ok { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; }
+.cls-opt.ko { background:#fdeaea; border-color:#e99; color:#a12c2c; animation:shake .35s; }
+@keyframes shake { 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.cls-fb { min-height:2.4rem; font-size:0.84rem; margin-top:0.8rem; line-height:1.5; color:var(--text2); text-align:center; }
+.cls-score { font-size:0.76rem; font-weight:800; color:var(--navy); text-align:center; }
+.result-box { text-align:center; padding:1.3rem; background:#eefaf1; border:1px solid #bfe6c8; border-radius:12px; color:#1f5a2c; font-weight:800; margin-top:0.5rem; }
+.play-again { display:block; margin:0.8rem auto 0; padding:0.55rem 1.4rem; background:var(--navy); color:white; border:none; border-radius:8px; cursor:pointer; font-size:0.85rem; font-family:inherit; font-weight:700; }
+
+/* INTERNAS */
+.building { display:grid; grid-template-columns:220px 1fr; gap:1rem; }
+.floors { display:flex; flex-direction:column; gap:0.45rem; background:linear-gradient(180deg,#dfe7f1,#c9d6e6); border-radius:14px 14px 4px 4px; padding:0.8rem 0.7rem; position:relative; }
+.floors::before { content:'🏢 PC Componentes'; display:block; font-size:0.72rem; font-weight:800; color:var(--navy); text-align:center; margin-bottom:0.2rem; }
+.floor { background:white; border:none; border-radius:8px; padding:0.6rem 0.7rem; text-align:left; font-weight:700; font-size:0.82rem; cursor:pointer; display:flex; align-items:center; gap:0.5rem; transition:all .25s var(--ease); font-family:inherit; color:var(--text); }
+.floor:hover { transform:translateX(4px); }
+.floor.sel { background:var(--navy); color:white; transform:translateX(6px); box-shadow:0 6px 16px rgba(18,53,91,0.3); }
+.floor .tag { margin-left:auto; font-size:0.6rem; background:var(--coral); color:white; border-radius:10px; padding:0.05rem 0.4rem; }
+.floor.sel .tag { background:var(--amber); color:#3b2600; }
+.dept-panel { background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.2rem 1.3rem; }
+.dept-panel h4 { font-family:'Sora',sans-serif; font-size:1.05rem; margin-bottom:0.5rem; }
+.data-chips { display:flex; flex-wrap:wrap; gap:0.4rem; margin:0.6rem 0 0.8rem; }
+.data-chip { background:white; border:1px solid #cddbea; color:var(--navy); font-weight:700; font-size:0.78rem; padding:0.3rem 0.7rem; border-radius:8px; animation:rise .4s var(--ease) both; }
+.data-chip:nth-child(2){animation-delay:.06s}.data-chip:nth-child(3){animation-delay:.12s}.data-chip:nth-child(4){animation-delay:.18s}.data-chip:nth-child(5){animation-delay:.24s}
+.flip-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:0.9rem; }
+.flip-card { height:250px; perspective:1000px; cursor:pointer; }
+.flip-inner { position:relative; width:100%; height:100%; transition:transform 0.65s var(--ease); transform-style:preserve-3d; }
+.flip-card.flipped .flip-inner { transform:rotateY(180deg); }
+.flip-front,.flip-back { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:14px; display:flex; flex-direction:column; padding:1.1rem; }
+.flip-front { color:white; justify-content:flex-end; overflow:hidden; }
+.flip-front .big { font-size:2.4rem; position:absolute; top:0.9rem; right:1rem; opacity:.9; }
+.flip-front .acr { font-family:'Sora',sans-serif; font-size:1.7rem; font-weight:800; line-height:1; }
+.flip-front .full { font-size:0.8rem; opacity:.85; margin-top:0.3rem; }
+.flip-front .tap { font-size:0.68rem; opacity:.7; margin-top:0.6rem; }
+.flip-back { background:white; border:1.5px solid var(--border); transform:rotateY(180deg); font-size:0.8rem; line-height:1.55; color:var(--text2); overflow-y:auto; }
+.flip-back b { color:var(--text); }
+.mine-wrap { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start; }
+.mine { display:grid; grid-template-columns:repeat(8,1fr); gap:4px; background:#3a3530; padding:8px; border-radius:12px; }
+.rock { aspect-ratio:1; border:none; border-radius:5px; background:linear-gradient(145deg,#7d7368,#5b534a); color:rgba(255,255,255,0.35); font-size:0.55rem; font-family:Consolas,monospace; cursor:pointer; transition:transform .15s; display:flex; align-items:center; justify-content:center; }
+.rock:hover { transform:scale(1.08); }
+.rock.dug { background:#2b2723; cursor:default; transform:none; color:transparent; animation:crack .35s; }
+.rock.gem { background:radial-gradient(circle,#ffe9a8,#e8a33d); font-size:1rem; color:initial; animation:gemPop .5s var(--ease); }
+@keyframes crack { 0%{transform:scale(1.15) rotate(4deg)} 100%{transform:none} }
+@keyframes gemPop { 0%{transform:scale(0.3) rotate(-30deg)} 70%{transform:scale(1.25)} 100%{transform:none} }
+.nuggets { display:flex; flex-direction:column; gap:0.45rem; }
+.nugget { background:#fff8e6; border:1px solid #f3d38c; border-radius:10px; padding:0.55rem 0.75rem; font-size:0.8rem; color:#5a3d00; animation:rise .45s var(--ease); }
+.mine-stats { font-size:0.78rem; font-weight:800; color:var(--navy); margin-bottom:0.5rem; }
+
+/* EXTERNAS */
+.src-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:1rem; }
+.src { background:white; border:1px solid var(--border); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; transition:all .3s var(--ease); box-shadow:var(--shadow); }
+.src:hover { transform:translateY(-5px); box-shadow:0 14px 28px rgba(0,0,0,0.1); }
+.src-top { padding:1rem 1rem 0.8rem; color:white; position:relative; min-height:92px; }
+.src-top .logo { font-family:'Sora',sans-serif; font-weight:800; font-size:1.5rem; line-height:1; }
+.src-top .name { font-size:0.74rem; opacity:.9; margin-top:0.25rem; line-height:1.3; }
+.src-top .pill { position:absolute; top:0.8rem; right:0.8rem; background:rgba(255,255,255,0.25); color:white; }
+.src-body { padding:0.9rem 1rem 1rem; font-size:0.8rem; color:var(--text2); line-height:1.55; flex:1; display:flex; flex-direction:column; gap:0.5rem; }
+.src-body .pcc { background:#fff7f3; border-radius:8px; padding:0.45rem 0.6rem; color:#6b2a14; font-size:0.76rem; }
+.src-body a { margin-top:auto; align-self:flex-start; }
+.eval-pick { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem; }
+.eval-src { border:1.5px solid var(--border); background:white; border-radius:12px; padding:0.6rem 0.8rem; font-size:0.8rem; font-weight:700; cursor:pointer; text-align:left; font-family:inherit; max-width:230px; transition:all .2s; }
+.eval-src:hover { border-color:var(--coral); }
+.eval-src.sel { border-color:var(--navy); background:var(--navy); color:white; }
+.eval-src small { display:block; font-weight:500; opacity:.8; margin-top:0.2rem; font-size:0.72rem; }
+.crit { display:grid; grid-template-columns:1fr auto; gap:0.7rem; align-items:center; padding:0.6rem 0; border-bottom:1px dashed var(--border); }
+.crit h5 { font-size:0.85rem; } .crit p { font-size:0.76rem; color:var(--text2); }
+.yn { display:flex; gap:0.3rem; }
+.yn button { border:1.5px solid var(--border); background:white; border-radius:8px; padding:0.35rem 0.75rem; font-weight:800; font-size:0.76rem; cursor:pointer; font-family:inherit; transition:all .2s; }
+.yn button.ok { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; }
+.yn button.ko { background:#fdeaea; border-color:#e99; color:#a12c2c; animation:shake .35s; }
+.yn button:disabled { cursor:default; }
+.crit-fb { grid-column:1/-1; font-size:0.76rem; color:var(--text2); background:var(--bg); border-radius:8px; padding:0.45rem 0.6rem; animation:rise .3s var(--ease); }
+.semaforo { display:flex; gap:0.8rem; align-items:center; margin-top:1rem; background:var(--bg); border-radius:12px; padding:0.9rem 1rem; }
+.lights { display:flex; flex-direction:column; gap:5px; background:#1c1f24; padding:7px; border-radius:12px; }
+.light { width:20px; height:20px; border-radius:50%; background:#3a3f47; transition:all .4s; }
+.light.r.on { background:#ff4d4d; box-shadow:0 0 12px #ff4d4d; } .light.y.on { background:#ffc53d; box-shadow:0 0 12px #ffc53d; } .light.g.on { background:#3ddc84; box-shadow:0 0 12px #3ddc84; }
+.sem-text { font-size:0.86rem; line-height:1.5; }
+
+/* BUSCADORES */
+.engines { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.engine { border-radius:14px; padding:1.1rem; border:1px solid var(--border); background:white; }
+.engine .lvl { font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.6px; }
+.engine h4 { font-family:'Sora',sans-serif; font-size:1rem; margin:0.25rem 0 0.4rem; }
+.engine p { font-size:0.78rem; color:var(--text2); line-height:1.5; margin-bottom:0.5rem; }
+.how { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin:0.8rem 0; }
+.how .box { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:0.55rem 0.8rem; font-size:0.8rem; font-weight:700; }
+.how .arr { color:var(--coral); font-weight:800; }
+.op-table { width:100%; border-collapse:separate; border-spacing:0 6px; font-size:0.84rem; }
+.op-table td { background:var(--bg); padding:0.6rem 0.8rem; }
+.op-table td:first-child { border-radius:8px 0 0 8px; font-family:Consolas,monospace; font-weight:800; color:var(--coral2); width:110px; }
+.op-table td:last-child { border-radius:0 8px 8px 0; }
+.op-table tr { cursor:pointer; transition:transform .2s; } .op-table tr:hover td { background:#ffece4; }
+.lab { background:#0f1b2b; border-radius:16px; padding:1.2rem; color:#d9e3f0; }
+.lab-top { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.8rem; }
+.dots i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; }
+.lab-title { font-size:0.78rem; font-weight:700; opacity:.7; margin-left:0.4rem; }
+.search-bar { display:flex; align-items:center; gap:0.6rem; background:white; border-radius:30px; padding:0.55rem 0.9rem; box-shadow:0 4px 18px rgba(0,0,0,0.25); }
+.search-bar input { flex:1; border:none; outline:none; font-size:0.95rem; font-family:Consolas,'Segoe UI',monospace; color:#1a1a1a; background:transparent; min-width:0; }
+.op-chips { display:flex; flex-wrap:wrap; gap:0.35rem; margin:0.7rem 0; }
+.op-chip { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); color:#ffd2c2; font-family:Consolas,monospace; font-size:0.78rem; font-weight:700; border-radius:8px; padding:0.25rem 0.6rem; cursor:pointer; transition:all .2s; }
+.op-chip:hover { background:var(--coral); color:white; }
+.res-count { font-size:0.74rem; opacity:.65; margin:0.3rem 0 0.5rem; }
+.results { display:flex; flex-direction:column; gap:0.45rem; max-height:360px; overflow-y:auto; padding-right:4px; }
+.res { background:rgba(255,255,255,0.05); border-radius:10px; padding:0.6rem 0.8rem; animation:rise .3s var(--ease); }
+.res .u { font-size:0.7rem; color:#8fd0a8; }
+.res .t { font-size:0.88rem; color:#9ec5ff; font-weight:700; }
+.res .d { font-size:0.75rem; opacity:.75; line-height:1.45; }
+.res .ft { font-size:0.62rem; font-weight:800; background:#e4572e; color:white; border-radius:4px; padding:0 0.3rem; margin-right:0.3rem; }
+.missions { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:0.5rem; margin-top:1rem; }
+.mission { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:0.6rem 0.7rem; font-size:0.76rem; line-height:1.4; transition:all .4s var(--ease); }
+.mission b { color:#ffd2c2; }
+.mission.done { background:rgba(61,220,132,0.18); border-color:#3ddc84; }
+.mission.done::before { content:'✅ '; }
+.serp { background:white; border:1px solid var(--border); border-radius:14px; padding:1rem 1.2rem; }
+.serp-q { display:flex; align-items:center; gap:0.5rem; border:1px solid #dfe1e5; border-radius:24px; padding:0.45rem 0.9rem; font-size:0.85rem; margin-bottom:0.8rem; }
+.serp-item { padding:0.6rem 0.6rem; border-radius:10px; transition:all .35s var(--ease); border:2px solid transparent; position:relative; }
+.serp-item .sp { font-size:0.7rem; font-weight:800; color:#202124; }
+.serp-item .u { font-size:0.74rem; color:#4d5156; }
+.serp-item .t { font-size:0.95rem; color:#1a0dab; }
+.serp-item .d { font-size:0.78rem; color:#4d5156; line-height:1.45; }
+.serp.hl-sem .serp-item.sem, .serp.hl-seo .serp-item.seo { border-color:var(--coral); background:#fff4ef; }
+.serp.hl-sem .serp-item.seo, .serp.hl-seo .serp-item.sem { opacity:.35; }
+.serp-tag { position:absolute; right:0.6rem; top:0.6rem; font-size:0.65rem; font-weight:800; background:var(--coral); color:white; border-radius:6px; padding:0.1rem 0.4rem; opacity:0; transition:opacity .3s; }
+.serp.hl-sem .sem .serp-tag, .serp.hl-seo .seo .serp-tag { opacity:1; }
+.seo-sem { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem; }
+.ss-card { border-radius:14px; padding:1rem 1.1rem; }
+.ss-card h4 { font-family:'Sora',sans-serif; font-size:1.2rem; }
+.ss-card ul { padding-left:1.1rem; font-size:0.8rem; line-height:1.8; margin-top:0.3rem; }
+
+/* TRATAMIENTO */
+.fmt-tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; margin-bottom:1rem; }
+.fmt { border:1.5px solid var(--border); background:white; border-radius:12px; padding:0.9rem; cursor:pointer; text-align:center; font-family:inherit; transition:all .3s var(--ease); }
+.fmt .i { font-size:1.8rem; display:block; } .fmt b { font-size:0.86rem; display:block; margin-top:0.2rem; } .fmt small { font-size:0.72rem; color:var(--text2); }
+.fmt:hover { transform:translateY(-3px); }
+.fmt.sel { background:var(--navy); color:white; border-color:var(--navy); } .fmt.sel small { color:rgba(255,255,255,0.75); }
+.fmt-panel { background:var(--bg); border-radius:14px; padding:1.2rem 1.3rem; border:1px solid var(--border); font-size:0.86rem; line-height:1.7; color:var(--text2); }
+.fmt-panel h4 { font-family:'Sora',sans-serif; color:var(--text); font-size:1rem; margin-bottom:0.4rem; }
+.fmt-panel ul { padding-left:1.1rem; }
+.tbl-demo { border-collapse:collapse; margin:0.7rem 0; font-size:0.78rem; background:white; }
+.tbl-demo th, .tbl-demo td { border:1px solid #cfd7e2; padding:0.35rem 0.6rem; text-align:center; }
+.tbl-demo th { background:#e9eff6; color:var(--navy); }
+.tbl-demo .lab-v { background:var(--coral); color:white; font-size:0.65rem; }
+.tbl-demo .lab-c { background:var(--mint); color:white; font-size:0.65rem; writing-mode:vertical-rl; transform:rotate(180deg); }
+.clean { width:100%; border-collapse:separate; border-spacing:3px; font-size:0.84rem; }
+.clean th { background:var(--navy); color:white; padding:0.5rem; border-radius:6px; font-size:0.76rem; }
+.clean td { background:var(--bg); padding:0.55rem; text-align:center; border-radius:6px; cursor:pointer; transition:all .2s; font-family:Consolas,monospace; border:1.5px solid transparent; }
+.clean td:hover { border-color:var(--coral); }
+.clean td.fixed { background:#fdeaea; color:#a12c2c; text-decoration:line-through; border-color:#e99; cursor:default; animation:gemPop .4s; }
+.clean td.nope { animation:shake .35s; }
+.clean td.idc { background:transparent; color:var(--text2); cursor:default; border:none; }
+.apa { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+.apa label { font-size:0.74rem; font-weight:700; color:var(--text2); display:flex; flex-direction:column; gap:0.2rem; }
+.apa input { border:1.5px solid var(--border); border-radius:8px; padding:0.5rem 0.6rem; font-size:0.84rem; font-family:inherit; }
+.apa input:focus { outline:none; border-color:var(--coral); }
+.apa-out { margin-top:0.8rem; background:#0f1b2b; color:#e8eef6; border-radius:10px; padding:0.9rem 1rem; font-size:0.86rem; line-height:1.6; display:flex; gap:0.8rem; align-items:flex-start; justify-content:space-between; }
+.apa-out i { color:#ffd2c2; }
+.an-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; }
+.an { border-radius:14px; padding:1.1rem; border:1px solid var(--border); background:white; border-top:5px solid; }
+.an h4 { font-family:'Sora',sans-serif; font-size:0.98rem; margin-bottom:0.4rem; }
+.an p { font-size:0.8rem; color:var(--text2); line-height:1.6; margin-bottom:0.5rem; }
+.code-bars { display:flex; flex-direction:column; gap:0.35rem; margin-top:1rem; }
+.cbar { display:grid; grid-template-columns:90px 1fr 24px; gap:0.5rem; align-items:center; font-size:0.78rem; font-weight:700; }
+.cbar .track { background:var(--bg); border-radius:6px; height:14px; overflow:hidden; }
+.cbar .fill { height:100%; width:0; border-radius:6px; transition:width .6s var(--ease); }
+
+/* DECISIÓN */
+.pipeline { display:grid; grid-template-columns:repeat(5,1fr); gap:0.5rem; }
+.pipe { background:white; border:1px solid var(--border); border-radius:12px; padding:0.8rem 0.5rem; text-align:center; position:relative; }
+.pipe .p-ico { font-size:1.5rem; } .pipe h5 { font-size:0.78rem; font-weight:800; margin-top:0.2rem; } .pipe p { font-size:0.7rem; color:var(--text2); line-height:1.35; margin-top:0.2rem; }
+.pipe:not(:last-child)::after { content:'➜'; position:absolute; right:-0.6rem; top:50%; transform:translateY(-50%); color:var(--coral); font-weight:800; z-index:1; }
+.tab-content.active .pipe { animation:rise .5s var(--ease) both; }
+.tab-content.active .pipe:nth-child(2){animation-delay:.1s}.tab-content.active .pipe:nth-child(3){animation-delay:.2s}.tab-content.active .pipe:nth-child(4){animation-delay:.3s}.tab-content.active .pipe:nth-child(5){animation-delay:.4s}
+.order { display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap; margin-top:0.8rem; }
+.order .o { border-radius:10px; padding:0.5rem 0.8rem; font-size:0.8rem; font-weight:800; }
+.dtree { display:grid; grid-template-columns:1fr 1.1fr 1.4fr; gap:0.8rem; align-items:center; }
+.dt-root { background:var(--navy); color:white; border-radius:14px; padding:1rem; font-weight:800; font-size:0.88rem; text-align:center; font-family:'Sora',sans-serif; }
+.dt-col { display:flex; flex-direction:column; gap:0.8rem; }
+.dt-q { border-radius:12px; padding:0.8rem; font-size:0.8rem; font-weight:700; text-align:center; cursor:pointer; transition:all .3s var(--ease); border:2px solid transparent; font-family:inherit; }
+.dt-q:hover { transform:translateX(4px); }
+.dt-a { border-radius:12px; padding:0.8rem 0.9rem; font-size:0.8rem; line-height:1.5; background:white; border:1.5px dashed var(--border); color:var(--text2); min-height:88px; transition:all .4s var(--ease); }
+.dt-a.show { border-style:solid; color:var(--text); }
+.dt-q.lit { border-color:var(--text); box-shadow:0 6px 16px rgba(0,0,0,0.12); }
+.sim-q { background:var(--bg); border-radius:12px; padding:0.9rem 1rem; margin-bottom:0.6rem; }
+.sim-q h5 { font-size:0.88rem; margin-bottom:0.5rem; }
+.sim-opts { display:flex; flex-wrap:wrap; gap:0.35rem; }
+.sim-opt { border:1.5px solid var(--border); background:white; border-radius:20px; padding:0.3rem 0.75rem; font-size:0.76rem; font-weight:700; cursor:pointer; font-family:inherit; transition:all .2s; }
+.sim-opt:hover:not(:disabled) { border-color:var(--coral); color:var(--coral); }
+.sim-opt.ok { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; }
+.sim-opt.ko { background:#fdeaea; border-color:#e99; color:#a12c2c; }
+.sim-opt:disabled { cursor:default; }
+.sim-fb { font-size:0.76rem; color:var(--text2); margin-top:0.4rem; animation:rise .3s var(--ease); }
+.verdict { border-radius:14px; padding:1.1rem 1.2rem; font-size:0.9rem; line-height:1.6; margin-top:0.6rem; animation:rise .5s var(--ease); }
+
+/* JUEGOS */
+.games-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.2rem; }
+.game-launch { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:1.5rem; text-align:center; cursor:pointer; transition:all .25s var(--ease); }
+.game-launch:hover { border-color:var(--coral); transform:translateY(-4px); box-shadow:0 12px 26px rgba(0,0,0,0.09); }
+.game-launch .g-icon { font-size:2.5rem; margin-bottom:0.5rem; }
+.game-launch h4 { font-size:0.92rem; font-weight:800; margin-bottom:0.3rem; }
+.game-launch p { font-size:0.78rem; color:var(--text2); }
+.modal-bg { display:none; position:fixed; inset:0; background:rgba(8,20,36,0.6); z-index:200; align-items:center; justify-content:center; backdrop-filter:blur(3px); }
+.modal-bg.show { display:flex; animation:fadeIn .25s; }
+.modal { background:var(--bg2); border-radius:18px; padding:2rem; max-width:560px; width:92%; max-height:88vh; overflow-y:auto; position:relative; animation:rise .35s var(--ease); }
+.modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text2); }
+.modal h2 { font-size:1.2rem; font-weight:800; margin-bottom:1.2rem; }
+.hangman-word { display:flex; gap:0.35rem; flex-wrap:wrap; justify-content:center; margin:1rem 0; }
+.letter-box { width:28px; height:34px; border-bottom:2.5px solid var(--text); display:flex; align-items:center; justify-content:center; font-size:1.05rem; font-weight:800; }
+.hangman-keys { display:flex; flex-wrap:wrap; gap:0.35rem; justify-content:center; margin:1rem 0; }
+.key-btn { padding:0.4rem 0.55rem; min-width:32px; border:1.5px solid var(--border); border-radius:7px; background:var(--bg2); cursor:pointer; font-size:0.85rem; font-weight:700; font-family:inherit; }
+.key-btn:hover:not(:disabled) { border-color:var(--coral); color:var(--coral); }
+.key-btn:disabled { opacity:0.35; cursor:not-allowed; }
+.key-btn.wrong { background:#fdeaea; border-color:#e99; color:#a12c2c; opacity:.8; }
+.key-btn.right { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; opacity:.8; }
+.hangman-drawing { display:block; margin:0 auto 0.5rem; }
+.hangman-status { text-align:center; font-weight:800; font-size:0.95rem; margin:0.5rem 0; }
+.hint-text { text-align:center; font-size:0.8rem; color:var(--text2); background:var(--bg); border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; }
+.grid-sopa { display:inline-grid; gap:2px; user-select:none; touch-action:none; }
+.sopa-cell { width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; border-radius:4px; cursor:pointer; background:var(--bg); border:1px solid var(--border); }
+.sopa-cell.selected { background:#ffe2d6; border-color:var(--coral); color:var(--coral2); }
+.sopa-cell.found { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; }
+.sopa-words { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.8rem; justify-content:center; }
+.sopa-word { padding:0.25rem 0.7rem; border-radius:20px; font-size:0.78rem; font-weight:700; background:var(--bg); border:1px solid var(--border); color:var(--text2); }
+.sopa-word.found { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; text-decoration:line-through; }
+.quiz-q { font-weight:700; font-size:0.93rem; margin-bottom:0.7rem; }
+.quiz-options { display:flex; flex-direction:column; gap:0.45rem; margin-bottom:1.2rem; }
+.quiz-opt { padding:0.65rem 1rem; border:1.5px solid var(--border); border-radius:10px; background:var(--bg2); cursor:pointer; font-size:0.85rem; text-align:left; font-family:inherit; transition:all .2s; }
+.quiz-opt:hover { border-color:var(--coral); }
+.quiz-opt.selected { background:#ffece4; border-color:var(--coral); font-weight:700; }
+.quiz-opt.right { background:#e6f5ea; border-color:#4c9a5b; } .quiz-opt.wrong { background:#fdeaea; border-color:#e99; }
+.memory-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem; margin:1rem 0; }
+.mem-card { height:76px; perspective:600px; cursor:pointer; }
+.mem-inner { position:relative; width:100%; height:100%; transition:transform 0.45s; transform-style:preserve-3d; }
+.mem-card.flipped .mem-inner { transform:rotateY(180deg); }
+.mem-front,.mem-back { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; text-align:center; padding:0.3rem; }
+.mem-front { background:linear-gradient(135deg,var(--navy),#1b4a7a); color:white; font-size:1.2rem; }
+.mem-back { background:#fff4ef; border:2px solid var(--coral); color:var(--coral2); transform:rotateY(180deg); font-size:0.68rem; }
+.mem-card.matched .mem-back { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; }
+.mem-status { text-align:center; font-size:0.85rem; color:var(--text2); }
+
+/* TOAST + CONFETI */
+.toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,120px); background:var(--navy2); color:white; padding:0.8rem 1.2rem; border-radius:14px; font-weight:700; font-size:0.88rem; z-index:300; box-shadow:0 10px 30px rgba(0,0,0,0.3); transition:transform .5s var(--ease); display:flex; gap:0.6rem; align-items:center; }
+.toast.show { transform:translate(-50%,0); }
+.confetti { position:fixed; top:-20px; z-index:299; font-size:1.2rem; pointer-events:none; animation:fall 1.8s linear forwards; }
+@keyframes fall { to { transform:translateY(105vh) rotate(540deg); opacity:.3; } }
+
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } }
+@media(max-width:700px){
+  header { padding:0.8rem 1rem; }
+  .container { padding:1.2rem 1rem; }
+  .ut-hero { padding:2rem 1.3rem 1.5rem; }
+  .ut-hero h2 { font-size:1.75rem; }
+  .hero-chips { display:none; }
+  .tabs { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { white-space:nowrap; flex-shrink:0; }
+  .versus { grid-template-columns:1fr; } .vs-mid { padding:0.2rem; }
+  .roadmap { grid-template-columns:1fr 1fr; }
+  .building { grid-template-columns:1fr; }
+  .mine-wrap, .seo-sem, .apa, .engines { grid-template-columns:1fr; }
+  .fmt-tabs { grid-template-columns:1fr 1fr 1fr; } .fmt small { display:none; }
+  .pipeline { grid-template-columns:1fr 1fr; } .pipe:not(:last-child)::after { display:none; }
+  .dtree { grid-template-columns:1fr; }
+  .memory-grid { grid-template-columns:repeat(3,1fr); }
+  .sopa-cell { width:22px; height:22px; font-size:0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>PABLO JORDÁN PROFE</h1>
+    <span>Unidad de Trabajo 4</span>
+  </div>
+  <a href="index.html" class="back-btn">← Volver al índice</a>
+  <div class="scroll-progress" id="scroll-progress"></div>
+</header>
+
+<div class="container">
+  <div class="ut-hero">
+    <div class="hero-chips"><span class="hchip">📊 INE</span><span class="hchip">🔎 site:ine.es</span><span class="hchip">💎 data mining</span></div>
+    <span class="hero-tag">Unidad 4</span>
+    <h2>Información <em>secundaria</em></h2>
+    <div class="typing" id="typing"></div>
+    <div class="badges" id="badges">
+      <span class="badges-label">Tus insignias</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="intro" onclick="switchTab('intro',this)">🧭 Punto de partida</div>
+    <div class="tab" data-tab="internas" onclick="switchTab('internas',this)">🏢 Fuentes internas</div>
+    <div class="tab" data-tab="externas" onclick="switchTab('externas',this)">🌐 Fuentes externas</div>
+    <div class="tab" data-tab="buscadores" onclick="switchTab('buscadores',this)">🔎 Buscadores</div>
+    <div class="tab" data-tab="tratamiento" onclick="switchTab('tratamiento',this)">🗂️ Tratamiento y análisis</div>
+    <div class="tab" data-tab="decision" onclick="switchTab('decision',this)">✅ ¿Es suficiente?</div>
+    <div class="tab" data-tab="juegos" onclick="switchTab('juegos',this)">🎮 Juegos</div>
+  </div>
+
+  <!-- ================= INTRO ================= -->
+  <div class="tab-content active" id="tab-intro">
+    <div class="card" style="border-left:4px solid var(--coral)">
+      <div class="kicker">1 · La información secundaria y su control</div>
+      <h3>Antes de preguntar a nadie… ¿ya existe la respuesta?</h3>
+      <p>La materia prima de cualquier investigación comercial son los <strong>datos</strong> y la <strong>información</strong>. La <strong>información secundaria</strong> es la que <strong>ya existe</strong>: alguien la recogió antes y para otro fin (un informe del INE, los datos de ventas del CRM, un estudio de audiencias...).</p>
+      <p>Como es, por lo general, <strong>más barata y fácil de obtener</strong> que la primaria, <strong>siempre</strong> que empezamos una investigación comprobamos primero si hay suficiente información secundaria para cumplir los objetivos. Si la hay, <strong>no hace falta recoger información primaria</strong>.</p>
+      <p>Eso sí: puede que no nos sirva, porque <strong>no se ajusta</strong> a lo que necesitamos o porque es de <strong>dudosa calidad o escasa fiabilidad</strong>. Por eso hay que saber <strong>buscarla, evaluarla y tratarla</strong>.</p>
+    </div>
+
+    <div class="card">
+      <h3>⚔️ Primaria vs. secundaria</h3>
+      <div class="versus">
+        <div class="vs-col" style="background:#eef3f9">
+          <h4 style="color:var(--navy)">📚 Secundaria</h4>
+          <div class="vs-row"><span>¿Existe ya?</span><span>Sí, se recogió para otro fin</span></div>
+          <div class="vs-row"><span>Coste</span><span>Bajo o gratis 💸</span></div>
+          <div class="vs-row"><span>Tiempo</span><span>Rápida ⚡</span></div>
+          <div class="vs-row"><span>Ajuste a mi problema</span><span>No siempre 🤏</span></div>
+          <div class="vs-row" style="border:none"><span>Ejemplo</span><span>Población por edad del INE</span></div>
+        </div>
+        <div class="vs-mid">VS</div>
+        <div class="vs-col" style="background:#fff1eb">
+          <h4 style="color:var(--coral2)">🎤 Primaria</h4>
+          <div class="vs-row"><span>¿Existe ya?</span><span>No, la creamos nosotros</span></div>
+          <div class="vs-row"><span>Coste</span><span>Alto 💰</span></div>
+          <div class="vs-row"><span>Tiempo</span><span>Lenta 🐢</span></div>
+          <div class="vs-row"><span>Ajuste a mi problema</span><span>Total 🎯</span></div>
+          <div class="vs-row" style="border:none"><span>Ejemplo</span><span>Encuesta a nuestros clientes</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🗺️ La ruta de esta unidad</h3>
+      <p class="hint">Toca cada paso para ir directamente a su apartado.</p>
+      <div class="roadmap">
+        <div class="rm-step" onclick="goTab('internas')"><div class="n">01</div><h5>¿Dónde está?</h5><p>Fuentes internas (primero) y externas.</p><span class="go">Ir →</span></div>
+        <div class="rm-step" onclick="goTab('buscadores')"><div class="n">02</div><h5>¿Cómo la busco?</h5><p>Buscadores, operadores y ojo con el SEO/SEM.</p><span class="go">Ir →</span></div>
+        <div class="rm-step" onclick="goTab('tratamiento')"><div class="n">03</div><h5>¿Qué hago con ella?</h5><p>Clasificar, ordenar, limpiar, citar y analizar.</p><span class="go">Ir →</span></div>
+        <div class="rm-step" onclick="goTab('decision')"><div class="n">04</div><h5>¿Me basta?</h5><p>Comparar con los objetivos y decidir.</p><span class="go">Ir →</span></div>
+      </div>
+    </div>
+
+    <div class="case">🖥️ <b>Caso guía de la unidad:</b> <b>PC Componentes</b> estudia lanzar un servicio de <b>montaje de PCs gaming a domicilio</b> en la Región de Murcia (lo conociste en la UT2). Antes de gastar en una encuesta, el equipo de marketing se pregunta: <b>¿qué sabemos ya?</b> Lo iremos viendo en cada apartado.</div>
+    <div style="height:1.2rem"></div>
+
+    <div class="card">
+      <h3>🕵️ Reto «Detective de fuentes»: ¿primaria o secundaria?</h3>
+      <p class="hint">Consigue al menos 6 aciertos para ganar la insignia.</p>
+      <div id="cls-ps"></div>
+    </div>
+  </div>
+
+  <!-- ================= INTERNAS ================= -->
+  <div class="tab-content" id="tab-internas">
+    <div class="card" style="border-left:4px solid var(--navy)">
+      <div class="kicker">1.1 · Tipos de fuentes secundarias</div>
+      <h3>🏢 Fuentes internas: empieza por casa</h3>
+      <p>Las fuentes secundarias, igual que las primarias, pueden estar <strong>dentro (internas)</strong> o <strong>fuera (externas)</strong> de la organización. Siempre intentaremos <strong>empezar por las fuentes internas</strong>.</p>
+      <p>Ojo: la información interna se genera por el <strong>desarrollo normal de la actividad</strong> de la empresa (comprar, producir, vender) o por la elaboración de algún <strong>informe específico</strong>. Como no se creó pensando en nuestra investigación, <strong>puede que no nos sea útil</strong>.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔍 Recorre la empresa: ¿qué datos tiene cada departamento?</h3>
+      <p class="hint">Toca cada planta del edificio. Las marcadas con <span class="pill" style="background:var(--coral);color:white">tema</span> son las del libro; el resto amplían.</p>
+      <div class="building">
+        <div class="floors" id="floors"></div>
+        <div class="dept-panel" id="dept-panel"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🧰 Las herramientas que guardan la información interna</h3>
+      <p class="hint">👆 Toca cada tarjeta para darle la vuelta.</p>
+      <div class="flip-grid">
+        <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+          <div class="flip-front" style="background:linear-gradient(135deg,#12355b,#1f5c96)"><span class="big">🤝</span><div class="acr">CRM</div><div class="full">Customer Relationship Management</div><div class="tap">Toca para ver ↻</div></div>
+          <div class="flip-back"><b>Registra todos los contactos</b> que tenemos con cada cliente: cada conversación, cada venta, cada oferta... Toda esa actividad se almacena y nos permite hacer <b>promociones y comunicaciones muy específicas</b> a clientes concretos.<br><br>🖥️ PCC sabe qué clientes de Murcia compraron piezas sueltas este año.</div>
+        </div></div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+          <div class="flip-front" style="background:linear-gradient(135deg,#1f9e8f,#177a6e)"><span class="big">🗃️</span><div class="acr">BBDD</div><div class="full">Bases de datos de clientes</div><div class="tap">Toca para ver ↻</div></div>
+          <div class="flip-back">Incluyen datos de <b>ventas</b> y de <b>clientes potenciales</b>, que se pueden <b>enriquecer</b> con características individuales: <b>género, edad o zona de residencia</b>.<br><br>🖥️ Saber que el 60 % de quien compra piezas tiene entre 18 y 30 años.</div>
+        </div></div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+          <div class="flip-front" style="background:linear-gradient(135deg,#6a4cc2,#4d3496)"><span class="big">🏬</span><div class="acr">DW</div><div class="full">Data warehouse (almacén de datos)</div><div class="tap">Toca para ver ↻</div></div>
+          <div class="flip-back">Un <b>repositorio único</b> donde se almacenan <b>todos los datos</b> que genera la empresa (en sus equipos o en la nube). Los datos tienen formas muy distintas (informes de vendedores ≠ navegación web), y un buen DW es capaz de <b>relacionarlos</b> para que sean útiles. A más tamaño y actividad, más datos.</div>
+        </div></div>
+        <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-inner">
+          <div class="flip-front" style="background:linear-gradient(135deg,#e4572e,#b83a14)"><span class="big">⛏️</span><div class="acr">DM</div><div class="full">Data mining (minería de datos)</div><div class="tap">Toca para ver ↻</div></div>
+          <div class="flip-back">Conjunto de <b>técnicas de análisis complejas</b> que se aplican a grandes cantidades de datos para encontrar <b>patrones de comportamiento</b>. Se llama así porque busca <b>«pepitas de información» entre «montañas de datos»</b>. ¡Pruébalo justo aquí abajo! 👇</div>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>⛏️ Mina de datos: encuentra las 6 pepitas de información</h3>
+      <p class="hint">Cada roca es un dato del data warehouse de PCC. Pica hasta encontrar los 6 patrones escondidos (datos ficticios para la actividad). Con 30 golpes o menos ganas la insignia «Minero de datos».</p>
+      <div class="mine-wrap">
+        <div>
+          <div class="mine-stats" id="mine-stats"></div>
+          <div class="mine" id="mine"></div>
+          <button class="btn btn-ghost" style="margin-top:0.6rem" onclick="buildMine()">↺ Nueva mina</button>
+        </div>
+        <div class="nuggets" id="nuggets"><div class="hint" style="margin:0">💎 Aquí irán apareciendo los patrones que descubras...</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= EXTERNAS ================= -->
+  <div class="tab-content" id="tab-externas">
+    <div class="card" style="border-left:4px solid var(--mint)">
+      <div class="kicker">1.1 · Tipos de fuentes secundarias</div>
+      <h3>🌐 Fuentes externas: lo que otros ya han investigado</h3>
+      <p>Cuando la información interna no basta, salimos fuera: <strong>organismos públicos</strong> de estadística, <strong>asociaciones</strong> del sector, <strong>empresas</strong> de investigación y medios, <strong>estudios académicos</strong>... Muchas son gratuitas; otras son de pago.</p>
+    </div>
+
+    <p class="hint">👇 Las cuatro del tema. Cada tarjeta lleva un acceso directo a la web oficial.</p>
+    <div class="src-grid" id="src-main" style="margin-bottom:1.2rem"></div>
+
+    <div class="card">
+      <h3>➕ Más fuentes que un profesional del marketing usa a diario</h3>
+      <div class="src-grid" id="src-more"></div>
+    </div>
+
+    <div class="card">
+      <h3>🚦 ¿Me fío de esta fuente? Evalúala</h3>
+      <p>No todo lo que encuentras sirve. Antes de usar una fuente secundaria, evalúala con estas cinco preguntas. Elige una fuente y responde: el semáforo te dirá si es fiable.</p>
+      <div style="height:0.8rem"></div>
+      <div class="eval-pick" id="eval-pick"></div>
+      <div id="eval-box"></div>
+    </div>
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> fuentes <strong>internas</strong> = CRM, bases de datos de clientes, data warehouse / data mining y los datos de cada departamento. Fuentes <strong>externas</strong> del tema = <strong>INE, CIS, EGM y Oblicua</strong>.</div>
+  </div>
+
+  <!-- ================= BUSCADORES ================= -->
+  <div class="tab-content" id="tab-buscadores">
+    <div class="card" style="border-left:4px solid var(--violet)">
+      <div class="kicker">2 · Búsqueda de información secundaria</div>
+      <h3>🔎 Hoy casi todo se busca online</h3>
+      <p>Internet permite buscar <strong>desde cualquier lugar, en cualquier momento y con cualquier dispositivo</strong>, así que la búsqueda en formatos físicos casi ha desaparecido. Aun así, <strong>no todo está digitalizado</strong> (algunos libros y manuales, por ejemplo). Y en las empresas con <strong>data warehouse o CRM</strong>, consultar los datos internos es muy sencillo y rápido.</p>
+    </div>
+
+    <div class="card">
+      <div class="kicker">2.1 · El uso de motores de búsqueda</div>
+      <h3>🧭 Tres tipos de buscadores</h3>
+      <div class="engines">
+        <div class="engine" style="border-top:5px solid #4285f4"><div class="lvl" style="color:#4285f4">General</div><h4>Para todo</h4><p>Buscan en toda la web.</p><a class="ext" href="https://www.google.com/" target="_blank" rel="noopener">Google ↗</a><a class="ext" href="https://www.bing.com/" target="_blank" rel="noopener">Bing ↗</a></div>
+        <div class="engine" style="border-top:5px solid var(--mint)"><div class="lvl" style="color:var(--mint)">Específicos</div><h4>Académicos</h4><p>Artículos científicos y estudios. PubMed está centrado en salud.</p><a class="ext" href="https://scholar.google.es/" target="_blank" rel="noopener">Google Scholar ↗</a><a class="ext" href="https://www.jstor.org/" target="_blank" rel="noopener">JSTOR ↗</a><a class="ext" href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener">PubMed ↗</a></div>
+        <div class="engine" style="border-top:5px solid var(--coral)"><div class="lvl" style="color:var(--coral)">Especializados</div><h4>Marketing digital</h4><p>Tendencias de búsqueda, palabras clave y análisis de webs y competencia.</p><a class="ext" href="https://trends.google.es/trends/" target="_blank" rel="noopener">Google Trends ↗</a><a class="ext" href="https://es.semrush.com/" target="_blank" rel="noopener">Semrush ↗</a><a class="ext" href="https://ahrefs.com/es" target="_blank" rel="noopener">Ahrefs ↗</a></div>
+      </div>
+      <div style="height:1rem"></div>
+      <p><strong>¿Cómo funcionan?</strong> Todos igual:</p>
+      <div class="how"><span class="box">⌨️ Escribes palabras clave</span><span class="arr">➜</span><span class="box">🤖 El algoritmo matemático de la empresa las ordena</span><span class="arr">➜</span><span class="box">📃 Lista de webs donde aparecen</span></div>
+      <p>El problema hoy <strong>no es la falta de información, sino el exceso</strong>. Cuanto más afines tus búsquedas, más eficiente serás. Para eso están los <strong>operadores</strong>.</p>
+    </div>
+
+    <div class="card">
+      <h3>🧩 Operadores de búsqueda de Google</h3>
+      <p class="hint">Toca un operador para probarlo en el laboratorio de abajo.</p>
+      <table class="op-table" id="op-table"></table>
+      <div class="curio" style="margin:0.8rem 0 0">🤓 <strong>Curiosidad, no examen:</strong> en Google, <code>AND</code> no hace falta escribirlo, porque buscar varias palabras ya funciona así. <code>OR</code> debe ir en MAYÚSCULAS. ¿Quieres más trucos? <a class="ext" href="https://www.xataka.com/basics/operadores-busqueda-para-google" target="_blank" rel="noopener">39 operadores de Google (Xataka) ↗</a></div>
+    </div>
+
+    <div class="lab" id="lab">
+      <div class="lab-top"><span class="dots"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i></span><span class="lab-title">🧪 Laboratorio de búsqueda · simulador con 12 resultados</span></div>
+      <div class="search-bar"><span>🔎</span><input id="q" type="text" placeholder='Prueba: gaming filetype:pdf' autocomplete="off" spellcheck="false" oninput="runSearch()"><a class="btn btn-coral" id="real-google" href="https://www.google.com/" target="_blank" rel="noopener" style="padding:0.4rem 0.8rem;font-size:0.74rem">Google real ↗</a></div>
+      <div class="op-chips" id="op-chips"></div>
+      <div class="res-count" id="res-count"></div>
+      <div class="results" id="results"></div>
+      <div style="margin-top:1rem;font-size:0.8rem;font-weight:800;color:#ffd2c2">🥷 Misiones: complétalas todas para ser «Ninja de operadores»</div>
+      <div class="missions" id="missions"></div>
+    </div>
+    <div style="height:1.2rem"></div>
+
+    <div class="card">
+      <h3>🥇 Salir primero no significa ser el mejor</h3>
+      <p>La <strong>posición</strong> de una web en los resultados no refleja su calidad, sino que el <strong>algoritmo</strong> la considera más o menos <strong>relevante</strong> para esas palabras. Además, con <strong>técnicas SEM</strong> se puede llevar una página a los primeros puestos. Por eso: <strong>evalúa siempre las fuentes</strong> (mira la pestaña 🌐 Fuentes externas).</p>
+      <div style="display:flex;gap:0.5rem;flex-wrap:wrap;margin:1rem 0 0.8rem">
+        <button class="btn btn-coral" onclick="hlSerp('sem')">💰 Resaltar SEM</button>
+        <button class="btn btn-navy" onclick="hlSerp('seo')">🌱 Resaltar SEO</button>
+        <button class="btn btn-ghost" onclick="hlSerp('')">Quitar</button>
+      </div>
+      <div class="serp" id="serp">
+        <div class="serp-q">🔎 montaje pc gaming a domicilio murcia</div>
+        <div class="serp-item sem"><span class="serp-tag">SEM · anuncio de pago</span><div class="sp">Patrocinado</div><div class="u">montapc-express.es</div><div class="t">Montaje de PC en 24 h — ¡Pide presupuesto gratis!</div><div class="d">Técnicos certificados. Recogemos y montamos tu PC gaming en casa. Oferta de lanzamiento.</div></div>
+        <div class="serp-item sem"><span class="serp-tag">SEM · anuncio de pago</span><div class="sp">Patrocinado</div><div class="u">tiendagamer.com</div><div class="t">PCs gaming ya montados desde 699 €</div><div class="d">Olvídate de montar: compra tu PC listo para jugar. Envío gratis.</div></div>
+        <div class="serp-item seo"><span class="serp-tag">SEO · resultado orgánico</span><div class="u">montajes-murcia.es</div><div class="t">Servicio de montaje de ordenadores a domicilio en Murcia</div><div class="d">Montamos tu PC en Murcia, Cartagena y Lorca. Opiniones de clientes y precios.</div></div>
+        <div class="serp-item seo"><span class="serp-tag">SEO · resultado orgánico</span><div class="u">forogamer.es › hardware</div><div class="t">¿Alguien ha usado un servicio de montaje a domicilio?</div><div class="d">Hilo con 54 respuestas de usuarios contando su experiencia...</div></div>
+        <div class="serp-item seo"><span class="serp-tag">SEO · resultado orgánico</span><div class="u">blogpcmaster.com</div><div class="t">Cómo montar un PC gaming paso a paso (guía 2026)</div><div class="d">Todo lo que necesitas saber para montarlo tú mismo.</div></div>
+      </div>
+      <div class="seo-sem">
+        <div class="ss-card" style="background:#eef7ef"><h4>🌱 SEO</h4><div style="font-size:0.74rem;font-weight:700;color:#2d6b39">Search Engine Optimization</div><ul><li>Posicionamiento <strong>orgánico</strong> (no se paga a Google).</li><li>Se consigue con buen contenido y técnica web.</li><li>Lento, pero duradero.</li></ul></div>
+        <div class="ss-card" style="background:#fff1eb"><h4>💰 SEM</h4><div style="font-size:0.74rem;font-weight:700;color:var(--coral2)">Search Engine Marketing</div><ul><li>Marketing en buscadores; en la práctica, <strong>anuncios de pago</strong> (Google Ads).</li><li>Aparecen como <strong>«Patrocinado»</strong>.</li><li>Resultado inmediato mientras pagas.</li></ul></div>
+      </div>
+    </div>
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> buscadores <strong>generales</strong> (Google, Bing), <strong>específicos</strong> (Google Scholar, JSTOR, PubMed) y <strong>especializados</strong> (Google Trends, Semrush, Ahrefs). Operadores: <code>AND</code>, <code>OR</code>, <code>" "</code>, <code>-</code>, <code>filetype:</code>, <code>site:</code>. Y recuerda: <strong>posición ≠ calidad</strong>.</div>
+  </div>
+
+  <!-- ================= TRATAMIENTO ================= -->
+  <div class="tab-content" id="tab-tratamiento">
+    <div class="card" style="border-left:4px solid var(--amber)">
+      <div class="kicker">3 · Tratamiento y análisis de la información secundaria</div>
+      <h3>🗂️ Ya la tengo… ¿y ahora qué?</h3>
+      <p>Después de buscar, evaluar y seleccionar la información secundaria, toca <strong>adecuarla y analizarla</strong>. Al final se decide si es <strong>suficiente</strong> para cumplir los objetivos o si hace falta información adicional.</p>
+    </div>
+
+    <div class="card">
+      <div class="kicker">3.1 · Clasificación y ordenación</div>
+      <h3>¿En qué forma está tu información?</h3>
+      <p class="hint">Cómo la ordenes depende de su formato. Elige uno:</p>
+      <div class="fmt-tabs">
+        <button class="fmt sel" onclick="showFmt(0,this)"><span class="i">📄</span><b>Documentos</b><small>artículos, libros, informes</small></button>
+        <button class="fmt" onclick="showFmt(1,this)"><span class="i">🎙️</span><b>Cualitativa</b><small>vídeos, audios, discursos</small></button>
+        <button class="fmt" onclick="showFmt(2,this)"><span class="i">🔢</span><b>Cuantitativa</b><small>números</small></button>
+      </div>
+      <div class="fmt-panel" id="fmt-panel"></div>
+    </div>
+
+    <div class="card">
+      <h3>🧽 Reto «Limpiador de datos»: encuentra los 5 errores</h3>
+      <p>En esta tabla de clientes de PCC se han colado errores. Reglas: la <strong>edad</strong> debe ser un número; el <strong>gasto</strong> válido va de <strong>100 a 1.000 €</strong>; la provincia debe estar bien escrita. Toca las celdas erróneas, como haría el software de limpieza.</p>
+      <div style="height:0.8rem"></div>
+      <div style="overflow-x:auto"><table class="clean" id="clean"></table></div>
+      <div class="cls-fb" id="clean-fb"></div>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--coral)">
+      <h3>©️ Cita siempre tus fuentes</h3>
+      <p>Tanto si la información es gratuita como si es de pago, <strong>es tu obligación citar o referenciar la fuente</strong>: para <strong>reconocer la autoría</strong> de quien la produjo y para que tu lector pueda <strong>profundizar</strong> en las fuentes originales. Si no lo haces y tu texto se parece demasiado a otro publicado, te pueden acusar de <strong>plagio</strong>, con consecuencias <strong>legales y morales</strong>.</p>
+      <div style="height:0.8rem"></div>
+      <p style="font-weight:700;color:var(--text)">✍️ Generador rápido de citas (estilo APA 7) — rellena y copia:</p>
+      <div style="height:0.5rem"></div>
+      <div class="apa">
+        <label>Autor u organismo<input id="apa-a" value="Instituto Nacional de Estadística" oninput="updApa()"></label>
+        <label>Año<input id="apa-y" value="2025" oninput="updApa()"></label>
+        <label>Título del documento<input id="apa-t" value="Encuesta sobre equipamiento y uso de TIC en los hogares" oninput="updApa()"></label>
+        <label>URL<input id="apa-u" value="https://www.ine.es/" oninput="updApa()"></label>
+      </div>
+      <div class="apa-out"><span id="apa-out"></span><button class="btn btn-coral" style="flex-shrink:0;padding:0.4rem 0.8rem" onclick="copyApa(this)">📋 Copiar</button></div>
+    </div>
+
+    <div class="card">
+      <div class="kicker">3.2 · Análisis de la información secundaria</div>
+      <h3>🔬 Tres formas de analizar</h3>
+      <div class="an-grid">
+        <div class="an" style="border-top-color:var(--navy)"><h4>📄 Análisis documental</h4><p>Una <strong>descripción bibliográfica</strong> de cada documento y un <strong>análisis interno</strong>: palabras clave y un resumen de lo más relevante para los objetivos. Ayuda un gestor de referencias.</p><a class="ext" href="https://www.zotero.org/" target="_blank" rel="noopener">Zotero ↗</a><a class="ext" href="https://www.mendeley.com/" target="_blank" rel="noopener">Mendeley ↗</a></div>
+        <div class="an" style="border-top-color:var(--violet)"><h4>🎙️ Información cualitativa</h4><p><strong>Análisis de contenido</strong>: <strong>codificar</strong> el material según categorías de análisis y buscar relaciones entre ellas. Se usa software tipo <strong>CAQDAS</strong> (programas de análisis cualitativo asistido por ordenador), como <strong>NVivo</strong> o <strong>ATLAS.ti</strong>.</p><a class="ext" href="https://lumivero.com/products/nvivo/" target="_blank" rel="noopener">NVivo ↗</a><a class="ext" href="https://atlasti.com/" target="_blank" rel="noopener">ATLAS.ti ↗</a></div>
+        <div class="an" style="border-top-color:var(--mint)"><h4>🔢 Información cuantitativa</h4><p><strong>Métodos estadísticos</strong> con software específico (por ejemplo, <strong>SPSS</strong>) u <strong>hojas de cálculo</strong>. Lo trabajarás a fondo en la UT7.</p><a class="ext" href="https://www.ibm.com/es-es/products/spss-statistics" target="_blank" rel="noopener">SPSS ↗</a><a class="ext" href="https://sheets.google.com/" target="_blank" rel="noopener">Google Sheets ↗</a></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🏷️ Pruébalo: análisis de contenido de opiniones</h3>
+      <p>Así trabaja un analista cualitativo: lee opiniones de clientes de PCC en reseñas y <strong>codifícalas</strong> en una categoría. Mira cómo se forman los resultados.</p>
+      <div id="coding"></div>
+      <div class="code-bars" id="code-bars"></div>
+    </div>
+  </div>
+
+  <!-- ================= DECISIÓN ================= -->
+  <div class="tab-content" id="tab-decision">
+    <div class="card" style="border-left:4px solid var(--mint)">
+      <div class="kicker">3.3 · Almacenamiento y necesidades de información adicional</div>
+      <h3>✅ El momento de la verdad: ¿es suficiente?</h3>
+      <p>En el <strong>orden de tareas</strong> de la investigación comercial, la información secundaria se busca <strong>siempre antes</strong> que la primaria, por su <strong>rapidez y agilidad</strong> y porque da una <strong>base sólida y de contexto</strong>. Se usan bases de datos, informes de mercado, estudios académicos y datos públicos.</p>
+      <div class="order">
+        <span class="o" style="background:#e9eff6;color:var(--navy)">1️⃣ Secundaria interna</span><span style="color:var(--coral);font-weight:800">➜</span>
+        <span class="o" style="background:#e6f6f3;color:#0f6a5f">2️⃣ Secundaria externa</span><span style="color:var(--coral);font-weight:800">➜</span>
+        <span class="o" style="background:#fff1eb;color:var(--coral2)">3️⃣ Primaria (solo si hace falta)</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔄 Antes de decidir, la información ha pasado por...</h3>
+      <div class="pipeline">
+        <div class="pipe"><div class="p-ico">🔎</div><h5>Buscar</h5><p>Interna y externa</p></div>
+        <div class="pipe"><div class="p-ico">🚦</div><h5>Evaluar</h5><p>¿Es fiable?</p></div>
+        <div class="pipe"><div class="p-ico">🧽</div><h5>Depurar</h5><p>Ordenar y limpiar</p></div>
+        <div class="pipe"><div class="p-ico">🔬</div><h5>Analizar</h5><p>Documental, cuali, cuanti</p></div>
+        <div class="pipe" style="background:#fff1eb;border-color:#f7c9b6"><div class="p-ico">⚖️</div><h5>Comparar</h5><p>con los objetivos</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🌳 El árbol de decisión</h3>
+      <p class="hint">Se comparan los <strong>resultados obtenidos</strong> con los <strong>objetivos planteados</strong> en la planificación preliminar: ¿responde a todas las preguntas? ¿son datos completos y precisos? Toca cada rama.</p>
+      <div class="dtree">
+        <div class="dt-root">⚖️ Comparación de resultados obtenidos con los objetivos planteados</div>
+        <div class="dt-col">
+          <button class="dt-q" id="dtq0" style="background:#e6f5ea;color:#22562d" onclick="showDT(0)">✅ Se han alcanzado los objetivos con la información secundaria disponible</button>
+          <button class="dt-q" id="dtq1" style="background:#fdeaea;color:#a12c2c" onclick="showDT(1)">❌ La información secundaria no es suficiente para responder a todas las preguntas</button>
+        </div>
+        <div class="dt-col">
+          <div class="dt-a" id="dta0">👈 Toca la rama verde</div>
+          <div class="dt-a" id="dta1">👈 Toca la rama roja</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Simulador «Decisor»: el caso PCC</h3>
+      <p>El equipo de marketing tiene estas <strong>5 preguntas de investigación</strong> sobre el montaje a domicilio. Para cada una, elige de dónde saldría la respuesta. Al final, decide: ¿basta con la secundaria?</p>
+      <div style="height:0.8rem"></div>
+      <div id="sim"></div>
+      <div id="sim-verdict"></div>
+    </div>
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> secundaria <strong>antes</strong> que primaria; <strong>interna primero</strong>, externa después. Si la secundaria basta → <strong>conclusiones e informe final</strong> (hallazgos, análisis y recomendaciones). Si no → <strong>información primaria</strong> (encuestas, entrevistas, grupos focales): más cara y lenta, pero específica. La verás en la UT5.</div>
+  </div>
+
+  <!-- ================= JUEGOS ================= -->
+  <div class="tab-content" id="tab-juegos">
+    <div class="card">
+      <h3>🎮 Zona de repaso — UT4</h3>
+      <p>Cuatro juegos para fijar la información secundaria. ¡A por el 10!</p>
+    </div>
+    <div class="games-grid">
+      <div class="game-launch" onclick="openAhorcado()"><div class="g-icon">🪢</div><h4>Ahorcado</h4><p>Términos clave de la unidad</p></div>
+      <div class="game-launch" onclick="openSopa()"><div class="g-icon">🔍</div><h4>Sopa de letras</h4><p>Fuentes, siglas y operadores</p></div>
+      <div class="game-launch" onclick="openQuiz()"><div class="g-icon">📝</div><h4>Quiz exprés</h4><p>15 preguntas con nota</p></div>
+      <div class="game-launch" onclick="openMemoria()"><div class="g-icon">🃏</div><h4>Memoria</h4><p>Une cada concepto con su definición</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-ahorcado"><div class="modal"><button class="modal-close" onclick="closeModal('modal-ahorcado')">✕</button><h2>🪢 Ahorcado — UT4</h2><div id="hangman-content"></div></div></div>
+<div class="modal-bg" id="modal-sopa"><div class="modal"><button class="modal-close" onclick="closeModal('modal-sopa')">✕</button><h2>🔍 Sopa de letras — UT4</h2><div id="sopa-content"></div></div></div>
+<div class="modal-bg" id="modal-quiz"><div class="modal"><button class="modal-close" onclick="closeModal('modal-quiz')">✕</button><h2>📝 Quiz — UT4</h2><div id="quiz-content"></div></div></div>
+<div class="modal-bg" id="modal-memoria"><div class="modal" style="max-width:640px"><button class="modal-close" onclick="closeModal('modal-memoria')">✕</button><h2>🃏 Memoria — UT4</h2><div id="memoria-content"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== NAVEGACIÓN Y TRANSICIONES ===== */
+function switchTab(id,el,noScroll){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  try{ history.replaceState(null,'','#'+id); }catch(e){}
+  try{ el.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'}); }catch(e){}
+  if(!noScroll){
+    const tabs=document.querySelector('.tabs');
+    const top=tabs.getBoundingClientRect().top+scrollY-document.querySelector('header').offsetHeight-4;
+    if(scrollY>top) scrollTo({top,behavior:'smooth'});
+  }
+}
+function goTab(id){ const t=document.querySelector(`.tab[data-tab="${id}"]`); switchTab(id,t,true); const tabs=document.querySelector('.tabs'); scrollTo({top:tabs.getBoundingClientRect().top+scrollY-document.querySelector('header').offsetHeight-4,behavior:'smooth'}); }
+function fitTabs(){ document.querySelector('.tabs').style.top=document.querySelector('header').offsetHeight+'px'; }
+addEventListener('resize',fitTabs);
+addEventListener('scroll',()=>{ const h=document.documentElement.scrollHeight-innerHeight; document.getElementById('scroll-progress').style.width=(h>0?scrollY/h*100:0)+'%'; },{passive:true});
+document.addEventListener('DOMContentLoaded',()=>{ fitTabs(); const id=location.hash.slice(1), t=id&&document.querySelector(`.tab[data-tab="${id}"]`); if(t) switchTab(id,t,true); });
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+const shuffle=a=>{ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; };
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+
+/* Texto que se escribe solo en la portada */
+(function(){
+  const lines=['Antes de preguntar a nadie… ¿ya existe la respuesta?','Interna primero, externa después.','Buscar · evaluar · tratar · decidir.'];
+  const el=document.getElementById('typing'); let li=0,ci=0,del=false;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent=lines[0]; return; }
+  (function tick(){
+    const l=lines[li];
+    el.textContent=l.slice(0,ci);
+    if(!del&&ci<l.length){ ci++; setTimeout(tick,45); }
+    else if(!del){ del=true; setTimeout(tick,2200); }
+    else if(ci>0){ ci--; setTimeout(tick,18); }
+    else { del=false; li=(li+1)%lines.length; setTimeout(tick,300); }
+  })();
+})();
+
+/* ===== INSIGNIAS (se guardan solo en este navegador) ===== */
+const BADGES=[['detective','🕵️ Detective de fuentes'],['minero','⛏️ Minero de datos'],['ninja','🥷 Ninja de operadores'],['limpiador','🧽 Limpiador de datos'],['decisor','⚖️ Decisor']];
+let got={};
+try{ got=JSON.parse(localStorage.getItem('ut4-badges')||'{}')||{}; }catch(e){ got={}; }
+function renderBadges(){
+  const b=document.getElementById('badges');
+  b.innerHTML='<span class="badges-label">Tus insignias</span>'+BADGES.map(([k,n])=>`<span class="badge ${got[k]?'got':''}">${got[k]?n:'🔒 '+n.split(' ').slice(1).join(' ')}</span>`).join('');
+}
+function award(k){
+  if(got[k]) return;
+  got[k]=true; try{ localStorage.setItem('ut4-badges',JSON.stringify(got)); }catch(e){}
+  renderBadges();
+  const name=BADGES.find(b=>b[0]===k)[1];
+  toast(`🏅 ¡Insignia conseguida! ${name}`);
+  confetti();
+}
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),3200); }
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const em=['🎉','✨','🟧','🟦','⭐','💎'];
+  for(let i=0;i<28;i++){ const s=document.createElement('span'); s.className='confetti'; s.textContent=em[i%em.length]; s.style.left=Math.random()*100+'vw'; s.style.animationDelay=Math.random()*0.5+'s'; s.style.fontSize=(0.8+Math.random()*0.9)+'rem'; document.body.appendChild(s); setTimeout(()=>s.remove(),2600); }
+}
+renderBadges();
+
+/* ===== CLASIFICADOR REUTILIZABLE ===== */
+function makeClassifier(boxId,options,items,onFinish){
+  const st={};
+  function start(){ st.items=shuffle(items); st.i=0; st.ok=0; render(); }
+  function render(){
+    const box=document.getElementById(boxId);
+    if(st.i>=st.items.length){
+      const nota=(st.ok/st.items.length*10).toFixed(1);
+      box.innerHTML=`<div class="result-box">${nota>=8?'🏆':nota>=5?'👍':'💪'} ${st.ok}/${st.items.length} aciertos · Nota: ${nota}/10</div><button class="play-again">Jugar otra vez</button>`;
+      box.querySelector('button').onclick=start;
+      if(onFinish) onFinish(st.ok,st.items.length);
+      return;
+    }
+    const it=st.items[st.i];
+    box.innerHTML=`<div class="cls-score">Pregunta ${st.i+1} de ${st.items.length} · Aciertos: ${st.ok}</div><div class="cls-item swap">${it.q}</div><div class="cls-opts">${options.map((o,k)=>`<button class="cls-opt" data-k="${k}">${o}</button>`).join('')}</div><div class="cls-fb"></div>`;
+    box.querySelectorAll('.cls-opt').forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+  }
+  function answer(k){
+    const box=document.getElementById(boxId), it=st.items[st.i], btns=box.querySelectorAll('.cls-opt');
+    btns.forEach(b=>b.disabled=true); btns[it.a].classList.add('ok');
+    if(k===it.a) st.ok++; else btns[k].classList.add('ko');
+    box.querySelector('.cls-fb').innerHTML=(k===it.a?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>No exactamente.</strong> ')+it.why;
+    box.querySelector('.cls-score').textContent=`Pregunta ${st.i+1} de ${st.items.length} · Aciertos: ${st.ok}`;
+    setTimeout(()=>{ st.i++; render(); }, k===it.a?1600:3000);
+  }
+  start();
+}
+makeClassifier('cls-ps',['📚 Secundaria','🎤 Primaria'],[
+  {q:'📊 Datos del INE sobre población de la Región de Murcia',a:0,why:'Ya existen: el INE los recogió para otro fin.'},
+  {q:'📋 Una encuesta que PCC hace a 400 de sus clientes',a:1,why:'La creamos nosotros, específicamente para nuestro problema.'},
+  {q:'🤝 El historial de compras de los clientes en el CRM',a:0,why:'Ya existe dentro de la empresa: es secundaria interna.'},
+  {q:'🗣️ Un focus group con 8 gamers para probar el servicio',a:1,why:'Se recoge ahora y para este estudio.'},
+  {q:'📈 Las tendencias de búsqueda de «montar pc» en Google Trends',a:0,why:'Son datos que ya existen y están publicados.'},
+  {q:'📻 El último resumen de audiencias del EGM',a:0,why:'Lo elabora la AIMC para el sector; nosotros solo lo consultamos.'},
+  {q:'👀 Observar en tienda cuánto tardan los clientes en elegir una gráfica',a:1,why:'La observación la diseñamos y hacemos nosotros: primaria.'},
+  {q:'🧾 El informe de ventas del trimestre pasado',a:0,why:'Lo generó la propia actividad de la empresa: secundaria interna.'}
+],(ok)=>{ if(ok>=6) award('detective'); });
+
+/* ===== INTERNAS: EDIFICIO ===== */
+const depts=[
+  {ico:'💶',n:'Ventas',tema:true,data:['Ventas por clientes','Canales','Distribución'],pcc:'Qué clientes de Murcia compran piezas sueltas y por qué canal (web o tienda).'},
+  {ico:'🧮',n:'Contabilidad',tema:true,data:['Coste del producto','Resultados','Rentabilidad','Financiación a clientes','Morosidad'],pcc:'Cuánto cuesta cada montaje y si sería rentable a 49 €.'},
+  {ico:'📣',n:'Marketing',tema:false,data:['Resultados de campañas','Promociones anteriores','Estudios previos'],pcc:'Cómo funcionó la última campaña de «PC a medida».'},
+  {ico:'🎧',n:'Atención al cliente',tema:false,data:['Quejas y reclamaciones','Devoluciones','Consultas frecuentes'],pcc:'Cuántas devoluciones son de clientes que «no supieron montarlo».'},
+  {ico:'📦',n:'Logística',tema:false,data:['Stock','Plazos de entrega','Zonas de reparto'],pcc:'Qué zonas de la Región se cubren en 24 h.'}
+];
+function renderFloors(sel){
+  document.getElementById('floors').innerHTML=depts.map((d,i)=>`<button class="floor ${i===sel?'sel':''}" onclick="renderFloors(${i})">${d.ico} ${d.n}${d.tema?'<span class="tag">tema</span>':''}</button>`).join('');
+  const d=depts[sel], p=document.getElementById('dept-panel');
+  p.innerHTML=`<h4>${d.ico} Departamento de ${d.n}</h4><div style="font-size:0.78rem;color:var(--text2)">Datos que nos puede dar:</div><div class="data-chips">${d.data.map(x=>`<span class="data-chip">${x}</span>`).join('')}</div><div class="case">🖥️ <b>En el caso PCC:</b> ${d.pcc}</div>`;
+  p.classList.remove('swap'); void p.offsetWidth; p.classList.add('swap');
+}
+renderFloors(0);
+
+/* ===== MINA DE DATOS ===== */
+const pepitas=[
+  'El 62 % de quien compra una tarjeta gráfica compra una fuente de alimentación en los 7 días siguientes.',
+  'Los pedidos de piezas sueltas en la Región suben un 40 % en noviembre (Black Friday).',
+  'Los clientes de 18-24 años devuelven más productos con el motivo «no sé montarlo».',
+  'Quien ve 3 o más vídeos de montaje en la web tiene el doble de probabilidad de comprar.',
+  'Cartagena y Lorca concentran el 30 % de los pedidos de la Región fuera de Murcia capital.',
+  'Los clientes que contactan con soporte la primera semana compran más accesorios después.'
+];
+let mineSt={};
+function buildMine(){
+  const N=48, pos=shuffle([...Array(N).keys()]).slice(0,6);
+  mineSt={gems:pos,dug:new Set(),found:0,hits:0};
+  const m=document.getElementById('mine');
+  m.innerHTML=[...Array(N)].map((_,i)=>`<button class="rock" data-i="${i}" aria-label="Roca de datos">${Math.floor(Math.random()*900+100)}</button>`).join('');
+  m.querySelectorAll('.rock').forEach(r=>r.onclick=()=>dig(+r.dataset.i,r));
+  document.getElementById('nuggets').innerHTML='<div class="hint" style="margin:0">💎 Aquí irán apareciendo los patrones que descubras...</div>';
+  mineStats();
+}
+function dig(i,el){
+  if(mineSt.dug.has(i)||mineSt.found===6) return;
+  mineSt.dug.add(i); mineSt.hits++;
+  const g=mineSt.gems.indexOf(i);
+  if(g>=0){
+    el.classList.add('gem'); el.textContent='💎'; mineSt.found++;
+    const n=document.getElementById('nuggets'); if(mineSt.found===1) n.innerHTML='';
+    n.insertAdjacentHTML('beforeend',`<div class="nugget">💎 <b>Patrón ${mineSt.found}:</b> ${pepitas[g]}</div>`);
+    if(mineSt.found===6){ if(mineSt.hits<=30) award('minero'); else toast('¡Mina completada! Inténtalo en 30 golpes o menos para la insignia.'); }
+  } else { el.classList.add('dug'); }
+  mineStats();
+}
+function mineStats(){ document.getElementById('mine-stats').textContent=`⛏️ Golpes: ${mineSt.hits} · 💎 Pepitas: ${mineSt.found}/6`; }
+buildMine();
+
+/* ===== EXTERNAS ===== */
+const srcMain=[
+  {logo:'INE',name:'Instituto Nacional de Estadística',bg:'linear-gradient(135deg,#8a1f3d,#a8294c)',tipo:'Pública',what:'Estadísticas oficiales de España: población, empleo, consumo, uso de tecnología en los hogares...',pcc:'Cuántos jóvenes de 16 a 35 años viven en la Región de Murcia.',url:'https://www.ine.es/'},
+  {logo:'CIS',name:'Centro de Investigaciones Sociológicas',bg:'linear-gradient(135deg,#0e8aa0,#0b6e80)',tipo:'Pública',what:'Encuestas sobre opiniones, actitudes y hábitos de la sociedad española (barómetros mensuales).',pcc:'Hábitos de ocio y uso de internet de los jóvenes.',url:'https://www.cis.es/'},
+  {logo:'EGM',name:'Estudio General de Medios · AIMC',bg:'linear-gradient(135deg,#1d3566,#f2b33d)',tipo:'Sectorial',what:'El estudio de referencia de audiencias de medios en España: TV, radio, prensa, internet... Lo elabora la AIMC.',pcc:'En qué medios hay más audiencia joven para anunciar el servicio.',url:'https://www.aimc.es/egm/'},
+  {logo:'oblicua',name:'Oblicua · agencia de medios',bg:'linear-gradient(135deg,#1e88e5,#0d5bb5)',tipo:'Privada',what:'Agencia de medios: planificación y compra de publicidad. Publica datos y tarifas de medios útiles para planificar campañas.',pcc:'Cuánto costaría anunciar el servicio en radio o exterior en Murcia.',url:'https://www.oblicua.es/'}
+];
+const srcMore=[
+  {logo:'CREM',name:'Centro Regional de Estadística de Murcia',bg:'linear-gradient(135deg,#b3122e,#7c0c20)',tipo:'Pública',what:'Estadísticas de la Región de Murcia por municipio (portal Econet).',pcc:'Población joven de Cartagena, Lorca o Molina.',url:'https://econet.carm.es/'},
+  {logo:'Eurostat',name:'Oficina estadística de la UE',bg:'linear-gradient(135deg,#0e47a1,#1565c0)',tipo:'Pública',what:'Datos comparables de todos los países de la Unión Europea.',pcc:'Comparar el gasto en tecnología de España con otros países.',url:'https://ec.europa.eu/eurostat'},
+  {logo:'datos.gob',name:'Catálogo de datos abiertos',bg:'linear-gradient(135deg,#2e7d32,#1b5e20)',tipo:'Pública',what:'Miles de conjuntos de datos públicos descargables (CSV, Excel...).',pcc:'Datos de comercio electrónico por comunidad.',url:'https://datos.gob.es/'},
+  {logo:'Dataset Search',name:'Buscador de datos de Google',bg:'linear-gradient(135deg,#5f6368,#3c4043)',tipo:'Buscador',what:'Busca bases de datos publicadas en todo el mundo.',pcc:'Encontrar estudios sobre el mercado gaming.',url:'https://datasetsearch.research.google.com/'},
+  {logo:'AEDEMO',name:'Asociación Española de Estudios de Mercado, Marketing y Opinión',bg:'linear-gradient(135deg,#ff7043,#e64a19)',tipo:'Asociación',what:'Publicaciones y jornadas del sector de la investigación de mercados.',pcc:'Buenas prácticas para diseñar el estudio.',url:'https://www.aedemo.es/'}
+];
+function srcCard(s){ return `<div class="src"><div class="src-top" style="background:${s.bg}"><span class="pill">${s.tipo}</span><div class="logo">${s.logo}</div><div class="name">${s.name}</div></div><div class="src-body"><div>${s.what}</div><div class="pcc">🖥️ ${s.pcc}</div><a class="ext" href="${s.url}" target="_blank" rel="noopener">Abrir web ↗</a></div></div>`; }
+document.getElementById('src-main').innerHTML=srcMain.map(srcCard).join('');
+document.getElementById('src-more').innerHTML=srcMore.map(srcCard).join('');
+
+const crits=[['👤 Autoría','¿Se sabe quién lo firma y es alguien fiable?'],['📅 Actualidad','¿Los datos son recientes?'],['⚖️ Objetividad','¿Informa sin querer vendernos nada?'],['🧪 Metodología','¿Explica cómo obtuvo los datos?'],['🎯 Pertinencia','¿Responde a lo que necesito saber?']];
+const evalSrc=[
+  {n:'INE · Encuesta TIC en hogares (2025)',ans:[1,1,1,1,1],why:['Organismo oficial de estadística.','Datos del último año.','Organismo público, sin interés comercial.','Publica su metodología completa.','Habla del uso de tecnología en los hogares: nos sirve.']},
+  {n:'Blog «gamerpro_99» (2016): «a nadie le gusta montar su PC»',ans:[0,0,0,0,1],why:['Autor anónimo.','Tiene 10 años: el mercado ha cambiado.','Es una opinión personal.','No explica de dónde sale la afirmación.','El tema sí es el nuestro... pero eso no basta.']},
+  {n:'Informe de una marca de PCs ya montados: «el 90 % prefiere comprarlo montado»',ans:[1,1,0,0,1],why:['La empresa está identificada.','Es reciente.','Tiene interés comercial: vende PCs ya montados.','No dice a cuántas personas preguntó ni cómo.','Habla justo de nuestro tema.']},
+  {n:'EGM · Resumen general de audiencias (AIMC)',ans:[1,1,1,1,1],why:['La AIMC es la referencia del sector.','Se publica cada año.','Es un estudio compartido por todo el sector.','Publica su ficha técnica.','Nos dice dónde anunciar el servicio.']}
+];
+let evSt={};
+function pickEval(i){
+  document.querySelectorAll('.eval-src').forEach((b,k)=>b.classList.toggle('sel',k===i));
+  evSt={i,score:0,ans:0,ok:0};
+  const box=document.getElementById('eval-box');
+  box.innerHTML=crits.map((c,k)=>`<div class="crit" id="crit-${k}"><div><h5>${c[0]}</h5><p>${c[1]}</p></div><div class="yn"><button onclick="ansEval(${k},1,this)">Sí</button><button onclick="ansEval(${k},0,this)">No</button></div></div>`).join('')+
+    `<div class="semaforo"><div class="lights"><span class="light r"></span><span class="light y"></span><span class="light g"></span></div><div class="sem-text" id="sem-text">Responde las 5 preguntas para ver el veredicto.</div></div>`;
+  box.classList.remove('swap'); void box.offsetWidth; box.classList.add('swap');
+}
+function ansEval(k,v,btn){
+  const s=evalSrc[evSt.i], row=document.getElementById('crit-'+k), bs=row.querySelectorAll('.yn button');
+  if(bs[0].disabled) return;
+  bs.forEach(b=>b.disabled=true);
+  const right=s.ans[k]; bs[right?0:1].classList.add('ok'); if(v!==right) btn.classList.add('ko'); else evSt.ok++;
+  row.insertAdjacentHTML('beforeend',`<div class="crit-fb">${v===right?'✅':'❌'} ${s.why[k]}</div>`);
+  evSt.ans++; evSt.score+=right;
+  if(evSt.ans===5){
+    const L=document.querySelectorAll('.light'), sc=evSt.score;
+    const lvl=sc===5?2:sc>=3?1:0;
+    L[['r','y','g'].indexOf(['r','y','g'][lvl])].classList.add('on');
+    document.getElementById('sem-text').innerHTML=(lvl===2?'🟢 <b>Fuente fiable.</b> Puedes usarla (y citarla).':lvl===1?'🟡 <b>Úsala con precaución.</b> Contrástala con otra fuente más objetiva.':'🔴 <b>No te fíes.</b> Busca una fuente mejor.')+` <span style="color:var(--text2)">· Has acertado ${evSt.ok}/5.</span>`;
+  }
+}
+document.getElementById('eval-pick').innerHTML=evalSrc.map((s,i)=>`<button class="eval-src" onclick="pickEval(${i})">${['📊','📝','🏷️','📻'][i]} ${s.n.split(':')[0]}<small>${s.n.includes(':')?s.n.split(':').slice(1).join(':'):''}</small></button>`).join('');
+pickEval(1);
+
+/* ===== BUSCADORES ===== */
+const ops=[['AND','Las que contengan todos los términos introducidos.','gaming AND murcia'],['OR','Las que contengan todos o algunos de los términos introducidos.','murcia OR cartagena'],['" "','Las que contengan exactamente lo que aparece dentro de las comillas.','"montar pc"'],['-','Las que no contengan el término que aparece tras el guion.','gaming -ofertas'],['filetype:','Archivos con la extensión solicitada (PDF, TXT, XLS, etc.).','gaming filetype:pdf'],['site:','Busca solo dentro de un sitio web específico.','site:ine.es']];
+document.getElementById('op-table').innerHTML=ops.map(o=>`<tr onclick="tryQ('${o[2].replace(/"/g,'&quot;')}')"><td>${o[0]}</td><td>${o[1]} <span style="color:var(--text2);font-size:0.75rem">· Ej.: <code>${o[2]}</code></span></td></tr>`).join('');
+document.getElementById('op-chips').innerHTML=[['" "','""'],['-','-'],['OR',' OR '],['site:','site:'],['filetype:','filetype:']].map(c=>`<span class="op-chip" onclick="insOp('${c[1].replace(/"/g,'&quot;')}')">${c[0]}</span>`).join('')+`<span class="op-chip" onclick="tryQ('')">✕ borrar</span>`;
+const docs=[
+  {t:'La industria del videojuego en España 2025',u:'aevi.org.es/informe-anual-2025.pdf',ft:'pdf',d:'El sector gaming en España: facturación, número de jugadores y perfil del gamer.'},
+  {t:'Población por edad y municipio · Región de Murcia',u:'econet.carm.es/poblacion',ft:'html',d:'Padrón municipal: Murcia, Cartagena, Lorca, Molina de Segura...'},
+  {t:'Cómo montar un PC gaming paso a paso',u:'blogpcmaster.com/montar-pc-gaming',ft:'html',d:'Guía para montar pc en casa: placa base, gráfica y fuente.'},
+  {t:'Encuesta sobre equipamiento y uso de TIC en los hogares',u:'ine.es/encuesta-tic-hogares-2025.pdf',ft:'pdf',d:'Ordenadores, internet y compras online en los hogares españoles.'},
+  {t:'Comparativa de precios de tarjetas gráficas',u:'comparadorpc.es/graficas',ft:'html',d:'Precios actualizados de gráficas para gaming.'},
+  {t:'Resumen general de audiencias EGM',u:'aimc.es/egm/resumen-general.pdf',ft:'pdf',d:'Audiencia de televisión, radio, prensa e internet en España.'},
+  {t:'Montaje de ordenadores a domicilio en Murcia y Cartagena',u:'montajes-murcia.es',ft:'html',d:'Servicio técnico: montar pc gaming en tu casa.'},
+  {t:'Hábitos de compra online de los jóvenes',u:'cis.es/estudios/habitos-compra-online.pdf',ft:'pdf',d:'Barómetro sobre comercio electrónico y jóvenes.'},
+  {t:'Ventas trimestrales de componentes informáticos',u:'statsmarket.com/componentes-2025.xls',ft:'xls',d:'Datos de ventas de componentes gaming por trimestre.'},
+  {t:'Videojuegos y horas de pantalla en adolescentes',u:'pubmed.ncbi.nlm.nih.gov/gaming-adolescentes',ft:'html',d:'Estudio sobre gaming y salud.'},
+  {t:'Interés por «montar pc» en España',u:'trends.google.es/montar-pc',ft:'html',d:'Evolución de las búsquedas de montar pc por comunidades.'},
+  {t:'Ofertas de PC gaming baratos',u:'tiendaofertas.com/pc-gaming',ft:'html',d:'Las mejores ofertas gaming de la semana.'}
+];
+function parseQ(q){
+  const res={clauses:[],neg:[],site:null,ft:null};
+  const toks=q.match(/-?"[^"]*"?|\S+/g)||[];
+  let pendingOr=false;
+  toks.forEach(tk=>{
+    if(tk==='AND') return;
+    if(tk==='OR'){ pendingOr=true; return; }
+    if(/^site:/i.test(tk)){ res.site=norm(tk.slice(5)); return; }
+    if(/^filetype:/i.test(tk)){ res.ft=norm(tk.slice(9)); return; }
+    let neg=false; if(tk.startsWith('-')&&tk.length>1){ neg=true; tk=tk.slice(1); }
+    const term=norm(tk.replace(/"/g,'')).trim(); if(!term) return;
+    if(neg){ res.neg.push(term); return; }
+    if(pendingOr&&res.clauses.length){ res.clauses[res.clauses.length-1].push(term); }
+    else res.clauses.push([term]);
+    pendingOr=false;
+  });
+  return res;
+}
+function runSearch(){
+  const q=document.getElementById('q').value, p=parseQ(q);
+  const out=docs.filter(d=>{
+    const txt=norm(d.t+' '+d.d+' '+d.u);
+    if(p.site&&!norm(d.u).includes(p.site)) return false;
+    if(p.ft&&d.ft!==p.ft) return false;
+    if(p.neg.some(n=>txt.includes(n))) return false;
+    return p.clauses.every(alts=>alts.some(a=>txt.includes(a)));
+  });
+  document.getElementById('res-count').textContent=`Aproximadamente ${out.length} resultado${out.length===1?'':'s'}${q.trim()?'':' (escribe algo para filtrar)'}`;
+  document.getElementById('results').innerHTML=out.length?out.map(d=>`<div class="res"><div class="u">${d.ft!=='html'?`<span class="ft">${d.ft.toUpperCase()}</span>`:''}${d.u}</div><div class="t">${d.t}</div><div class="d">${d.d}</div></div>`).join(''):'<div class="res"><div class="d">😶 Ningún resultado. Revisa tus operadores.</div></div>';
+  document.getElementById('real-google').href='https://www.google.com/search?q='+encodeURIComponent(q||'información secundaria');
+  checkMissions(q);
+}
+function tryQ(q){ const i=document.getElementById('q'); i.value=q; runSearch(); i.focus(); document.getElementById('lab').scrollIntoView({block:'center',behavior:'smooth'}); }
+function insOp(op){ const i=document.getElementById('q'); const pos=i.selectionStart??i.value.length; const v=i.value; const ins=(v&&!v.endsWith(' ')&&op!==' OR '?' ':'')+op; i.value=v.slice(0,pos)+ins+v.slice(pos); i.focus(); const c=pos+ins.length-(op==='""'?1:0); i.setSelectionRange(c,c); runSearch(); }
+const missions=[
+  {txt:'Solo <b>documentos PDF</b> que hablen de <b>gaming</b>',ok:q=>/filetype:pdf/i.test(q)&&/gaming/i.test(q)},
+  {txt:'Solo resultados de la web del <b>INE</b>',ok:q=>/site:(www\.)?ine\.es/i.test(q)},
+  {txt:'La frase exacta <b>"montar pc"</b>',ok:q=>/"montar pc"/i.test(q)},
+  {txt:'<b>gaming</b> pero <b>sin ofertas</b>',ok:q=>/gaming/i.test(q)&&/-ofertas/i.test(q)},
+  {txt:'Resultados de <b>Murcia o Cartagena</b>',ok:q=>/murcia\s+OR\s+cartagena|cartagena\s+OR\s+murcia/i.test(q)&&/\bOR\b/.test(q)}
+];
+const mDone=new Set();
+function checkMissions(q){
+  missions.forEach((m,i)=>{ if(!mDone.has(i)&&m.ok(q)){ mDone.add(i); toast('🥷 ¡Misión cumplida!'); } });
+  document.getElementById('missions').innerHTML=missions.map((m,i)=>`<div class="mission ${mDone.has(i)?'done':''}">${m.txt}</div>`).join('');
+  if(mDone.size===missions.length) award('ninja');
+}
+runSearch();
+function hlSerp(k){ const s=document.getElementById('serp'); s.classList.remove('hl-sem','hl-seo'); if(k) s.classList.add('hl-'+k); }
+
+/* ===== TRATAMIENTO ===== */
+const fmts=[
+  `<h4>📄 Documentos: usa un gestor de referencias bibliográficas</h4>Si tienes muchos artículos, libros o informes, lo mejor es un <strong>gestor de referencias bibliográficas</strong>:<ul><li>Reúne en <strong>una sola base de datos</strong> las referencias de todos los documentos útiles.</li><li>Permite <strong>etiquetarlos</strong> para encontrarlos fácilmente.</li><li>Permite hacer <strong>anotaciones</strong> sobre cada uno.</li><li>Y lo más importante: te ayuda a <strong>citar las fuentes</strong> en tus informes de forma casi automática.</li></ul><div style="margin-top:0.6rem"><a class="ext" href="https://www.zotero.org/" target="_blank" rel="noopener">Zotero (gratis) ↗</a><a class="ext" href="https://www.mendeley.com/" target="_blank" rel="noopener">Mendeley ↗</a></div>`,
+  `<h4>🎙️ Información cualitativa: transcribe y organiza</h4>Conferencias, discursos, vídeos o audios sobre tu tema. Hay que preparar esa materia prima para el <strong>análisis de contenido</strong>:<ul><li><strong>Transcribir</strong> el material a texto (si no lo estaba).</li><li><strong>Organizarlo</strong> con algún criterio: por <strong>antigüedad</strong>, por <strong>temática</strong> o por <strong>procedencia geográfica</strong>.</li></ul><div class="case" style="margin-top:0.6rem">🖥️ PCC reúne 12 vídeos de YouTube de gamers murcianos hablando de montar su PC, los transcribe y los ordena por temática: precio, dificultad, tiempo.</div>`,
+  `<h4>🔢 Información cuantitativa: en forma de tabla y limpia</h4>Para aprovechar el software de análisis, los datos deben estar <strong>en forma de tabla</strong>: en las <strong>columnas, las variables</strong> y en las <strong>filas, las observaciones o casos</strong>.
+  <div style="overflow-x:auto"><table class="tbl-demo"><tr><th></th><th class="lab-v" colspan="3">⬇ VARIABLES (columnas)</th></tr><tr><th class="lab-c" rowspan="4">CASOS ➜</th><th>Edad</th><th>Gasto (€)</th><th>Provincia</th></tr><tr><td>23</td><td>250</td><td>Murcia</td></tr><tr><td>31</td><td>480</td><td>Alicante</td></tr><tr><td>19</td><td>320</td><td>Almería</td></tr></table></div>
+  Además, los datos <strong>no deben tener errores</strong>: para eso se hace la <strong>«limpieza de datos»</strong>. Si una variable es numérica, el software avisa si encuentra una letra; si el rango posible es de 100 a 1.000, avisa de los valores fuera de él. ¡Practícalo justo abajo! 👇`
+];
+function showFmt(i,el){ document.querySelectorAll('.fmt').forEach(b=>b.classList.remove('sel')); if(el) el.classList.add('sel'); const p=document.getElementById('fmt-panel'); p.innerHTML=fmts[i]; p.classList.remove('swap'); void p.offsetWidth; p.classList.add('swap'); }
+showFmt(0);
+
+const cleanRows=[['001','23','250','Murcia'],['002','2O','480','Alicante'],['003','31','1500','Murcia'],['004','19','320','Almería'],['005','veinte','210','Murcia'],['006','27','45','Albacete'],['007','35','760','Murcia'],['008','22','590','Mursia']];
+const cleanErr={'1-1':'«2O» lleva una letra O en vez de un cero.','2-2':'1.500 € está por encima del rango (100-1.000).','4-1':'«veinte» es texto en una variable numérica.','5-2':'45 € está por debajo del rango (100-1.000).','7-3':'«Mursia» está mal escrito: es Murcia.'};
+let cleanFound=new Set();
+function buildClean(){
+  cleanFound=new Set();
+  document.getElementById('clean').innerHTML='<tr><th>Cliente</th><th>Edad</th><th>Gasto (€)</th><th>Provincia</th></tr>'+cleanRows.map((r,i)=>'<tr>'+r.map((c,j)=>j===0?`<td class="idc">${c}</td>`:`<td data-k="${i}-${j}" onclick="cleanClick(this)">${c}</td>`).join('')+'</tr>').join('');
+  document.getElementById('clean-fb').innerHTML='Errores encontrados: 0/5';
+}
+function cleanClick(td){
+  const k=td.dataset.k; if(td.classList.contains('fixed')) return;
+  const fb=document.getElementById('clean-fb');
+  if(cleanErr[k]){ td.classList.add('fixed'); cleanFound.add(k); fb.innerHTML=`✅ <b>Bien visto:</b> ${cleanErr[k]} · Errores encontrados: ${cleanFound.size}/5`; if(cleanFound.size===5){ fb.innerHTML+=' 🎉 <b>¡Tabla limpia!</b>'; award('limpiador'); } }
+  else { td.classList.remove('nope'); void td.offsetWidth; td.classList.add('nope'); fb.innerHTML=`🤔 Ese dato es correcto. · Errores encontrados: ${cleanFound.size}/5`; }
+}
+buildClean();
+
+function esc(s){ return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function updApa(){
+  const a=document.getElementById('apa-a').value.trim()||'Autor', y=document.getElementById('apa-y').value.trim()||'s.f.', t=document.getElementById('apa-t').value.trim()||'Título', u=document.getElementById('apa-u').value.trim();
+  document.getElementById('apa-out').innerHTML=`${esc(a)}. (${esc(y)}). <i>${esc(t)}</i>.${u?' '+esc(u):''}`;
+}
+function copyApa(btn){ const txt=document.getElementById('apa-out').innerText; try{ navigator.clipboard.writeText(txt).then(()=>{ btn.textContent='✅ Copiada'; setTimeout(()=>btn.textContent='📋 Copiar',1600); }); }catch(e){} }
+updApa();
+
+const codeCats=[['💶 Precio','#e8a33d'],['🚚 Envío','#1f9e8f'],['🎧 Atención','#6a4cc2'],['🖥️ Producto','#e4572e']];
+const codeTally=[0,0,0,0];
+function renderBars(){ const max=Math.max(1,...codeTally); document.getElementById('code-bars').innerHTML=codeCats.map((c,i)=>`<div class="cbar"><span>${c[0]}</span><div class="track"><div class="fill" style="width:${codeTally[i]/max*100}%;background:${c[1]}"></div></div><span>${codeTally[i]}</span></div>`).join(''); }
+renderBars();
+makeClassifier('coding',codeCats.map(c=>c[0]),[
+  {q:'«Llegó en 24 horas, ¡súper rápido!»',a:1,why:'Habla del plazo de entrega: Envío.'},
+  {q:'«Más barato que en otras tiendas online»',a:0,why:'Compara precios: Precio.'},
+  {q:'«La gráfica vino con un ventilador roto»',a:3,why:'Es un defecto del artículo: Producto.'},
+  {q:'«El chat de soporte me lo resolvió en 5 minutos»',a:2,why:'Valora el servicio de ayuda: Atención.'},
+  {q:'«El paquete tardó dos semanas»',a:1,why:'Otra vez el plazo de entrega: Envío.'},
+  {q:'«Muy buena relación calidad-precio»',a:0,why:'Valora lo que pagas por lo que recibes: Precio.'},
+  {q:'«No contestan al teléfono»',a:2,why:'Problema con el servicio al cliente: Atención.'},
+  {q:'«La placa base funciona de maravilla»',a:3,why:'Valora el artículo en sí: Producto.'}
+]);
+/* Las barras suben con cada respuesta correcta: escuchamos los clics de la caja */
+document.getElementById('coding').addEventListener('click',e=>{
+  const b=e.target.closest('.cls-opt'); if(!b) return;
+  setTimeout(()=>{ const ok=document.querySelector('#coding .cls-opt.ok'); if(ok&&ok===b){ codeTally[+b.dataset.k]++; renderBars(); } },0);
+});
+
+/* ===== DECISIÓN ===== */
+const dtA=['Se procede a <b>establecer las conclusiones del estudio</b> y a <b>redactar el informe final</b>, con los <b>hallazgos clave</b>, el <b>análisis</b> y las <b>recomendaciones</b> basadas en la información recopilada.','Será necesario <b>recoger información primaria</b> en fuentes originales mediante <b>encuestas, entrevistas y grupos focales</b>. Es <b>más costosa y lleva más tiempo</b>, pero da datos <b>específicos y detallados</b> que complementan la secundaria.'];
+function showDT(i){
+  [0,1].forEach(k=>{ document.getElementById('dtq'+k).classList.toggle('lit',k===i); });
+  const a=document.getElementById('dta'+i); a.innerHTML=dtA[i]; a.classList.add('show','swap');
+  a.style.background=i?'#fdeaea':'#e6f5ea';
+}
+const simOpts=['📊 INE / CREM','🤝 CRM de PCC','📈 Google Trends','📻 EGM','🚫 No existe: hay que preguntar'];
+const simQs=[
+  {q:'1. ¿Cuántos jóvenes de 16 a 35 años viven en la Región de Murcia?',a:0,why:'Estadística oficial de población: INE o el CREM regional.'},
+  {q:'2. ¿Cuántos clientes de Murcia compraron piezas sueltas el último año?',a:1,why:'Es información interna: está en el CRM.'},
+  {q:'3. ¿Está creciendo el interés por «montar pc»?',a:2,why:'Google Trends muestra la evolución de las búsquedas.'},
+  {q:'4. ¿Cuánto estarían dispuestos a pagar por el montaje a domicilio?',a:4,why:'Nadie lo ha estudiado aún: es un dato que solo podemos obtener preguntando.'},
+  {q:'5. ¿En qué medios hay más audiencia joven para anunciarlo?',a:3,why:'Es justo lo que mide el EGM.'}
+];
+let simAns=0, simOk=0;
+document.getElementById('sim').innerHTML=simQs.map((s,i)=>`<div class="sim-q" id="simq${i}"><h5>${s.q}</h5><div class="sim-opts">${simOpts.map((o,k)=>`<button class="sim-opt" onclick="simPick(${i},${k},this)">${o}</button>`).join('')}</div></div>`).join('');
+function simPick(i,k,btn){
+  const row=document.getElementById('simq'+i), bs=row.querySelectorAll('.sim-opt'); if(bs[0].disabled) return;
+  bs.forEach(b=>b.disabled=true); bs[simQs[i].a].classList.add('ok'); if(k!==simQs[i].a) btn.classList.add('ko'); else simOk++;
+  row.insertAdjacentHTML('beforeend',`<div class="sim-fb">${k===simQs[i].a?'✅':'❌'} ${simQs[i].why}</div>`);
+  if(++simAns===simQs.length){
+    document.getElementById('sim-verdict').innerHTML=`<div class="verdict" style="background:#fff1eb;border:1px solid #f7c9b6">⚖️ <b>Veredicto:</b> 4 de las 5 preguntas se responden con información secundaria (rápida y barata)... pero la <b>pregunta 4 no</b>. La información secundaria <b>no es suficiente</b> → PCC tendrá que hacer una <b>investigación primaria</b> (por ejemplo, la encuesta a 400 clientes de la UT2). <br><span style="color:var(--text2)">Has acertado ${simOk}/5.</span></div>`;
+    showDT(1);
+    if(simOk>=4) award('decisor');
+  }
+}
+
+/* ===== JUEGOS ===== */
+const words=[
+  {word:'SECUNDARIA',hint:'Información que ya existe y se recogió para otro fin'},
+  {word:'INTERNAS',hint:'Fuentes por las que siempre conviene empezar'},
+  {word:'MOROSIDAD',hint:'Dato que aporta contabilidad: clientes que no pagan'},
+  {word:'REPOSITORIO',hint:'Un data warehouse es un ... único de datos'},
+  {word:'MINERIA',hint:'Data mining en español'},
+  {word:'OPERADORES',hint:'AND, OR, site: o filetype: son ... de búsqueda'},
+  {word:'ALGORITMO',hint:'Ordena los resultados del buscador'},
+  {word:'POSICIONAMIENTO',hint:'Lo que mejora el SEO en los buscadores'},
+  {word:'TRANSCRIBIR',hint:'Pasar a texto un audio o vídeo para analizarlo'},
+  {word:'PLAGIO',hint:'Lo que te pueden atribuir si no citas tus fuentes'},
+  {word:'BIBLIOGRAFICAS',hint:'Gestor de referencias ...'},
+  {word:'CUALITATIVA',hint:'Información que se estudia con análisis de contenido'},
+  {word:'CUANTITATIVA',hint:'Información que se prepara en forma de tabla'},
+  {word:'SUFICIENTE',hint:'Al final hay que decidir si la información secundaria es ...'}
+];
+let hState={};
+function openAhorcado(){ openModal('modal-ahorcado'); startHangman(); }
+function startHangman(){ const e=words[Math.floor(Math.random()*words.length)]; hState={word:e.word,hint:e.hint,guessed:[],wrong:0,maxWrong:7}; renderHangman(); }
+function renderHangman(){
+  const {word,hint,guessed,wrong,maxWrong}=hState, won=word.split('').every(l=>guessed.includes(l)), lost=wrong>=maxWrong;
+  const parts=[wrong>0?'<line x1="80" y1="130" x2="130" y2="130" stroke="currentColor" stroke-width="2.5"/>':'',wrong>1?'<line x1="100" y1="130" x2="100" y2="10" stroke="currentColor" stroke-width="2.5"/>':'',wrong>2?'<line x1="100" y1="10" x2="140" y2="10" stroke="currentColor" stroke-width="2"/>':'',wrong>3?'<line x1="140" y1="10" x2="140" y2="28" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>':'',wrong>4?'<circle cx="140" cy="38" r="10" stroke="currentColor" stroke-width="2" fill="none"/>':'',wrong>5?'<line x1="140" y1="48" x2="140" y2="82" stroke="currentColor" stroke-width="2"/><line x1="140" y1="58" x2="122" y2="72" stroke="currentColor" stroke-width="2"/><line x1="140" y1="58" x2="158" y2="72" stroke="currentColor" stroke-width="2"/>':'',wrong>6?'<line x1="140" y1="82" x2="124" y2="105" stroke="currentColor" stroke-width="2"/><line x1="140" y1="82" x2="156" y2="105" stroke="currentColor" stroke-width="2"/>':''].join('');
+  document.getElementById('hangman-content').innerHTML=`<div class="hint-text">💡 Pista: ${hint}</div><svg class="hangman-drawing" width="200" height="140" viewBox="0 0 200 140" style="color:var(--text)"><rect x="0" y="125" width="200" height="5" rx="2" fill="var(--border)"/>${parts}</svg>
+  <div class="hangman-word">${word.split('').map(l=>`<div class="letter-box">${guessed.includes(l)?l:''}</div>`).join('')}</div>
+  <div class="hangman-status" style="color:${won?'#22562d':lost?'#a12c2c':'var(--text2)'}">${won?'🎉 ¡Correcto! Era: '+word:lost?'❌ Game over. Era: '+word:'Errores: '+wrong+'/'+maxWrong}</div>
+  ${won||lost?'<button class="play-again" onclick="startHangman()">Jugar de nuevo</button>':''}
+  <div class="hangman-keys">${'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('').map(l=>{ const g=guessed.includes(l), cls=g?(word.includes(l)?'right':'wrong'):''; return `<button class="key-btn ${cls}" ${g||won||lost?'disabled':''} onclick="guessLetter('${l}')">${l}</button>`; }).join('')}</div>`;
+}
+function guessLetter(l){ if(hState.guessed.includes(l)) return; hState.guessed.push(l); if(!hState.word.includes(l)) hState.wrong++; renderHangman(); }
+
+const sopaWords=['INE','CIS','EGM','CRM','SEO','SEM','PLAGIO','TABLA','FILETYPE','OPERADOR','ALGORITMO','INTERNAS'];
+let sopaState={};
+function openSopa(){ openModal('modal-sopa'); buildSopa(); }
+function buildSopa(){
+  const SIZE=13, grid=Array.from({length:SIZE},()=>Array(SIZE).fill('')), placed=[], dirs=[[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
+  [...sopaWords].sort((a,b)=>b.length-a.length).forEach(word=>{
+    for(let tries=0;tries<300;tries++){
+      const dir=dirs[Math.floor(Math.random()*8)], r=Math.floor(Math.random()*SIZE), c=Math.floor(Math.random()*SIZE), cells=[];
+      for(let i=0;i<word.length;i++){ const nr=r+dir[0]*i, nc=c+dir[1]*i; if(nr<0||nr>=SIZE||nc<0||nc>=SIZE) break; if(grid[nr][nc]&&grid[nr][nc]!==word[i]) break; cells.push([nr,nc]); }
+      if(cells.length===word.length){ cells.forEach(([nr,nc],i)=>grid[nr][nc]=word[i]); placed.push({word,cells}); break; }
+    }
+  });
+  const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!grid[r][c]) grid[r][c]=alpha[Math.floor(Math.random()*26)];
+  sopaState={SIZE,grid,placed,found:[],selecting:[],down:false};
+  renderSopa();
+}
+function renderSopa(){
+  const {SIZE,grid,placed,found}=sopaState, cls={};
+  placed.forEach(p=>{ if(found.includes(p.word)) p.cells.forEach(([r,c])=>cls[r+','+c]='found'); });
+  sopaState.selecting.forEach(([r,c])=>{ if(!cls[r+','+c]) cls[r+','+c]='selected'; });
+  let h=`<div style="text-align:center"><div class="grid-sopa" id="gsopa" style="grid-template-columns:repeat(${SIZE},auto)">`;
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) h+=`<div class="sopa-cell ${cls[r+','+c]||''}" data-r="${r}" data-c="${c}">${grid[r][c]}</div>`;
+  h+=`</div><div class="sopa-words">${placed.map(p=>`<span class="sopa-word ${found.includes(p.word)?'found':''}">${p.word}</span>`).join('')}</div>`;
+  if(found.length===placed.length) h+='<div style="margin-top:1rem;font-weight:800;color:#22562d">🎉 ¡Todas encontradas!</div><button class="play-again" onclick="buildSopa()">Jugar otra vez</button>';
+  document.getElementById('sopa-content').innerHTML=h+'</div>';
+  const g=document.getElementById('gsopa');
+  const cellAt=e=>{ const t=document.elementFromPoint(e.clientX,e.clientY); return t&&t.classList.contains('sopa-cell')?[+t.dataset.r,+t.dataset.c]:null; };
+  g.onpointerdown=e=>{ const c=cellAt(e); if(!c) return; sopaState.down=true; sopaState.start=c; sopaState.selecting=[c]; paintSel(); };
+  g.onpointermove=e=>{ if(!sopaState.down) return; const c=cellAt(e); if(!c) return; const [sr,sc]=sopaState.start, dr=c[0]-sr, dc=c[1]-sc, len=Math.max(Math.abs(dr),Math.abs(dc)); let R=0,C=0; if(Math.abs(dr)>=Math.abs(dc)) R=Math.sign(dr); if(Math.abs(dc)>=Math.abs(dr)) C=Math.sign(dc); sopaState.selecting=[...Array(len+1)].map((_,i)=>[sr+R*i,sc+C*i]); paintSel(); };
+  g.onpointerup=()=>endSel(); g.onpointerleave=()=>{ if(sopaState.down) endSel(); };
+}
+function paintSel(){ document.querySelectorAll('#gsopa .sopa-cell').forEach(el=>{ const on=sopaState.selecting.some(([r,c])=>r==el.dataset.r&&c==el.dataset.c); el.classList.toggle('selected',on&&!el.classList.contains('found')); }); }
+function endSel(){
+  sopaState.down=false; const sel=sopaState.selecting;
+  if(sel.length>1){ const s=sel.map(([r,c])=>sopaState.grid[r][c]).join(''); const hit=sopaState.placed.find(p=>p.word===s||p.word===[...s].reverse().join('')); if(hit&&!sopaState.found.includes(hit.word)) sopaState.found.push(hit.word); }
+  sopaState.selecting=[]; renderSopa();
+}
+
+const quizQ=[
+  {q:'¿Por qué se busca primero la información secundaria?',o:['Porque es siempre más precisa','Porque suele ser más barata y fácil de obtener','Porque lo exige la ley'],a:1},
+  {q:'¿Por qué tipo de fuentes conviene empezar?',o:['Por las externas','Por las internas','Da igual el orden'],a:1},
+  {q:'Un CRM registra...',o:['Solo las ventas anuales','Todos los contactos con los clientes: conversaciones, ventas, ofertas...','Las estadísticas del INE'],a:1},
+  {q:'Un data warehouse es...',o:['Una técnica para encontrar patrones','Un repositorio único donde se almacenan todos los datos de la empresa','Un buscador académico'],a:1},
+  {q:'El data mining busca...',o:['«Pepitas de información» (patrones) entre «montañas de datos»','Borrar los datos antiguos','Comprar bases de datos a otras empresas'],a:0},
+  {q:'¿Cuál de estas es una fuente secundaria EXTERNA?',o:['El informe de ventas del CRM','Las estadísticas del INE','Una encuesta propia a clientes'],a:1},
+  {q:'¿Qué mide el EGM?',o:['La población española','Las audiencias de los medios de comunicación','La morosidad de los clientes'],a:1},
+  {q:'Google Scholar es un buscador...',o:['General','Específico (académico)','Especializado en SEO'],a:1},
+  {q:'Google Trends, Semrush y Ahrefs son buscadores...',o:['Generales','Específicos','Especializados'],a:2},
+  {q:'¿Qué hace el operador «-» (guion)?',o:['Busca sinónimos','Excluye el término que va detrás','Busca la frase exacta'],a:1},
+  {q:'¿Para qué sirve «site:»?',o:['Para buscar un tipo de archivo','Para buscar solo dentro de un sitio web concreto','Para buscar webs parecidas'],a:1},
+  {q:'Que una web salga la primera en Google significa que...',o:['Es la de más calidad','El algoritmo la considera más relevante para esa búsqueda','Es una fuente oficial'],a:1},
+  {q:'Los datos cuantitativos deben prepararse...',o:['En forma de tabla: variables en columnas y casos en filas','En formato vídeo','Transcritos a texto'],a:0},
+  {q:'La información cualitativa se analiza mediante...',o:['El análisis de contenido','La limpieza de datos','El muestreo'],a:0},
+  {q:'Si la información secundaria no responde a todas las preguntas de la investigación...',o:['Se abandona la investigación','Se recoge información primaria','Se redacta el informe igualmente'],a:1}
+];
+let userAnswers=[], quizDone=false;
+function openQuiz(){ openModal('modal-quiz'); userAnswers=Array(quizQ.length).fill(null); quizDone=false; renderQuiz(); }
+function renderQuiz(){
+  let h='';
+  quizQ.forEach((q,qi)=>{ h+=`<p class="quiz-q">${qi+1}. ${q.q}</p><div class="quiz-options">${q.o.map((o,oi)=>{ let c=userAnswers[qi]===oi?'selected':''; if(quizDone){ if(oi===q.a) c='right'; else if(userAnswers[qi]===oi) c='wrong'; } return `<button class="quiz-opt ${c}" ${quizDone?'disabled':''} onclick="selQ(${qi},${oi})">${o}</button>`; }).join('')}</div>`; });
+  const all=userAnswers.every(a=>a!==null);
+  if(!quizDone) h+=`<button class="play-again" ${all?'':'disabled style="opacity:.5"'} onclick="finishQuiz()">${all?'Corregir':'Responde todas para corregir'}</button>`;
+  else { const sc=userAnswers.filter((a,i)=>a===quizQ[i].a).length, n=(sc/quizQ.length*10).toFixed(1); h+=`<div class="result-box">${n>=9?'🏆':n>=7?'🎉':n>=5?'👍':'💪'} ${sc}/${quizQ.length} · Nota: ${n}/10</div><button class="play-again" onclick="openQuiz()">Repetir</button>`; }
+  document.getElementById('quiz-content').innerHTML=h;
+}
+function selQ(qi,oi){ userAnswers[qi]=oi; const m=document.querySelector('#modal-quiz .modal'), st=m.scrollTop; renderQuiz(); m.scrollTop=st; }
+function finishQuiz(){ quizDone=true; renderQuiz(); document.querySelector('#modal-quiz .modal').scrollTop=1e6; }
+
+const memPairs=[
+  ['🤝 CRM','Registra todos los contactos con los clientes'],['🏬 Data warehouse','Repositorio único con todos los datos'],
+  ['⛏️ Data mining','Pepitas de información entre montañas de datos'],['📊 INE','Estadísticas oficiales de España'],
+  ['📻 EGM','Audiencias de los medios (AIMC)'],['🎓 Google Scholar','Buscador académico'],
+  ['🌐 site:','Busca dentro de una web concreta'],['🎙️ NVivo / ATLAS.ti','Software de análisis cualitativo']
+];
+let memState={};
+function openMemoria(){ openModal('modal-memoria'); buildMemoria(); }
+function buildMemoria(){ const cards=shuffle(memPairs.flatMap((p,i)=>[{t:p[0],pair:i,k:0},{t:p[1],pair:i,k:1}])); memState={cards,flipped:[],matched:[],moves:0}; renderMemoria(); }
+function renderMemoria(){
+  const {cards,flipped,matched,moves}=memState, done=matched.length===memPairs.length;
+  document.getElementById('memoria-content').innerHTML=`<div class="mem-status">Intentos: ${moves}${done?' · 🎉 ¡Completado!':''}</div><div class="memory-grid">${cards.map((c,i)=>{ const f=flipped.includes(i)||matched.includes(c.pair); return `<div class="mem-card ${f?'flipped':''} ${matched.includes(c.pair)?'matched':''}" onclick="flipMem(${i})"><div class="mem-inner"><div class="mem-front">?</div><div class="mem-back">${c.t}</div></div></div>`; }).join('')}</div>${done?'<button class="play-again" onclick="buildMemoria()">Jugar otra vez</button>':''}`;
+}
+function flipMem(i){
+  const {cards,flipped,matched}=memState, c=cards[i];
+  if(flipped.includes(i)||matched.includes(c.pair)||flipped.length>=2) return;
+  memState.flipped=[...flipped,i]; renderMemoria();
+  if(memState.flipped.length===2){ memState.moves++; const [a,b]=memState.flipped.map(x=>cards[x]);
+    if(a.pair===b.pair&&a.k!==b.k){ memState.matched.push(a.pair); memState.flipped=[]; setTimeout(renderMemoria,300); }
+    else setTimeout(()=>{ memState.flipped=[]; renderMemoria(); },1000); }
+}
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('show'); }));
+</script>
+</body>
+</html>
