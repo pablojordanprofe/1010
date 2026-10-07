@@ -160,10 +160,187 @@ header span { font-size:0.75rem; opacity:0.6; }
 .mem-card.matched .mem-back { background:#eaf3de; border-color:#639922; color:#27500a; }
 .mem-status { text-align:center; font-size:0.85rem; color:var(--text2); margin-bottom:0.5rem; }
 
+/* ===== TRANSICIONES GLOBALES ===== */
+.scroll-progress { position:absolute; left:0; bottom:0; height:3px; width:0; background:linear-gradient(90deg,#5cc8e8,#b07d1a); transition:width .1s linear; }
+.tabs { position:sticky; z-index:60; top:64px; background:rgba(247,246,242,0.93); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); padding:0.6rem 0; margin-left:-0.2rem; margin-right:-0.2rem; }
+.tab { transition:all .25s cubic-bezier(.2,.8,.2,1); }
+.tab.active { box-shadow:0 4px 14px rgba(15,110,140,0.28); transform:translateY(-1px); }
+.tab-content.active { animation:tabIn .5s cubic-bezier(.2,.8,.2,1); }
+.tab-content.active > * { animation:rise .55s cubic-bezier(.2,.8,.2,1) both; }
+.tab-content.active > *:nth-child(2){ animation-delay:.07s } .tab-content.active > *:nth-child(3){ animation-delay:.14s }
+.tab-content.active > *:nth-child(4){ animation-delay:.21s } .tab-content.active > *:nth-child(5){ animation-delay:.28s }
+.tab-content.active > *:nth-child(n+6){ animation-delay:.33s }
+@keyframes tabIn { from{opacity:0} to{opacity:1} }
+@keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+.sim-detail.show { animation:rise .4s cubic-bezier(.2,.8,.2,1); }
+.new-badge { display:inline-block; font-size:0.6rem; font-weight:800; background:#b07d1a; color:white; border-radius:20px; padding:0.05rem 0.4rem; margin-left:0.3rem; vertical-align:middle; letter-spacing:.3px; }
+.btn { border:none; border-radius:10px; padding:0.6rem 1.1rem; font-size:0.83rem; font-weight:600; cursor:pointer; transition:all .2s; font-family:inherit; }
+.btn-teal { background:var(--teal); color:white; } .btn-teal:hover { background:var(--teal2); }
+.btn-ghost { background:var(--bg); color:var(--text); border:1.5px solid var(--border); } .btn-ghost:hover { border-color:var(--teal); color:var(--teal); }
+.btn:disabled { opacity:.4; cursor:not-allowed; }
+.exam-tip { background:#fef3c7; border:1px solid #fde68a; border-radius:10px; padding:0.8rem 1rem; font-size:0.82rem; color:#78350f; line-height:1.6; }
+
+/* ===== MAPA DEL SIM ===== */
+.map-controls { display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center; margin-top:1rem; }
+.map-step-label { font-size:0.78rem; color:var(--text2); margin-left:auto; font-weight:600; }
+.map { display:grid; grid-template-columns:1fr 46px 2fr 46px 1fr; align-items:center; gap:0; }
+.map-col { display:flex; flex-direction:column; gap:0.7rem; }
+.map-head { border-radius:12px; padding:0.7rem; text-align:center; font-weight:800; font-size:0.9rem; }
+.map-node { border-radius:12px; padding:0.8rem; text-align:center; cursor:pointer; transition:all .35s cubic-bezier(.2,.8,.2,1); border:2px solid transparent; position:relative; }
+.map-node:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.1); }
+.map-node h5 { font-size:0.85rem; font-weight:800; margin-bottom:0.4rem; }
+.env-c { background:#f8f6c9; color:#4a4510; }
+.map-head.env-c, .map-head.dec-c { background:#e6e277; color:#2f2c05; }
+.dec-c { background:#f8f6c9; color:#4a4510; }
+.chips { display:flex; flex-wrap:wrap; gap:0.25rem; justify-content:center; }
+.chip { font-size:0.68rem; background:rgba(255,255,255,0.75); border-radius:20px; padding:0.12rem 0.5rem; font-weight:600; }
+.map-sim { border:2.5px solid #0f6e8c; border-radius:18px; padding:0.9rem; background:white; position:relative; }
+.map-sim-title { text-align:center; font-weight:800; font-size:0.78rem; letter-spacing:.6px; color:#0a3d55; margin:0.2rem 0 0.7rem; }
+.map-subs { display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; }
+.map-sub { padding:0; overflow:hidden; background:#a9c6de; }
+.map-sub .s-name { background:#0f6e8c; color:white; padding:0.6rem 0.4rem; font-weight:800; font-size:0.84rem; }
+.map-sub .s-alias { padding:0.55rem 0.4rem; font-size:0.72rem; color:#0a3d55; line-height:1.35; }
+.map-arrow { height:12px; position:relative; margin:0 6px; border-radius:6px; overflow:hidden; background:#d8e7f0; }
+.map-arrow::before { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,#0f6e8c 0 10px,transparent 10px 18px); opacity:.35; animation:flowX 1.2s linear infinite; }
+.map-arrow::after { content:'▶'; position:absolute; right:-2px; top:50%; transform:translateY(-50%); color:#0f6e8c; font-size:0.8rem; line-height:1; }
+@keyframes flowX { from{background-position:0 0} to{background-position:18px 0} }
+.map-loop { margin-top:1rem; border:2px dashed #c7c25a; border-radius:12px; padding:0.7rem 1rem; text-align:center; font-weight:700; font-size:0.85rem; color:#4a4510; cursor:pointer; transition:all .35s; position:relative; overflow:hidden; }
+.map-loop .loop-ico { display:inline-block; animation:spin 4s linear infinite; }
+@keyframes spin { to{transform:rotate(-360deg)} }
+.map .lit, .map-loop.lit { border-color:#b07d1a; box-shadow:0 0 0 4px rgba(176,125,26,0.18),0 10px 24px rgba(0,0,0,0.12); transform:translateY(-3px) scale(1.02); }
+.map-arrow.lit { background:#fde68a; }
+.map-arrow.lit::before { opacity:1; background:repeating-linear-gradient(90deg,#b07d1a 0 10px,transparent 10px 18px); animation-duration:.5s; }
+.map.playing .map-node:not(.lit), .map.playing .map-arrow:not(.lit) { opacity:.45; }
+.map-info { margin-top:1rem; background:#e8f4f8; border:1px solid #9fd3e8; border-radius:12px; padding:1rem 1.2rem; font-size:0.88rem; line-height:1.7; color:#0a3d55; min-height:92px; }
+.map-info h4 { font-size:0.95rem; margin-bottom:0.3rem; }
+.map-info.swap { animation:rise .4s cubic-bezier(.2,.8,.2,1); }
+.cls-box { text-align:center; }
+.cls-item { font-size:1rem; font-weight:700; background:var(--bg); border-radius:12px; padding:1.1rem; margin:0.8rem 0; border:1px solid var(--border); }
+.cls-item.anim { animation:rise .4s cubic-bezier(.2,.8,.2,1); }
+.cls-opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0.5rem; }
+.cls-opt { padding:0.7rem; border-radius:10px; border:1.5px solid var(--border); background:var(--bg2); cursor:pointer; font-weight:600; font-size:0.82rem; transition:all .2s; font-family:inherit; }
+.cls-opt:hover:not(:disabled) { border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
+.cls-opt.ok { background:#eaf3de; border-color:#639922; color:#27500a; }
+.cls-opt.ko { background:#fcebeb; border-color:#f09595; color:#a32d2d; animation:shake .35s; }
+@keyframes shake { 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.cls-fb { min-height:2.6rem; font-size:0.84rem; margin-top:0.8rem; line-height:1.5; color:var(--text2); }
+.cls-score { font-size:0.78rem; font-weight:700; color:var(--teal2); }
+
+/* ===== PROCESO DE INVESTIGACIÓN ===== */
+.stepper { display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem; position:relative; margin:0.4rem 0 1.2rem; }
+.stepper-line { position:absolute; left:12.5%; right:12.5%; top:22px; height:4px; background:var(--border); border-radius:4px; z-index:0; }
+.stepper-fill { height:100%; width:0; border-radius:4px; background:linear-gradient(90deg,#a39318,#2f6f9c,#7a4f96,#0f6e56); transition:width .6s cubic-bezier(.2,.8,.2,1); }
+.step-btn { position:relative; z-index:1; background:none; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:0.4rem; font-family:inherit; }
+.step-dot { width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; background:white; border:3px solid var(--border); color:var(--text2); transition:all .35s cubic-bezier(.2,.8,.2,1); }
+.step-btn.done .step-dot { color:white; }
+.step-btn.current .step-dot { transform:scale(1.15); box-shadow:0 6px 16px rgba(0,0,0,0.15); }
+.step-name { font-size:0.72rem; font-weight:700; color:var(--text2); text-align:center; line-height:1.25; }
+.step-btn.current .step-name { color:var(--text); }
+.phase-stage { position:relative; overflow:hidden; }
+.phase { display:none; }
+.phase.show { display:block; }
+.phase.in-right { animation:inRight .5s cubic-bezier(.2,.8,.2,1); }
+.phase.in-left { animation:inLeft .5s cubic-bezier(.2,.8,.2,1); }
+@keyframes inRight { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:none} }
+@keyframes inLeft { from{opacity:0;transform:translateX(-40px)} to{opacity:1;transform:none} }
+.phase-head { border-radius:12px; padding:1rem 1.2rem; display:flex; align-items:center; gap:0.9rem; margin-bottom:1rem; }
+.phase-num { width:44px; height:44px; border-radius:50%; background:white; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.2rem; flex-shrink:0; }
+.phase-head h3 { font-size:1.05rem; font-weight:800; margin:0; }
+.phase-head p { font-size:0.8rem; opacity:.85; margin:0.15rem 0 0; color:inherit; line-height:1.4; }
+.pflow { display:flex; flex-direction:column; align-items:stretch; }
+.pstep { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:1rem 1.2rem; box-shadow:var(--shadow); }
+.pstep h4 { font-size:0.92rem; font-weight:800; margin-bottom:0.5rem; }
+.pstep .pills { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.5rem; }
+.pill { font-size:0.76rem; font-weight:700; border-radius:20px; padding:0.25rem 0.75rem; }
+.pstep p { font-size:0.84rem; color:var(--text2); line-height:1.6; }
+.pchev { width:0; height:0; margin:0.35rem auto; border-left:16px solid transparent; border-right:16px solid transparent; border-top:12px solid; }
+.case-toggle { margin-top:0.6rem; background:none; border:1.5px dashed; border-radius:8px; padding:0.35rem 0.8rem; font-size:0.76rem; font-weight:700; cursor:pointer; font-family:inherit; }
+.case-body { max-height:0; overflow:hidden; transition:max-height .45s ease; }
+.case-body.open { max-height:400px; }
+.case-inner { margin-top:0.6rem; background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:0.7rem 0.9rem; font-size:0.8rem; color:#78350f; line-height:1.6; }
+.tree { display:flex; flex-direction:column; align-items:center; }
+.tree-node { border-radius:12px; padding:0.75rem 1rem; text-align:center; cursor:pointer; font-weight:800; font-size:0.86rem; transition:all .3s cubic-bezier(.2,.8,.2,1); border:2px solid transparent; background:#e7f0f8; color:#1d4f73; font-family:inherit; }
+.tree-node:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,0.1); }
+.tree-node.sel { border-color:#2f6f9c; background:#2f6f9c; color:white; }
+.tree-root { background:#86afcc; color:white; }
+.tree-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; width:100%; position:relative; padding-top:22px; }
+.tree-row::before { content:''; position:absolute; top:0; left:25%; right:25%; height:12px; border:2px solid #86afcc; border-bottom:none; border-radius:10px 10px 0 0; }
+.tree-col { display:flex; flex-direction:column; align-items:center; gap:0; }
+.tree-col .tree-node { width:100%; }
+.tree-sub { width:100%; }
+.tree-detail { margin-top:1rem; border-radius:12px; padding:1rem 1.2rem; background:#e7f0f8; border:1px solid #b9d2e6; color:#1d4f73; font-size:0.85rem; line-height:1.7; }
+.tree-detail.swap { animation:rise .4s cubic-bezier(.2,.8,.2,1); }
+.tree-detail h4 { font-size:0.95rem; margin-bottom:0.3rem; }
+.tree-detail ul { padding-left:1.1rem; }
+.foto-peli { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-top:0.6rem; }
+.foto-peli div { background:white; border-radius:8px; padding:0.6rem; font-size:0.78rem; border:1px solid #b9d2e6; }
+.methods { display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem; margin-top:0.5rem; }
+.method { background:var(--bg2); border:1.5px solid #b9d2e6; border-radius:10px; padding:0.7rem 0.4rem; text-align:center; cursor:pointer; font-weight:700; font-size:0.8rem; transition:all .25s; font-family:inherit; color:var(--text); }
+.method .m-ico { font-size:1.4rem; display:block; margin-bottom:0.2rem; }
+.method:hover, .method.sel { background:#2f6f9c; color:white; border-color:#2f6f9c; transform:translateY(-2px); }
+.balance-wrap { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:center; }
+.balance { position:relative; height:150px; }
+.beam { position:absolute; left:10%; right:10%; top:40px; height:6px; background:#7a4f96; border-radius:4px; transition:transform .6s cubic-bezier(.3,1.4,.5,1); transform-origin:50% 50%; }
+.pan { position:absolute; top:6px; width:84px; text-align:center; font-size:0.7rem; font-weight:800; }
+.pan .pan-box { height:34px; border-radius:0 0 40px 40px; display:flex; align-items:center; justify-content:center; color:white; font-size:0.72rem; margin-top:2px; }
+.pan.left { left:-30px; } .pan.right { right:-30px; }
+.pivot { position:absolute; left:50%; top:46px; transform:translateX(-50%); width:0; height:0; border-left:22px solid transparent; border-right:22px solid transparent; border-bottom:70px solid #c3a6cf; }
+.verdict { text-align:center; font-weight:800; font-size:1rem; border-radius:10px; padding:0.6rem; margin-top:0.4rem; transition:all .3s; }
+.slider-row { margin-bottom:0.8rem; }
+.slider-row label { font-size:0.8rem; font-weight:700; display:flex; justify-content:space-between; margin-bottom:0.2rem; }
+.slider-row input { width:100%; accent-color:#7a4f96; }
+.pipeline { display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem; margin-top:0.6rem; }
+.pipe { background:#f3ecf8; border:1px solid #d9c4e6; border-radius:12px; padding:0.9rem 0.6rem; text-align:center; position:relative; }
+.pipe .p-ico { font-size:1.6rem; }
+.pipe h5 { font-size:0.8rem; font-weight:800; color:#4a2a63; margin:0.3rem 0; }
+.pipe p { font-size:0.74rem; color:var(--text2); line-height:1.45; }
+.pipe:not(:last-child)::after { content:'➜'; position:absolute; right:-0.65rem; top:50%; transform:translateY(-50%); color:#7a4f96; font-weight:800; z-index:1; }
+.phase.show .pipe { animation:rise .5s cubic-bezier(.2,.8,.2,1) both; }
+.phase.show .pipe:nth-child(2){animation-delay:.12s} .phase.show .pipe:nth-child(3){animation-delay:.24s} .phase.show .pipe:nth-child(4){animation-delay:.36s}
+.report { background:white; border:1px solid var(--border); border-radius:6px; box-shadow:0 10px 30px rgba(0,0,0,0.1); padding:1.4rem 1.6rem; max-width:520px; margin:0 auto; position:relative; }
+.report::before { content:''; position:absolute; top:0; left:0; right:0; height:6px; background:#0f6e56; border-radius:6px 6px 0 0; }
+.report h4 { font-size:0.95rem; font-weight:800; text-align:center; margin-bottom:0.9rem; color:#0f6e56; letter-spacing:.5px; }
+.rep-item { display:flex; gap:0.7rem; align-items:flex-start; padding:0.55rem 0.4rem; border-bottom:1px dashed var(--border); cursor:pointer; border-radius:6px; transition:background .2s; }
+.rep-item:hover { background:#f0fdf4; }
+.rep-check { width:22px; height:22px; border-radius:6px; border:2px solid #0f6e56; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.8rem; color:white; transition:all .25s; }
+.rep-item.on .rep-check { background:#0f6e56; }
+.rep-item h5 { font-size:0.84rem; font-weight:800; }
+.rep-item p { font-size:0.78rem; color:var(--text2); line-height:1.5; max-height:0; overflow:hidden; transition:max-height .35s; }
+.rep-item.on p { max-height:120px; }
+.rep-star { background:#fef3c7; }
+.phase-nav { display:flex; justify-content:space-between; margin-top:1.2rem; gap:0.5rem; }
+.map5 { width:100%; border-collapse:separate; border-spacing:0 6px; font-size:0.82rem; }
+.map5 td { padding:0.6rem 0.8rem; background:var(--bg); }
+.map5 td:first-child { border-radius:8px 0 0 8px; font-weight:600; }
+.map5 td:last-child { border-radius:0 8px 8px 0; font-weight:800; }
+.map5 td.arrow { background:none; text-align:center; color:var(--text2); width:30px; padding:0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation:none !important; transition:none !important; }
+}
 @media(max-width:600px){
   .sim-diagram { grid-template-columns:1fr; }
   .memory-grid { grid-template-columns:repeat(3,1fr); }
+  .map { grid-template-columns:1fr; gap:0; }
+  .map-arrow { height:34px; width:12px; margin:6px auto; }
+  .map-arrow::before { background:repeating-linear-gradient(180deg,#0f6e8c 0 10px,transparent 10px 18px); animation-name:flowY; }
+  .map-arrow.lit::before { background:repeating-linear-gradient(180deg,#b07d1a 0 10px,transparent 10px 18px); }
+  .map-arrow::after { content:'▼'; right:auto; left:50%; top:auto; bottom:-3px; transform:translateX(-50%); }
+  .stepper-line { top:18px; }
+  .step-dot { width:36px; height:36px; font-size:0.85rem; }
+  .step-name { font-size:0.62rem; }
+  .methods, .pipeline { grid-template-columns:1fr 1fr; }
+  .pipe:not(:last-child)::after { display:none; }
+  .balance-wrap, .foto-peli { grid-template-columns:1fr; }
+  .tree-row { gap:0.5rem; }
+  header { padding:0.8rem 1rem; }
+  .map-info { position:sticky; bottom:8px; z-index:5; max-height:42vh; overflow-y:auto; box-shadow:0 -6px 20px rgba(0,0,0,0.12); }
+  .tabs { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { white-space:nowrap; flex-shrink:0; }
+  .container { padding:1.2rem 1rem; }
 }
+@keyframes flowY { from{background-position:0 0} to{background-position:0 18px} }
 </style>
 </head>
 <body>
@@ -174,22 +351,25 @@ header span { font-size:0.75rem; opacity:0.6; }
     <span>Unidad de Trabajo 2</span>
   </div>
   <a href="index.html" class="back-btn">← Volver al índice</a>
+  <div class="scroll-progress" id="scroll-progress"></div>
 </header>
 
 <div class="container">
   <div class="ut-hero">
     <div class="ut-num">Unidad de Trabajo 2</div>
     <h2>Sistema de Información de Marketing (SIM)</h2>
-    <p>Necesidad de información · Tipos de información · Concepto y estructura del SIM · Investigación comercial · Aspectos éticos · Código CCI/ESOMAR</p>
+    <p>Necesidad de información · Tipos de información · Concepto y estructura del SIM · Mapa del SIM · Investigación comercial y su proceso · Aspectos éticos · Código ICC/ESOMAR</p>
   </div>
 
   <div class="tabs">
-    <div class="tab active" onclick="switchTab('sim',this)">📡 El SIM</div>
-    <div class="tab" onclick="switchTab('estructura',this)">🏗️ Estructura</div>
-    <div class="tab" onclick="switchTab('idoneidad',this)">✅ Idoneidad</div>
-    <div class="tab" onclick="switchTab('investigacion',this)">🔬 Investigación</div>
-    <div class="tab" onclick="switchTab('etica',this)">⚖️ Ética</div>
-    <div class="tab" onclick="switchTab('juegos',this)">🎮 Juegos</div>
+    <div class="tab active" data-tab="sim" onclick="switchTab('sim',this)">📡 El SIM</div>
+    <div class="tab" data-tab="estructura" onclick="switchTab('estructura',this)">🏗️ Estructura</div>
+    <div class="tab" data-tab="mapa" onclick="switchTab('mapa',this)">🗺️ Mapa del SIM</div>
+    <div class="tab" data-tab="idoneidad" onclick="switchTab('idoneidad',this)">✅ Idoneidad</div>
+    <div class="tab" data-tab="investigacion" onclick="switchTab('investigacion',this)">🔬 Investigación</div>
+    <div class="tab" data-tab="proceso" onclick="switchTab('proceso',this)">🧭 Proceso de investigación</div>
+    <div class="tab" data-tab="etica" onclick="switchTab('etica',this)">⚖️ Ética</div>
+    <div class="tab" data-tab="juegos" onclick="switchTab('juegos',this)">🎮 Juegos</div>
   </div>
 
   <!-- TAB SIM -->
@@ -275,6 +455,76 @@ header span { font-size:0.75rem; opacity:0.6; }
     </div>
   </div>
 
+  <!-- TAB MAPA DEL SIM (resumen visual) -->
+  <div class="tab-content" id="tab-mapa">
+    <div class="card" style="border-left:4px solid #b07d1a">
+      <h3>🗺️ El SIM en un solo vistazo</h3>
+      <p>Este mapa resume <strong>todo el tema en una imagen</strong>: de dónde sale la información (el <strong>entorno</strong>), quién la trata (los <strong>cuatro subsistemas del SIM</strong>) y para qué sirve (la <strong>toma de decisiones</strong>). Y no acaba ahí: lo que decide la empresa cambia el entorno, y el ciclo vuelve a empezar.</p>
+      <p style="margin-top:0.5rem">Pulsa <strong>▶ Recorrido</strong> para ver cómo viaja la información paso a paso, o toca cualquier bloque del mapa.</p>
+      <div class="map-controls">
+        <button class="btn btn-teal" id="map-play" onclick="mapPlay()">▶ Recorrido</button>
+        <button class="btn btn-ghost" id="map-prev" onclick="mapGo(-1)">◀</button>
+        <button class="btn btn-ghost" id="map-next" onclick="mapGo(1)">▶</button>
+        <button class="btn btn-ghost" onclick="mapReset()">↺ Reiniciar</button>
+        <span class="map-step-label" id="map-step-label">Paso 0 de 9</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="map" id="map">
+        <div class="map-col">
+          <div class="map-head env-c">🌍 Entorno</div>
+          <div class="map-node env-c" data-k="macro" onclick="mapShow('macro')">
+            <h5>Macroentorno</h5>
+            <div class="chips"><span class="chip">Político</span><span class="chip">Económico</span><span class="chip">Social</span><span class="chip">Tecnológico</span><span class="chip">Ecológico</span><span class="chip">Legal</span></div>
+          </div>
+          <div class="map-node env-c" data-k="micro" onclick="mapShow('micro')">
+            <h5>Microentorno</h5>
+            <div class="chips"><span class="chip">Proveedores</span><span class="chip">Intermediarios</span><span class="chip">Clientes</span><span class="chip">Competidores</span><span class="chip">Grupos de interés</span></div>
+          </div>
+        </div>
+        <div class="map-arrow" data-k="in" onclick="mapShow('in')"></div>
+        <div class="map-sim">
+          <div class="map-sim-title">SISTEMA DE INFORMACIÓN DE MARKETING</div>
+          <div class="map-subs">
+            <div class="map-node map-sub" data-k="intel" onclick="mapShow('intel')"><div class="s-name">🧠 Sistema de inteligencia</div><div class="s-alias">Subsistema de <strong>inteligencia de marketing</strong></div></div>
+            <div class="map-node map-sub" data-k="reg" onclick="mapShow('reg')"><div class="s-name">🗄️ Sistema de registro</div><div class="s-alias">Subsistema de <strong>datos internos</strong></div></div>
+            <div class="map-node map-sub" data-k="inv" onclick="mapShow('inv')"><div class="s-name">🔬 Investigación comercial</div><div class="s-alias">Subsistema de <strong>investigación de marketing</strong></div></div>
+            <div class="map-node map-sub" data-k="ana" onclick="mapShow('ana')"><div class="s-name">📊 Sistema de análisis</div><div class="s-alias">Subsistema de <strong>apoyo a las decisiones</strong> de marketing</div></div>
+          </div>
+        </div>
+        <div class="map-arrow" data-k="out" onclick="mapShow('out')"></div>
+        <div class="map-col">
+          <div class="map-head dec-c">🎯 Toma de decisiones en marketing</div>
+          <div class="map-node dec-c" data-k="dec" onclick="mapShow('dec')">
+            <div style="display:flex;flex-direction:column;gap:0.4rem;font-weight:700;font-size:0.84rem">
+              <span>📝 Planificación</span><span>🚀 Ejecución</span><span>📈 Control de resultados</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="map-loop" data-k="loop" onclick="mapShow('loop')"><span class="loop-ico">↻</span> Efecto de las decisiones de marketing sobre el entorno <span class="loop-ico">↻</span></div>
+      <div class="map-info" id="map-info"><h4>👆 Toca un bloque o pulsa «Recorrido»</h4>Cada bloque del mapa te explica qué es y te da un ejemplo con <strong>PC Componentes</strong>, nuestra empresa de referencia.</div>
+    </div>
+
+    <div class="card">
+      <h3>🔑 Las tres ideas que tienes que llevarte</h3>
+      <div class="ic-grid" style="margin-bottom:0">
+        <div class="ic-card" style="background:#f8f6c9;border-color:#e6e277"><h4>1 · Entra información</h4><ul><li>Del <strong>macroentorno</strong> (PESTEL, lo viste en la UT1).</li><li>Del <strong>microentorno</strong> (clientes, competencia...).</li><li>Y de <strong>dentro</strong> de la propia empresa.</li></ul></div>
+        <div class="ic-card" style="background:#e8f4f8;border-color:#9fd3e8"><h4>2 · El SIM la trata</h4><ul><li><strong>4 subsistemas</strong>: cada uno con un nombre «corto» y otro «largo».</li><li>Recogen, ordenan, analizan y distribuyen.</li></ul></div>
+        <div class="ic-card" style="background:#f0fdf4;border-color:#bbf7d0"><h4>3 · Sale una decisión</h4><ul><li>Para <strong>planificar, ejecutar y controlar</strong>.</li><li>Esa decisión <strong>cambia el entorno</strong> → es un <strong>ciclo continuo</strong>.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Reto rápido: ¿a qué subsistema va cada información?</h3>
+      <p style="margin-bottom:0.4rem">Lee la información y elige qué subsistema del SIM se encarga de ella.</p>
+      <div class="cls-box" id="cls-sim"></div>
+    </div>
+
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> aprende los subsistemas por parejas — <strong>inteligencia</strong> = inteligencia de marketing · <strong>registro</strong> = datos internos · <strong>investigación comercial</strong> = investigación de marketing · <strong>análisis</strong> = apoyo a las decisiones de marketing. Te pueden preguntar por cualquiera de los dos nombres.</div>
+  </div>
+
   <!-- TAB IDONEIDAD -->
   <div class="tab-content" id="tab-idoneidad">
     <div class="card">
@@ -324,6 +574,164 @@ header span { font-size:0.75rem; opacity:0.6; }
     <div class="card" style="border-left:4px solid var(--teal)">
       <h3>🇪🇸 La investigación comercial en España</h3>
       <p>En España el sector está representado por <strong>ANEIMO</strong> (Asociación Nacional de Empresas de Investigación de Mercados y Opinión) y <strong>AEDEMO</strong> (Asociación Española de Estudios de Mercado, Marketing y Opinión). Las principales empresas que operan en España son: <strong>Kantar, Nielsen, Ipsos, GfK, Metroscopia</strong> y <strong>40dB</strong>. El <strong>INE</strong> es la fuente pública de referencia para datos estadísticos.</p>
+    </div>
+  </div>
+
+  <!-- TAB PROCESO DE INVESTIGACIÓN -->
+  <div class="tab-content" id="tab-proceso">
+    <div class="card" style="border-left:4px solid #2f6f9c">
+      <h3>🧭 ¿Cómo se hace una investigación comercial?</h3>
+      <p>Toda investigación comercial sigue un camino en <strong>tres grandes fases</strong> y termina en un <strong>informe</strong>: primero se <strong>planifica</strong> qué se quiere saber, después se <strong>diseña</strong> cómo averiguarlo y por último se <strong>pone en marcha</strong>. En la UT3 lo convertiremos en un plan de investigación completo.</p>
+      <div class="case-inner" style="margin-top:0.8rem">🖥️ <strong>Caso guía:</strong> <strong>PC Componentes</strong> se plantea lanzar un servicio de <strong>montaje de PCs gaming a domicilio</strong> en la Región de Murcia. ¿Lo lanza o no? Vamos a seguir este caso en cada fase.</div>
+    </div>
+
+    <div class="card">
+      <div class="stepper" id="stepper">
+        <div class="stepper-line"><div class="stepper-fill" id="stepper-fill"></div></div>
+        <button class="step-btn" onclick="goPhase(0)"><span class="step-dot">1</span><span class="step-name">Planificación<br>preliminar</span></button>
+        <button class="step-btn" onclick="goPhase(1)"><span class="step-dot">2</span><span class="step-name">Diseño de la<br>investigación</span></button>
+        <button class="step-btn" onclick="goPhase(2)"><span class="step-dot">3</span><span class="step-name">Implantación de<br>la investigación</span></button>
+        <button class="step-btn" onclick="goPhase(3)"><span class="step-dot">📄</span><span class="step-name">Informe de<br>investigación</span></button>
+      </div>
+
+      <div class="phase-stage">
+        <!-- FASE 1 -->
+        <div class="phase" data-phase="0">
+          <div class="phase-head" style="background:#f8f6c9;color:#4a4510"><div class="phase-num" style="color:#a39318">1</div><div><h3>Planificación preliminar</h3><p>Antes de gastar un euro: ¿qué queremos saber, para qué y cuánto vale saberlo?</p></div></div>
+          <div class="pflow">
+            <div class="pstep">
+              <h4>🎯 Propósito de la investigación</h4>
+              <div class="pills"><span class="pill" style="background:#f8f6c9;color:#4a4510">Problema de decisión</span><span class="pill" style="background:#f8f6c9;color:#4a4510">Usuarios de la investigación</span></div>
+              <p>¿Qué <strong>decisión</strong> tiene que tomar la empresa y <strong>quién</strong> va a usar los resultados? Si el problema está mal planteado, toda la investigación fracasa.</p>
+              <button class="case-toggle" style="color:#a39318;border-color:#d8cf6a" onclick="toggleCase(this)">🖥️ Ver en el caso</button>
+              <div class="case-body"><div class="case-inner"><strong>Problema de decisión:</strong> ¿lanzamos o no el servicio de montaje a domicilio?<br><strong>Usuarios:</strong> la dirección de marketing y el departamento de logística.</div></div>
+            </div>
+            <div class="pchev" style="border-top-color:#e6e277"></div>
+            <div class="pstep">
+              <h4>🔎 Definición de la investigación</h4>
+              <div class="pills"><span class="pill" style="background:#f8f6c9;color:#4a4510">Objeto</span><span class="pill" style="background:#f8f6c9;color:#4a4510">Hipótesis</span><span class="pill" style="background:#f8f6c9;color:#4a4510">Alcance</span></div>
+              <p><strong>Objeto:</strong> qué vamos a estudiar exactamente. <strong>Hipótesis:</strong> una suposición que la investigación confirmará o rechazará. <strong>Alcance:</strong> hasta dónde llega el estudio (a quién, dónde y durante cuánto tiempo).</p>
+              <button class="case-toggle" style="color:#a39318;border-color:#d8cf6a" onclick="toggleCase(this)">🖥️ Ver en el caso</button>
+              <div class="case-body"><div class="case-inner"><strong>Objeto:</strong> el interés de los clientes gamer por el montaje a domicilio.<br><strong>Hipótesis:</strong> «al menos el 30 % de los clientes que compran piezas pagaría 49 € por el montaje».<br><strong>Alcance:</strong> clientes de 16 a 35 años de la Región de Murcia, durante 2 meses.</div></div>
+            </div>
+            <div class="pchev" style="border-top-color:#e6e277"></div>
+            <div class="pstep">
+              <h4>💶 Estimación del valor de la información</h4>
+              <p>¿Cuánto nos ahorra tener esta información? Si equivocarnos sale muy caro, merece la pena investigar. Si la decisión es pequeña, quizá no compense.</p>
+              <button class="case-toggle" style="color:#a39318;border-color:#d8cf6a" onclick="toggleCase(this)">🖥️ Ver en el caso</button>
+              <div class="case-body"><div class="case-inner">Lanzar el servicio supone contratar técnicos y furgonetas: unos <strong>120.000 €</strong>. Saber antes si va a funcionar <strong>vale mucho</strong> → tiene sentido investigar.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FASE 2 -->
+        <div class="phase" data-phase="1">
+          <div class="phase-head" style="background:#e7f0f8;color:#1d4f73"><div class="phase-num" style="color:#2f6f9c">2</div><div><h3>Diseño de la investigación</h3><p>Elegimos el enfoque (qué tipo de investigación) y los métodos para recoger los datos.</p></div></div>
+          <p class="flip-hint" style="text-align:left">👇 Toca cada tipo de investigación del árbol</p>
+          <div class="tree">
+            <button class="tree-node tree-root" onclick="showTree('enfoque',this)">🧭 Enfoque de la investigación</button>
+            <div class="tree-row">
+              <div class="tree-col"><button class="tree-node" onclick="showTree('explo',this)">🔦 Investigación exploratoria</button></div>
+              <div class="tree-col">
+                <button class="tree-node" onclick="showTree('concl',this)">✅ Investigación concluyente</button>
+                <div class="tree-row tree-sub">
+                  <div class="tree-col"><button class="tree-node" onclick="showTree('desc',this)">📋 Estudios descriptivos</button></div>
+                  <div class="tree-col"><button class="tree-node" onclick="showTree('caus',this)">🔗 Estudios causales</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tree-detail" id="tree-detail"><h4>🧭 Enfoque de la investigación</h4>Hay dos grandes caminos: <strong>explorar</strong> cuando aún no sabemos bien qué buscamos, o <strong>concluir</strong> cuando ya tenemos hipótesis claras que queremos comprobar con datos. Toca cada caja para saber más.</div>
+
+          <div class="pchev" style="border-top-color:#a9c6de;margin-top:1rem"></div>
+          <div class="pstep">
+            <h4>🧰 Métodos de recopilación de datos</h4>
+            <p>Una vez elegido el enfoque, decidimos <strong>cómo</strong> vamos a obtener los datos:</p>
+            <div class="methods">
+              <button class="method" onclick="showMethod(0,this)"><span class="m-ico">📏</span>Medidas</button>
+              <button class="method" onclick="showMethod(1,this)"><span class="m-ico">📝</span>Cuestionario</button>
+              <button class="method" onclick="showMethod(2,this)"><span class="m-ico">🧪</span>Experimento</button>
+              <button class="method" onclick="showMethod(3,this)"><span class="m-ico">🎯</span>Muestreo</button>
+            </div>
+            <div class="tree-detail" id="method-detail" style="display:none"></div>
+          </div>
+        </div>
+
+        <!-- FASE 3 -->
+        <div class="phase" data-phase="2">
+          <div class="phase-head" style="background:#f3ecf8;color:#4a2a63"><div class="phase-num" style="color:#7a4f96">3</div><div><h3>Implantación de la investigación</h3><p>Última comprobación económica y, si compensa, ¡a por los datos!</p></div></div>
+          <div class="pstep">
+            <h4>⚖️ Comparación entre coste y valor de la nueva información</h4>
+            <p style="margin-bottom:0.8rem">Ya sabemos cuánto <strong>cuesta</strong> la investigación diseñada. Si cuesta más de lo que <strong>vale</strong> la información, se <strong>rechaza</strong>; si vale más, se <strong>continúa</strong>. Mueve los controles:</p>
+            <div class="balance-wrap">
+              <div>
+                <div class="slider-row"><label><span>💸 Coste de la investigación</span><span id="v-coste">8.000 €</span></label><input type="range" min="1000" max="40000" step="1000" value="8000" id="s-coste" oninput="updBalance()"></div>
+                <div class="slider-row"><label><span>💎 Valor de la información</span><span id="v-valor">25.000 €</span></label><input type="range" min="1000" max="40000" step="1000" value="25000" id="s-valor" oninput="updBalance()"></div>
+              </div>
+              <div>
+                <div class="balance">
+                  <div class="pivot"></div>
+                  <div class="beam" id="beam">
+                    <div class="pan left">Coste<div class="pan-box" style="background:#a32d2d">💸</div></div>
+                    <div class="pan right">Valor<div class="pan-box" style="background:#0f6e56">💎</div></div>
+                  </div>
+                </div>
+                <div class="verdict" id="verdict"></div>
+              </div>
+            </div>
+          </div>
+          <div class="pchev" style="border-top-color:#c3a6cf"></div>
+          <div class="pstep">
+            <h4>🔄 Recolección y análisis de datos</h4>
+            <div class="pipeline">
+              <div class="pipe"><div class="p-ico">🚶</div><h5>Trabajo de campo</h5><p>Salir a recoger los datos: encuestas, entrevistas, observación...</p></div>
+              <div class="pipe"><div class="p-ico">🧹</div><h5>Procesamiento y depuración</h5><p>Pasar los datos al ordenador y eliminar errores o respuestas incompletas.</p></div>
+              <div class="pipe"><div class="p-ico">📊</div><h5>Análisis de datos</h5><p>Aplicar técnicas estadísticas: porcentajes, medias, tablas, gráficos (UT7).</p></div>
+              <div class="pipe"><div class="p-ico">💡</div><h5>Interpretación de resultados</h5><p>¿Qué significan los números? ¿Se cumple la hipótesis?</p></div>
+            </div>
+            <button class="case-toggle" style="color:#7a4f96;border-color:#c3a6cf" onclick="toggleCase(this)">🖥️ Ver en el caso</button>
+            <div class="case-body"><div class="case-inner">Se encuesta a <strong>400 clientes</strong> en tienda y online. Tras depurar 23 respuestas incompletas, el análisis muestra que el <strong>38 %</strong> pagaría 49 € por el montaje. La hipótesis del 30 % <strong>se confirma</strong>.</div></div>
+          </div>
+        </div>
+
+        <!-- INFORME -->
+        <div class="phase" data-phase="3">
+          <div class="phase-head" style="background:#eaf6f1;color:#0b4d3c"><div class="phase-num" style="color:#0f6e56">📄</div><div><h3>Informe de investigación</h3><p>El resultado final: un documento claro que ayude a decidir.</p></div></div>
+          <p class="flip-hint" style="text-align:left">👇 Toca cada apartado del informe para ver qué incluye</p>
+          <div class="report">
+            <h4>INFORME DE INVESTIGACIÓN</h4>
+            <div class="rep-item" onclick="this.classList.toggle('on')"><span class="rep-check">✓</span><div><h5>👤 A quién va dirigido</h5><p>Los usuarios de la investigación que definimos en la fase 1. Ej.: dirección de marketing de PC Componentes.</p></div></div>
+            <div class="rep-item" onclick="this.classList.toggle('on')"><span class="rep-check">✓</span><div><h5>❓ El problema al que se quiere dar respuesta</h5><p>¿Lanzamos el servicio de montaje a domicilio en la Región de Murcia?</p></div></div>
+            <div class="rep-item" onclick="this.classList.toggle('on')"><span class="rep-check">✓</span><div><h5>🛠️ Desarrollo de la investigación</h5><p>Cómo se hizo: enfoque elegido, métodos, muestra, fechas del trabajo de campo...</p></div></div>
+            <div class="rep-item rep-star" onclick="this.classList.toggle('on')"><span class="rep-check">✓</span><div><h5>⭐ Interpretación de los resultados</h5><p>Lo más importante: qué nos dicen los datos. El 38 % pagaría por el servicio, sobre todo los menores de 25 años.</p></div></div>
+            <div class="rep-item rep-star" onclick="this.classList.toggle('on')"><span class="rep-check">✓</span><div><h5>⭐ Recomendaciones para la toma de decisiones</h5><p>Qué debería hacer la empresa. Ej.: lanzar una prueba piloto en Murcia y Cartagena durante 6 meses antes de extenderlo.</p></div></div>
+          </div>
+          <div class="exam-tip" style="margin-top:1rem">💡 <strong>Para el examen:</strong> en el informe lo de <strong>especial importancia</strong> es la <strong>interpretación de los resultados</strong> y las <strong>recomendaciones</strong> para la toma de decisiones. Un informe que solo da números, sin conclusiones, no sirve para decidir.</div>
+        </div>
+      </div>
+
+      <div class="phase-nav">
+        <button class="btn btn-ghost" id="ph-prev" onclick="goPhase(curPhase-1)">◀ Anterior</button>
+        <button class="btn btn-teal" id="ph-next" onclick="goPhase(curPhase+1)">Siguiente ▶</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔗 Relaciónalo con las 5 fases que ya conoces</h3>
+      <p style="margin-bottom:0.6rem">En la pestaña <strong>🔬 Investigación</strong> viste el proceso en 5 fases. Es el mismo camino, agrupado de otra forma:</p>
+      <table class="map5">
+        <tr><td>1. Definición del problema y objetivos</td><td class="arrow">➜</td><td style="background:#f8f6c9;color:#4a4510">1 · Planificación preliminar</td></tr>
+        <tr><td>2. Desarrollo del plan de investigación</td><td class="arrow">➜</td><td style="background:#e7f0f8;color:#1d4f73">2 · Diseño de la investigación</td></tr>
+        <tr><td>3. Recogida de información</td><td class="arrow">➜</td><td style="background:#f3ecf8;color:#4a2a63">3 · Implantación (trabajo de campo)</td></tr>
+        <tr><td>4. Análisis e interpretación de datos</td><td class="arrow">➜</td><td style="background:#f3ecf8;color:#4a2a63">3 · Implantación (análisis)</td></tr>
+        <tr><td>5. Presentación de resultados</td><td class="arrow">➜</td><td style="background:#eaf6f1;color:#0b4d3c">📄 Informe de investigación</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <h3>🎯 Reto: ¿exploratoria, descriptiva o causal?</h3>
+      <p style="margin-bottom:0.4rem">Lee cada situación y elige qué tipo de investigación es.</p>
+      <div class="cls-box" id="cls-tipo"></div>
     </div>
   </div>
 
@@ -414,12 +822,31 @@ header span { font-size:0.75rem; opacity:0.6; }
 <div class="modal-bg" id="modal-memoria"><div class="modal" style="max-width:620px"><button class="modal-close" onclick="closeModal('modal-memoria')">✕</button><h2>🃏 Memoria — Subsistemas del SIM</h2><div id="memoria-content"></div></div></div>
 
 <script>
-function switchTab(id,el){
+function switchTab(id,el,noScroll){
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('tab-'+id).classList.add('active');
+  try{ history.replaceState(null,'','#'+id); }catch(e){}
+  try{ el.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'}); }catch(e){}
+  if(!noScroll){
+    const tabs=document.querySelector('.tabs');
+    const top=tabs.getBoundingClientRect().top+window.scrollY-document.querySelector('header').offsetHeight-4;
+    if(window.scrollY>top) window.scrollTo({top,behavior:'smooth'});
+  }
 }
+/* Pestañas fijas bajo la cabecera, barra de progreso de lectura y enlace directo por #pestaña */
+function fitTabs(){ document.querySelector('.tabs').style.top=document.querySelector('header').offsetHeight+'px'; }
+window.addEventListener('resize',fitTabs);
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement.scrollHeight-innerHeight;
+  document.getElementById('scroll-progress').style.width=(h>0?scrollY/h*100:0)+'%';
+},{passive:true});
+document.addEventListener('DOMContentLoaded',()=>{
+  fitTabs();
+  const id=location.hash.slice(1), t=id&&document.querySelector(`.tab[data-tab="${id}"]`);
+  if(t) switchTab(id,t,true);
+});
 function openModal(id){ document.getElementById(id).classList.add('show'); }
 function closeModal(id){ document.getElementById(id).classList.remove('show'); }
 function toggleAcc(id,h){ document.getElementById(id).classList.toggle('open'); h.classList.toggle('open'); }
@@ -519,6 +946,9 @@ const words=[
   {word:'MODELIZACION',hint:'Técnica del sistema de análisis para prever alternativas futuras'},
   {word:'PRIMARIA',hint:'Información recogida específicamente para el estudio en cuestión'},
   {word:'SISTEMATICO',hint:'Carácter de la investigación: proceso ordenado y con metodología'},
+  {word:'EXPLORATORIA',hint:'Investigación flexible para problemas poco definidos o nuevos productos'},
+  {word:'LONGITUDINAL',hint:'Diseño descriptivo que estudia a la misma muestra a lo largo del tiempo'},
+  {word:'HIPOTESIS',hint:'Suposición que la investigación debe confirmar o rechazar'},
 ];
 let hState={};
 function openAhorcado(){ openModal('modal-ahorcado'); startHangman(); }
@@ -722,6 +1152,177 @@ function flipMem(idx){
     }
   }
 }
+
+/* ===== MAPA DEL SIM ===== */
+const mapInfo={
+  macro:{t:'🌍 Macroentorno',d:'Fuerzas generales que la empresa <strong>no controla</strong>: Político, Económico, Social, Tecnológico, Ecológico y Legal (el <strong>PESTEL</strong> de la UT1).<br>🖥️ <em>PC Componentes:</em> una subida del IVA, la escasez mundial de chips o la llegada de la IA a los ordenadores.'},
+  micro:{t:'👥 Microentorno',d:'Agentes cercanos con los que la empresa se relaciona a diario: <strong>proveedores, intermediarios, clientes, competidores y grupos de interés</strong>.<br>🖥️ <em>PC Componentes:</em> Amazon baja precios, un proveedor de tarjetas gráficas retrasa envíos, los clientes piden más rapidez.'},
+  in:{t:'➡️ La información entra en el SIM',d:'Todo lo que pasa en el entorno llega al SIM. Sin un sistema, esa información llegaría <strong>desordenada, tarde o incompleta</strong>. El SIM la recoge, la clasifica, la evalúa y la distribuye.'},
+  intel:{t:'🧠 Sistema de inteligencia · subsistema de inteligencia de marketing',d:'<strong>Vigila el entorno de forma continua</strong>: competencia, tendencias, tecnología, leyes. Usa sobre todo información <strong>externa</strong>.<br>🖥️ <em>PC Componentes:</em> alertas automáticas cuando un competidor cambia el precio de un producto.'},
+  reg:{t:'🗄️ Sistema de registro · subsistema de datos internos',d:'Lo que la empresa <strong>ya sabe de sí misma</strong>: ventas, pedidos, facturas, stock, clientes del CRM. Es el más básico: <strong>lo tienen todas las empresas</strong>.<br>🖥️ <em>PC Componentes:</em> qué productos se venden más cada día y en qué provincias.'},
+  inv:{t:'🔬 Investigación comercial · subsistema de investigación de marketing',d:'Entra en juego cuando <strong>falta información</strong> para un problema concreto: se investiga de forma <strong>puntual</strong> (encuestas, entrevistas, focus groups...).<br>🖥️ <em>PC Componentes:</em> encuesta para saber si los clientes pagarían por el montaje de su PC a domicilio.'},
+  ana:{t:'📊 Sistema de análisis · subsistema de apoyo a las decisiones de marketing',d:'<strong>Junta la información de los otros tres</strong> y la convierte en conocimiento útil: estadística, modelos, IA, cuadros de mando. Es el más complejo.<br>🖥️ <em>PC Componentes:</em> un modelo que predice cuántas tarjetas gráficas se venderán en el Black Friday.'},
+  out:{t:'➡️ La información sale hacia quien decide',d:'El SIM entrega la información <strong>a tiempo, sin errores y fácil de entender</strong> a los responsables de marketing (recuerda las características de idoneidad).'},
+  dec:{t:'🎯 Toma de decisiones en marketing',d:'Con la información del SIM, el departamento de marketing puede <strong>📝 planificar</strong> (objetivos y estrategias), <strong>🚀 ejecutar</strong> (poner en marcha las acciones) y <strong>📈 controlar los resultados</strong> (comprobar si se cumplen y corregir).<br>🖥️ <em>PC Componentes:</em> decide lanzar una campaña de portátiles gaming para la vuelta al cole y después mide sus ventas.'},
+  loop:{t:'↻ Las decisiones cambian el entorno',d:'Lo que decide la empresa <strong>provoca reacciones</strong>: los clientes compran (o no) y la competencia responde. Esos cambios vuelven a entrar en el SIM. Por eso el SIM es un <strong>sistema continuo, un ciclo que nunca se detiene</strong>.<br>🖥️ <em>PC Componentes:</em> si lanza su campaña, su competencia baja precios… y el sistema de inteligencia lo detecta.'}
+};
+const mapSteps=[['macro','micro'],['in'],['intel'],['reg'],['inv'],['ana'],['out'],['dec'],['loop']];
+const mapStepInfo=['macro','in','intel','reg','inv','ana','out','dec','loop'];
+let mapStep=0, mapTimer=null;
+function mapPaint(keys,infoKey){
+  document.querySelectorAll('#tab-mapa [data-k]').forEach(n=>n.classList.toggle('lit',keys.includes(n.dataset.k)));
+  const box=document.getElementById('map-info'), m=mapInfo[infoKey];
+  let extra='';
+  if(infoKey==='macro'&&keys.includes('micro')) extra=`<div style="margin-top:0.5rem">${mapInfo.micro.d}</div>`;
+  box.innerHTML=`<h4>${m.t}${infoKey==='macro'&&keys.includes('micro')?' y 👥 microentorno':''}</h4>${m.d}${extra}`;
+  box.classList.remove('swap'); void box.offsetWidth; box.classList.add('swap');
+}
+function mapShow(k){ mapStop(); document.getElementById('map').classList.remove('playing'); mapPaint([k],k); }
+function mapStepTo(d){
+  mapStep=Math.min(mapSteps.length,Math.max(1,mapStep+d));
+  document.getElementById('map').classList.add('playing');
+  mapPaint(mapSteps[mapStep-1],mapStepInfo[mapStep-1]);
+  document.getElementById('map-step-label').textContent=`Paso ${mapStep} de ${mapSteps.length}`;
+  if(innerWidth<600){ const n=document.querySelector(`#tab-mapa [data-k="${mapSteps[mapStep-1][0]}"]`); n&&n.scrollIntoView({block:'center',behavior:'smooth'}); }
+}
+function mapGo(d){ mapStop(); mapStepTo(d); }
+function mapPlay(){
+  if(mapTimer){ mapStop(); return; }
+  if(mapStep>=mapSteps.length) mapStep=0;
+  mapStepTo(1);
+  document.getElementById('map-play').textContent='⏸ Pausa';
+  mapTimer=setInterval(()=>{ if(mapStep>=mapSteps.length){ mapStop(); return; } mapStepTo(1); },3800);
+}
+function mapStop(){ if(mapTimer){ clearInterval(mapTimer); mapTimer=null; } document.getElementById('map-play').textContent='▶ Recorrido'; }
+function mapReset(){
+  mapStop(); mapStep=0;
+  document.getElementById('map').classList.remove('playing');
+  document.querySelectorAll('#tab-mapa [data-k]').forEach(n=>n.classList.remove('lit'));
+  document.getElementById('map-step-label').textContent=`Paso 0 de ${mapSteps.length}`;
+  document.getElementById('map-info').innerHTML='<h4>👆 Toca un bloque o pulsa «Recorrido»</h4>Cada bloque del mapa te explica qué es y te da un ejemplo con <strong>PC Componentes</strong>, nuestra empresa de referencia.';
+}
+
+/* ===== RETOS DE CLASIFICAR (reutilizable) ===== */
+function makeClassifier(boxId,options,items){
+  const st={items:[],i:0,ok:0,done:false};
+  function start(){ st.items=[...items].sort(()=>Math.random()-0.5); st.i=0; st.ok=0; st.done=false; render(); }
+  function render(fb){
+    const box=document.getElementById(boxId);
+    if(st.i>=st.items.length){
+      const nota=(st.ok/st.items.length*10).toFixed(1);
+      box.innerHTML=`<div class="quiz-result-box">${nota>=8?'🏆':nota>=5?'👍':'💪'} ${st.ok}/${st.items.length} aciertos · Nota: ${nota}/10</div><button class="play-again" style="margin-top:0.8rem">Jugar otra vez</button>`;
+      box.querySelector('button').onclick=start; return;
+    }
+    const it=st.items[st.i];
+    box.innerHTML=`<div class="cls-score">Pregunta ${st.i+1} de ${st.items.length} · Aciertos: ${st.ok}</div>
+      <div class="cls-item anim">${it.q}</div>
+      <div class="cls-opts">${options.map((o,k)=>`<button class="cls-opt" data-k="${k}">${o}</button>`).join('')}</div>
+      <div class="cls-fb"></div>`;
+    box.querySelectorAll('.cls-opt').forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+  }
+  function answer(k){
+    const box=document.getElementById(boxId), it=st.items[st.i];
+    const btns=box.querySelectorAll('.cls-opt');
+    btns.forEach(b=>b.disabled=true);
+    btns[it.a].classList.add('ok');
+    if(k===it.a) st.ok++; else btns[k].classList.add('ko');
+    box.querySelector('.cls-fb').innerHTML=(k===it.a?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>No exactamente.</strong> ')+it.why;
+    box.querySelector('.cls-score').textContent=`Pregunta ${st.i+1} de ${st.items.length} · Aciertos: ${st.ok}`;
+    setTimeout(()=>{ st.i++; render(); }, k===it.a?1700:3200);
+  }
+  start();
+}
+makeClassifier('cls-sim',['🧠 Inteligencia','🗄️ Registro','🔬 Investigación comercial','📊 Análisis'],[
+  {q:'🧾 Las facturas y pedidos del último mes',a:1,why:'Son datos que genera la propia actividad de la empresa: datos internos.'},
+  {q:'🏷️ Un competidor baja sus precios un 15 %',a:0,why:'Es un cambio del entorno (competencia) que se vigila de forma continua.'},
+  {q:'📋 Una encuesta a 500 clientes sobre un nuevo envase',a:2,why:'Es un estudio puntual para resolver un problema concreto.'},
+  {q:'🔮 Un modelo que predice las ventas de Navidad',a:3,why:'Usa modelos estadísticos para apoyar la decisión: es el sistema de análisis.'},
+  {q:'⚖️ Se aprueba una nueva ley de protección de datos',a:0,why:'Es un cambio del macroentorno (factor legal) que capta el sistema de inteligencia.'},
+  {q:'👤 El historial de compras de cada cliente en el CRM',a:1,why:'El CRM forma parte de los datos internos de la empresa.'},
+  {q:'🗣️ Un focus group para probar un anuncio antes de emitirlo',a:2,why:'Es una técnica de investigación para un problema concreto.'},
+  {q:'📈 Un cuadro de mando con IA que resume todo para el director',a:3,why:'Junta la información de los demás subsistemas y la hace manejable para decidir.'}
+]);
+makeClassifier('cls-tipo',['🔦 Exploratoria','📋 Descriptiva','🔗 Causal'],[
+  {q:'Una marca quiere ideas para un producto totalmente nuevo y aún no sabe ni por dónde empezar',a:0,why:'Problema poco definido y nuevo producto → exploratoria.'},
+  {q:'Conocer la edad, el gasto medio y la frecuencia de compra de los clientes de una tienda',a:1,why:'Describe cómo es un mercado o un consumidor → descriptiva.'},
+  {q:'Comprobar si bajar el precio un 10 % hace que aumenten las ventas',a:2,why:'Busca una relación causa (precio) → efecto (ventas) → causal.'},
+  {q:'Entrevistas abiertas a 8 gamers para entender qué les preocupa al comprar un PC',a:0,why:'Aproximación flexible para entender un tema → exploratoria.'},
+  {q:'Preguntar a los mismos 300 clientes cada trimestre durante 2 años',a:1,why:'Misma muestra a lo largo del tiempo → descriptiva con diseño longitudinal.'},
+  {q:'Emitir dos anuncios distintos en dos ciudades y medir cuál vende más',a:2,why:'Es un experimento: cambiamos una variable y medimos su efecto → causal.'},
+  {q:'Una encuesta única a 1.000 personas en marzo sobre sus hábitos de compra online',a:1,why:'Una “foto” en un momento concreto → descriptiva con diseño transversal.'}
+]);
+
+/* ===== PROCESO DE INVESTIGACIÓN ===== */
+let curPhase=0;
+const phaseColors=['#a39318','#2f6f9c','#7a4f96','#0f6e56'];
+function goPhase(n,first){
+  if(n<0||n>3) return;
+  const dir=n>=curPhase?'in-right':'in-left';
+  document.querySelectorAll('.phase').forEach(p=>{ p.classList.remove('show','in-right','in-left'); });
+  const p=document.querySelector(`.phase[data-phase="${n}"]`);
+  p.classList.add('show'); if(!first) p.classList.add(dir);
+  curPhase=n;
+  document.querySelectorAll('.step-btn').forEach((b,i)=>{
+    b.classList.toggle('done',i<=n); b.classList.toggle('current',i===n);
+    const dot=b.querySelector('.step-dot');
+    dot.style.background=i<=n?phaseColors[i]:'white';
+    dot.style.borderColor=i<=n?phaseColors[i]:'';
+  });
+  document.getElementById('stepper-fill').style.width=(n/3*100)+'%';
+  document.getElementById('ph-prev').disabled=n===0;
+  const nx=document.getElementById('ph-next');
+  nx.disabled=n===3; nx.textContent=n===2?'Ver el informe ▶':'Siguiente ▶';
+  if(!first){
+    const st=document.getElementById('stepper');
+    const top=st.getBoundingClientRect().top+scrollY-document.querySelector('header').offsetHeight-document.querySelector('.tabs').offsetHeight-12;
+    if(scrollY>top) scrollTo({top,behavior:'smooth'});
+  }
+}
+function toggleCase(btn){
+  const b=btn.nextElementSibling; b.classList.toggle('open');
+  btn.textContent=b.classList.contains('open')?'🖥️ Ocultar el caso':'🖥️ Ver en el caso';
+}
+const treeInfo={
+  enfoque:'<h4>🧭 Enfoque de la investigación</h4>Hay dos grandes caminos: <strong>explorar</strong> cuando aún no sabemos bien qué buscamos, o <strong>concluir</strong> cuando ya tenemos hipótesis claras que queremos comprobar con datos.',
+  explo:'<h4>🔦 Investigación exploratoria</h4><ul><li><strong>Aproximación</strong> a un tema concreto para entenderlo mejor.</li><li><strong>Flexible</strong>: no sigue un guion cerrado.</li><li>Muy útil para <strong>nuevos productos</strong>.</li><li>Para <strong>problemas poco definidos</strong>.</li></ul><div class="case-inner">🖥️ Antes de nada, PC Componentes hace entrevistas abiertas a 10 clientes gamer para descubrir si el montaje les preocupa de verdad.</div>',
+  concl:'<h4>✅ Investigación concluyente</h4><ul><li>Sirve para el <strong>contraste de hipótesis</strong>: confirmar o rechazar lo que suponemos.</li><li>Usa <strong>análisis cuantitativo</strong>: números, porcentajes, estadística.</li><li>Se divide en <strong>estudios descriptivos</strong> y <strong>estudios causales</strong>.</li></ul>',
+  desc:'<h4>📋 Estudios descriptivos</h4><ul><li><strong>Análisis de mercados y consumidores</strong>: cómo son, qué compran, cuánto gastan.</li><li><strong>Análisis de una situación concreta</strong>.</li><li>Dos tipos de diseño:</li></ul><div class="foto-peli"><div>📸 <strong>Transversal</strong><br>Una «foto»: se estudia a una muestra <strong>una sola vez</strong>, en un momento concreto.</div><div>🎬 <strong>Longitudinal</strong><br>Una «película»: se estudia a la <strong>misma muestra varias veces</strong> a lo largo del tiempo.</div></div><div class="case-inner">🖥️ Encuesta a 400 clientes para saber qué porcentaje pagaría por el montaje y cuál es su perfil.</div>',
+  caus:'<h4>🔗 Estudios causales</h4><ul><li>Analizan las <strong>relaciones causa-efecto</strong>: ¿si cambio X, qué pasa con Y?</li><li>Se trabajan <strong>mediante hipótesis y la definición de variables</strong>.</li><li>Suelen usar <strong>experimentos</strong>.</li></ul><div class="case-inner">🖥️ ¿Si el montaje cuesta 39 € en vez de 49 €, lo contratan más clientes? Se prueban los dos precios durante un mes y se comparan.</div>'
+};
+function showTree(k,el){
+  document.querySelectorAll('.tree-node').forEach(n=>n.classList.remove('sel'));
+  el.classList.add('sel');
+  const d=document.getElementById('tree-detail');
+  d.innerHTML=treeInfo[k];
+  d.classList.remove('swap'); void d.offsetWidth; d.classList.add('swap');
+}
+const methodInfo=[
+  '<h4>📏 Medidas</h4>Decidir <strong>qué vamos a medir y cómo</strong>: por ejemplo, la satisfacción en una escala del 1 al 5 o el gasto en euros. Medir bien es la base de unos datos fiables.',
+  '<h4>📝 Cuestionario</h4>El documento con las <strong>preguntas</strong> que responderán los encuestados. Su redacción es clave: una pregunta mal hecha da respuestas inútiles. (Lo verás en la UT5).',
+  '<h4>🧪 Experimento</h4>Cambiamos una variable (precio, anuncio, envase...) y <strong>medimos su efecto</strong> controlando el resto. Es el método típico de los estudios <strong>causales</strong>.',
+  '<h4>🎯 Muestreo</h4>Como no podemos preguntar a todo el mundo, elegimos <strong>a quién y a cuántos</strong> preguntar para que los resultados representen a toda la población. (Lo verás en la UT6).'
+];
+function showMethod(i,el){
+  document.querySelectorAll('.method').forEach(m=>m.classList.remove('sel'));
+  el.classList.add('sel');
+  const d=document.getElementById('method-detail');
+  d.style.display='block'; d.innerHTML=methodInfo[i];
+  d.classList.remove('swap'); void d.offsetWidth; d.classList.add('swap');
+}
+function updBalance(){
+  const c=+document.getElementById('s-coste').value, v=+document.getElementById('s-valor').value;
+  const fmt=n=>n.toLocaleString('es-ES')+' €';
+  document.getElementById('v-coste').textContent=fmt(c);
+  document.getElementById('v-valor').textContent=fmt(v);
+  const ang=Math.max(-14,Math.min(14,(v-c)/1500)); /* baja el platillo que más pesa */
+  document.getElementById('beam').style.transform=`rotate(${ang}deg)`;
+  const vd=document.getElementById('verdict');
+  if(v>c){ vd.innerHTML='✅ CONTINUAR · la información vale más de lo que cuesta'; vd.style.background='#eaf3de'; vd.style.color='#27500a'; }
+  else if(v<c){ vd.innerHTML='⛔ RECHAZAR · investigar cuesta más de lo que aporta'; vd.style.background='#fcebeb'; vd.style.color='#a32d2d'; }
+  else { vd.innerHTML='🤔 Empate · habría que valorar otros factores'; vd.style.background='#fef3c7'; vd.style.color='#78350f'; }
+}
+goPhase(0,true);
+updBalance();
 </script>
 </body>
 </html>
