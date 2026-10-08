@@ -3,263 +3,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Investigación Comercial · Pablo Jordán</title>
+<meta name="robots" content="noindex">
+<title>Proyecto PJP · Investigación Comercial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing:border-box; margin:0; padding:0; }
 :root {
-  --bg: #f7f6f2; --bg2: #ffffff; --text: #1a1a18; --text2: #6b6a64;
-  --border: rgba(0,0,0,0.1); --accent: #533ab7; --shadow: 0 2px 12px rgba(0,0,0,0.07);
+  --ink:#0c0a1d; --ink2:#15122e; --paper:#f6f4fb; --white:#fff; --text:#17152a; --text2:#625e78;
+  --violet:#6a4cf0; --pink:#ff4f8b; --coral:#ff7a45; --teal:#17c3b2; --sun:#ffc145;
+  --ease:cubic-bezier(.2,.8,.2,1);
 }
-body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+html,body { min-height:100%; }
+body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--ink); color:var(--white); overflow-x:hidden; }
+.display { font-family:'Sora','Segoe UI',sans-serif; letter-spacing:-0.02em; }
 
-/* LOGIN */
-#login-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, #1a0f3d 0%, #0f3d2e 100%); }
-.login-card { background: white; border-radius: 20px; padding: 2.5rem; width: 360px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-.login-logo { font-size: 2.5rem; margin-bottom: 0.8rem; }
-.login-card h1 { font-size: 1.4rem; font-weight: 700; color: #1a1a18; margin-bottom: 0.3rem; }
-.login-card p { font-size: 0.85rem; color: #888; margin-bottom: 1.8rem; }
-.login-card input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid #ddd; border-radius: 10px; font-size: 1rem; outline: none; margin-bottom: 1rem; transition: border-color .2s; }
-.login-card input:focus { border-color: #533ab7; }
-.login-card button { width: 100%; padding: 0.8rem; background: #533ab7; color: white; border: none; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: background .2s; }
-.login-card button:hover { background: #3c2889; }
-.login-error { color: #e24b4a; font-size: 0.8rem; margin-top: 0.5rem; display: none; }
-.login-badge { display: inline-block; background: #EEEDFE; color: #533ab7; font-size: 0.75rem; padding: 0.3rem 0.8rem; border-radius: 20px; margin-bottom: 1.5rem; font-weight: 600; letter-spacing: 0.5px; }
+/* ============ PORTADA / LOGIN ============ */
+#login { position:relative; min-height:100vh; display:grid; grid-template-columns:1.25fr 1fr; align-items:center; gap:3rem; padding:2.5rem clamp(1.2rem,5vw,5rem) 6rem; overflow:hidden; isolation:isolate; }
+.blob { position:absolute; border-radius:50%; filter:blur(70px); opacity:.55; z-index:-2; animation:drift 18s ease-in-out infinite alternate; }
+.b1 { width:520px; height:520px; background:var(--violet); left:-140px; top:-120px; }
+.b2 { width:420px; height:420px; background:var(--pink); right:-80px; top:20%; animation-delay:-6s; }
+.b3 { width:380px; height:380px; background:var(--teal); left:30%; bottom:-180px; animation-delay:-12s; opacity:.4; }
+@keyframes drift { 0%{transform:translate(0,0) scale(1)} 50%{transform:translate(60px,40px) scale(1.12)} 100%{transform:translate(-40px,70px) scale(.95)} }
+.grain { position:absolute; inset:0; z-index:-1; opacity:.08; pointer-events:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.grid-lines { position:absolute; inset:0; z-index:-1; background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px); background-size:64px 64px; mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%); -webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%); }
+.giant { position:absolute; right:-2vw; bottom:4rem; font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(10rem,26vw,24rem); line-height:.8; color:transparent; -webkit-text-stroke:1.5px rgba(255,255,255,.08); z-index:-1; user-select:none; letter-spacing:-.06em; }
 
-/* APP */
-#app { display: none; min-height: 100vh; }
+.brand { position:absolute; top:1.6rem; left:clamp(1.2rem,5vw,5rem); display:flex; align-items:center; gap:.7rem; }
+.mark { width:42px; height:42px; border-radius:12px; background:conic-gradient(from 210deg,var(--violet),var(--pink),var(--coral),var(--teal),var(--violet)); display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:800; font-size:.86rem; color:white; box-shadow:0 8px 24px rgba(106,76,240,.45); position:relative; }
+.mark::after { content:''; position:absolute; inset:3px; border-radius:9px; background:var(--ink); z-index:0; }
+.mark span { position:relative; z-index:1; }
+.brand b { font-family:'Sora',sans-serif; font-size:.9rem; letter-spacing:.16em; }
+.brand small { display:block; font-size:.68rem; opacity:.55; letter-spacing:.08em; }
 
-header { background: #1a0f3d; color: white; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
-.header-left h1 { font-size: 1.1rem; font-weight: 700; }
-.header-left span { font-size: 0.75rem; opacity: 0.6; }
-.logout-btn { background: rgba(255,255,255,0.15); border: none; color: white; padding: 0.4rem 1rem; border-radius: 8px; cursor: pointer; font-size: 0.8rem; transition: background .2s; }
-.logout-btn:hover { background: rgba(255,255,255,0.25); }
+.headline { position:relative; z-index:1; }
+.kicker { display:inline-flex; align-items:center; gap:.5rem; font-size:.78rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; padding:.45rem .9rem; border-radius:30px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.16); backdrop-filter:blur(6px); }
+.kicker i { width:8px; height:8px; border-radius:50%; background:var(--teal); box-shadow:0 0 12px var(--teal); animation:pulse 2s infinite; }
+@keyframes pulse { 50%{ opacity:.35 } }
+.title { font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(2.8rem,7.2vw,6.4rem); line-height:.95; letter-spacing:-.045em; margin:1.3rem 0 1.1rem; }
+.title .line { display:block; overflow:hidden; }
+.title .line span { display:inline-block; animation:up 1s var(--ease) both; }
+.title .line:nth-child(2) span { animation-delay:.12s; }
+.title .grad { background:linear-gradient(90deg,var(--pink),var(--coral) 45%,var(--sun)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+@keyframes up { from{ transform:translateY(105%) } to{ transform:none } }
+.sub { font-size:clamp(1rem,1.6vw,1.2rem); opacity:.78; max-width:520px; line-height:1.6; animation:fade 1.2s .4s var(--ease) both; }
+.sub b { color:white; opacity:1; }
+@keyframes fade { from{ opacity:0; transform:translateY(12px) } to{ opacity:.78; transform:none } }
+.signature { display:flex; align-items:center; gap:.9rem; margin-top:2rem; animation:fade 1.2s .6s var(--ease) both; }
+.avatar { width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,var(--violet),var(--pink)); display:flex; align-items:center; justify-content:center; font-family:'Sora',sans-serif; font-weight:800; font-size:1rem; }
+.signature b { display:block; font-size:1rem; } .signature small { font-size:.78rem; opacity:.6; }
 
-.container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+.login-card { position:relative; z-index:1; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.16); border-radius:26px; padding:2.2rem; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); box-shadow:0 30px 80px rgba(0,0,0,.45); animation:fade 1s .3s var(--ease) both; max-width:420px; width:100%; justify-self:end; }
+.login-card .tag { display:inline-block; font-size:.7rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; background:linear-gradient(90deg,var(--violet),var(--pink)); padding:.35rem .8rem; border-radius:20px; }
+.login-card h2 { font-family:'Sora',sans-serif; font-size:1.6rem; margin:1rem 0 .4rem; letter-spacing:-.02em; }
+.login-card p { font-size:.86rem; opacity:.7; line-height:1.55; margin-bottom:1.4rem; }
+.field { position:relative; margin-bottom:1rem; }
+.field input { width:100%; padding:1rem 3rem 1rem 1.1rem; border-radius:14px; border:1.5px solid rgba(255,255,255,.18); background:rgba(0,0,0,.25); color:white; font-size:1rem; outline:none; transition:all .25s; font-family:inherit; }
+.field input::placeholder { color:rgba(255,255,255,.45); }
+.field input:focus { border-color:var(--pink); box-shadow:0 0 0 4px rgba(255,79,139,.18); }
+.eye { position:absolute; right:.8rem; top:50%; transform:translateY(-50%); background:none; border:none; color:rgba(255,255,255,.6); cursor:pointer; font-size:1.05rem; }
+.go-btn { width:100%; padding:1rem; border:none; border-radius:14px; font-family:'Sora',sans-serif; font-weight:700; font-size:1rem; color:white; cursor:pointer; background:linear-gradient(90deg,var(--violet),var(--pink),var(--coral)); background-size:200% 100%; transition:background-position .5s, transform .2s; display:flex; align-items:center; justify-content:center; gap:.5rem; }
+.go-btn:hover { background-position:100% 0; transform:translateY(-2px); }
+.go-btn:disabled { opacity:.7; cursor:wait; }
+.spin { width:16px; height:16px; border:2px solid rgba(255,255,255,.4); border-top-color:white; border-radius:50%; animation:rot .8s linear infinite; display:none; }
+.go-btn.loading .spin { display:inline-block; }
+@keyframes rot { to{ transform:rotate(360deg) } }
+.msg { min-height:1.4rem; font-size:.82rem; margin-top:.8rem; text-align:center; color:#ffb3c9; }
+.shake { animation:shake .4s; }
+@keyframes shake { 20%,60%{ transform:translateX(-8px) } 40%,80%{ transform:translateX(8px) } }
+.secure { display:flex; align-items:center; gap:.5rem; font-size:.72rem; opacity:.55; margin-top:1.2rem; justify-content:center; }
 
-/* HERO */
-.hero { background: linear-gradient(135deg, #1a0f3d 0%, #0f3d2e 100%); border-radius: 18px; padding: 2.5rem; color: white; margin-bottom: 2.5rem; position: relative; overflow: hidden; }
-.hero::before { content: ''; position: absolute; right: -60px; top: -60px; width: 280px; height: 280px; border-radius: 50%; background: rgba(255,255,255,0.04); }
-.hero::after { content: ''; position: absolute; left: -30px; bottom: -40px; width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.03); }
-.hero-tag { display: inline-block; background: rgba(255,255,255,0.15); font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.9rem; border-radius: 20px; margin-bottom: 1rem; letter-spacing: 0.5px; }
-.hero h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: 0.5rem; line-height: 1.2; }
-.hero p { opacity: 0.75; font-size: 0.95rem; line-height: 1.6; max-width: 560px; }
-.hero-stats { display: flex; gap: 2rem; margin-top: 1.5rem; }
-.hero-stat { text-align: center; }
-.hero-stat .num { font-size: 1.8rem; font-weight: 800; }
-.hero-stat .label { font-size: 0.72rem; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.5px; }
+.marquee { position:absolute; left:0; right:0; bottom:0; overflow:hidden; border-top:1px solid rgba(255,255,255,.1); background:rgba(0,0,0,.25); padding:.9rem 0; }
+.track { display:flex; gap:2.5rem; width:max-content; animation:marq 38s linear infinite; font-family:'Sora',sans-serif; font-weight:700; font-size:1rem; letter-spacing:.08em; text-transform:uppercase; }
+.track span { opacity:.55; white-space:nowrap; } .track span.hl { opacity:1; color:var(--sun); }
+@keyframes marq { to{ transform:translateX(-50%) } }
 
-/* PROGRESS GLOBAL */
-.progress-section { margin-bottom: 2rem; }
-.progress-section h3 { font-size: 0.85rem; font-weight: 600; color: var(--text2); margin-bottom: 0.6rem; text-transform: uppercase; letter-spacing: 0.5px; }
-.progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, #533ab7, #0f6e56); border-radius: 4px; transition: width 1s ease; }
-.progress-label { font-size: 0.78rem; color: var(--text2); margin-top: 0.4rem; }
+/* ============ APP / TEMARIO ============ */
+#app { display:none; background:var(--paper); color:var(--text); min-height:100vh; }
+.top { position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:.9rem clamp(1rem,4vw,3rem); background:rgba(12,10,29,.92); backdrop-filter:blur(12px); color:white; }
+.top .brand { position:static; }
+.logout { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); color:white; border-radius:10px; padding:.5rem 1rem; font-size:.8rem; font-weight:700; cursor:pointer; font-family:inherit; transition:background .2s; }
+.logout:hover { background:rgba(255,255,255,.22); }
+.wrap { max-width:1120px; margin:0 auto; padding:2rem clamp(1rem,4vw,2rem) 3rem; }
+.hero { position:relative; overflow:hidden; border-radius:28px; padding:clamp(1.6rem,4vw,3rem); background:var(--ink); color:white; display:grid; grid-template-columns:1.4fr 1fr; gap:2rem; align-items:center; isolation:isolate; }
+.hero .blob { opacity:.5; filter:blur(60px); }
+.hero .b1 { width:380px; height:380px; left:-100px; top:-140px; }
+.hero .b2 { width:300px; height:300px; right:-60px; top:auto; bottom:-140px; }
+.hero h1 { font-family:'Sora',sans-serif; font-size:clamp(2.1rem,5vw,3.6rem); line-height:1; letter-spacing:-.04em; margin:.9rem 0 .7rem; }
+.hero p { opacity:.75; line-height:1.6; max-width:520px; font-size:.95rem; }
+.hero .chips { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.2rem; }
+.hero .chip { font-size:.74rem; font-weight:700; padding:.35rem .8rem; border-radius:20px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18); }
+.ring-box { display:flex; align-items:center; gap:1.4rem; justify-self:end; }
+.ring { position:relative; width:170px; height:170px; }
+.ring svg { transform:rotate(-90deg); }
+.ring .val { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.ring .val b { font-family:'Sora',sans-serif; font-size:2.4rem; line-height:1; }
+.ring .val small { font-size:.72rem; opacity:.65; text-transform:uppercase; letter-spacing:.1em; margin-top:.3rem; }
+.mini-stats { display:flex; flex-direction:column; gap:.8rem; }
+.mini-stats div b { font-family:'Sora',sans-serif; font-size:1.6rem; display:block; line-height:1; }
+.mini-stats div small { font-size:.7rem; opacity:.6; text-transform:uppercase; letter-spacing:.1em; }
 
-/* UT GRID */
-.ut-grid { display: grid; gap: 1rem; }
+.section-head { display:flex; align-items:end; justify-content:space-between; gap:1rem; margin:2.6rem 0 1.2rem; flex-wrap:wrap; }
+.section-head h2 { font-family:'Sora',sans-serif; font-size:clamp(1.6rem,3.5vw,2.3rem); letter-spacing:-.03em; }
+.section-head h2 em { font-style:normal; color:var(--violet); }
+.section-head p { color:var(--text2); font-size:.9rem; max-width:460px; }
+.legend { display:flex; gap:1rem; font-size:.78rem; color:var(--text2); }
+.legend i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:.35rem; vertical-align:middle; }
 
-.ut-card { background: var(--bg2); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.3rem 1.5rem; display: flex; align-items: center; gap: 1.2rem; text-decoration: none; color: inherit; transition: all .22s; position: relative; overflow: hidden; }
-.ut-card.available { cursor: pointer; }
-.ut-card.available:hover { border-color: #533ab7; box-shadow: 0 4px 20px rgba(83,58,183,0.13); transform: translateY(-2px); }
-.ut-card.locked { opacity: 0.55; cursor: not-allowed; }
+.units { display:grid; grid-template-columns:repeat(2,1fr); gap:1.1rem; }
+.unit { position:relative; border-radius:22px; padding:1.5rem 1.5rem 1.3rem; background:white; border:1px solid rgba(23,21,42,.08); overflow:hidden; min-height:200px; display:flex; flex-direction:column; transition:transform .45s var(--ease), box-shadow .45s var(--ease); opacity:0; transform:translateY(24px); animation:cardIn .7s var(--ease) forwards; text-decoration:none; color:inherit; }
+@keyframes cardIn { to{ opacity:1; transform:none } }
+.unit .band { position:absolute; inset:0 0 auto 0; height:6px; background:var(--g); }
+.unit .num { font-family:'Sora',sans-serif; font-weight:800; font-size:4.2rem; line-height:.85; letter-spacing:-.06em; background:var(--g); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.unit .ut { font-size:.72rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--text2); margin-top:.4rem; }
+.unit h3 { font-family:'Sora',sans-serif; font-size:1.18rem; letter-spacing:-.02em; margin:.35rem 0 .5rem; line-height:1.25; }
+.unit p { font-size:.82rem; color:var(--text2); line-height:1.55; flex:1; }
+.unit .foot { display:flex; align-items:center; justify-content:space-between; margin-top:1rem; }
+.state { font-size:.72rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; padding:.35rem .75rem; border-radius:20px; }
+.unit.open { cursor:pointer; }
+.unit.open .state { background:#e3f7ec; color:#13703f; }
+.unit.open .arrow { width:44px; height:44px; border-radius:50%; background:var(--ink); color:white; display:flex; align-items:center; justify-content:center; font-size:1.1rem; transition:transform .35s var(--ease), background .35s; }
+.unit.open:hover { transform:translateY(-6px); box-shadow:0 22px 44px rgba(23,21,42,.14); }
+.unit.open:hover .arrow { transform:rotate(-45deg); background:var(--pink); }
+.unit.open::after { content:''; position:absolute; right:-60px; top:-60px; width:180px; height:180px; border-radius:50%; background:var(--g); opacity:.08; transition:transform .6s var(--ease), opacity .6s; }
+.unit.open:hover::after { transform:scale(1.6); opacity:.14; }
+.unit.locked { background:#f0eef6; border-style:dashed; cursor:not-allowed; }
+.unit.locked .num { filter:grayscale(1); opacity:.35; }
+.unit.locked h3, .unit.locked p { opacity:.55; }
+.unit.locked .state { background:#e4e1ee; color:#7b7690; }
+.unit.locked .lock { font-size:1.2rem; opacity:.5; }
+.unit.locked:hover { animation:none; }
+.unit.nope { animation:shake .4s; }
 
-.ut-num-badge { min-width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; flex-shrink: 0; letter-spacing: 0.3px; }
-.badge-available { background: #EEEDFE; color: #533ab7; }
-.badge-locked { background: #f1efe8; color: #aaa; }
+footer { margin-top:3rem; padding:2rem clamp(1rem,4vw,3rem); background:var(--ink); color:rgba(255,255,255,.7); display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; font-size:.8rem; }
+footer b { color:white; }
 
-.ut-info { flex: 1; min-width: 0; }
-.ut-info h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ut-info p { font-size: 0.78rem; color: var(--text2); line-height: 1.4; }
+.toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,140px); background:var(--ink); color:white; padding:.85rem 1.2rem; border-radius:14px; font-weight:700; font-size:.88rem; z-index:300; box-shadow:0 10px 30px rgba(0,0,0,.35); transition:transform .5s var(--ease); border:1px solid rgba(255,255,255,.15); max-width:92vw; }
+.toast.show { transform:translate(-50%,0); }
 
-.ut-arrow { font-size: 1rem; flex-shrink: 0; }
-.available .ut-arrow { color: #533ab7; }
-.locked .ut-arrow { color: #ccc; }
-
-.ut-card.available::after { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #533ab7, #0f6e56); border-radius: 14px 0 0 14px; opacity: 0; transition: opacity .22s; }
-.ut-card.available:hover::after { opacity: 1; }
-
-/* STATUS PILLS */
-.status-pill { font-size: 0.68rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 20px; display: inline-block; margin-top: 0.3rem; }
-.pill-available { background: #eaf3de; color: #3b6d11; }
-.pill-soon { background: #fef9e7; color: #a16207; }
-.pill-locked { background: #f1efe8; color: #999; }
-
-/* FOOTER */
-footer { text-align: center; padding: 2rem; font-size: 0.78rem; color: var(--text2); border-top: 1px solid var(--border); margin-top: 2rem; }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } .unit { opacity:1; transform:none; } }
+@media (max-width:900px){
+  #login { grid-template-columns:1fr; gap:2rem; padding-top:6rem; }
+  .login-card { justify-self:stretch; max-width:none; }
+  .hero { grid-template-columns:1fr; }
+  .ring-box { justify-self:start; }
+  .units { grid-template-columns:1fr; }
+}
+@media (max-width:480px){
+  .ring { width:130px; height:130px; } .ring svg { width:130px; height:130px; }
+  .unit .num { font-size:3.4rem; }
+  .brand small { display:none; }
+}
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-logo">📊</div>
-    <div class="login-badge">RECURSOS EXCLUSIVOS</div>
-    <h1>Investigación Comercial</h1>
-    <p>CONTENIDO CFGS MARKETING Y PUBLICIDAD · Pablo Jordán</p>
-    <input type="password" id="pwd-input" placeholder="Contraseña de acceso" onkeydown="if(event.key==='Enter')doLogin()">
-    <button onclick="doLogin()">Entrar</button>
-    <div class="login-error" id="login-error">Contraseña incorrecta. Inténtalo de nuevo.</div>
+<!-- ============ PORTADA ============ -->
+<section id="login">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="grid-lines"></div><div class="grain"></div>
+  <div class="giant">PJP</div>
+
+  <div class="brand"><div class="mark"><span>PJP</span></div><div><b>PROYECTO PJP</b><small>Pablo Jordán · Profe</small></div></div>
+
+  <div class="headline">
+    <span class="kicker"><i></i> CFGS Marketing y Publicidad</span>
+    <h1 class="title"><span class="line"><span>Investigación</span></span><span class="line"><span class="grad">Comercial</span></span></h1>
+    <p class="sub">El temario completo del módulo, unidad a unidad: <b>teoría visual, casos reales, simuladores y juegos</b> para aprender a investigar como un profesional del marketing.</p>
+    <div class="signature"><div class="avatar">PJ</div><div><b>Pablo Jordán</b><small>Profesor · Proyecto PJP</small></div></div>
   </div>
-</div>
 
-<!-- APP -->
+  <form class="login-card" id="login-form" autocomplete="off">
+    <span class="tag">📚 Temario del módulo</span>
+    <h2>Accede a los contenidos</h2>
+    <p>Introduce la contraseña que te ha dado tu profesor para entrar en las unidades de trabajo.</p>
+    <div class="field">
+      <input type="password" id="pwd" placeholder="Contraseña de acceso" aria-label="Contraseña de acceso" autocomplete="current-password">
+      <button type="button" class="eye" id="eye" aria-label="Mostrar contraseña">👁️</button>
+    </div>
+    <button type="submit" class="go-btn" id="go"><span class="spin"></span><span id="go-txt">Entrar al temario →</span></button>
+    <div class="msg" id="msg"></div>
+    <div class="secure">🔐 Contenido protegido y cifrado</div>
+  </form>
+
+  <div class="marquee"><div class="track" id="track"></div></div>
+</section>
+
+<!-- ============ TEMARIO ============ -->
 <div id="app">
-  <header>
-    <div class="header-left">
-      <h1>PABLO JORDÁN PROFE</h1>
-      <span>Recursos y contenidos de Marketing y Publicidad</span>
-    </div>
-    <button class="logout-btn" onclick="doLogout()">Salir</button>
-  </header>
+  <div class="top">
+    <div class="brand"><div class="mark"><span>PJP</span></div><div><b>PROYECTO PJP</b><small>Investigación Comercial</small></div></div>
+    <button class="logout" id="logout">Salir ⎋</button>
+  </div>
 
-  <div class="container">
-
-    <!-- HERO -->
+  <div class="wrap">
     <div class="hero">
-      <div class="hero-tag">CFGS Marketing y Publicidad</div>
-      <h2>Investigación Comercial</h2>
-      <p>A continuación se presentan todos los contenidos del módulo organizados por Unidades de Trabajo. Accede a cada UT para estudiar la teoría, practicar con ejercicios y repasar con juegos interactivos.</p>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="num">8</div><div class="label">Unidades</div></div>
-        <div class="hero-stat"><div class="num" id="ut-disponibles">1</div><div class="label">Disponibles</div></div>
-        <div class="hero-stat"><div class="num" id="ut-proximamente">7</div><div class="label">Próximamente</div></div>
+      <div class="blob b1"></div><div class="blob b2"></div>
+      <div>
+        <span class="kicker"><i></i> CFGS Marketing y Publicidad · Módulo 1010</span>
+        <h1>Investigación<br>Comercial</h1>
+        <p>Bienvenido al temario del <b>Proyecto PJP</b>. Cada unidad combina teoría, casos de empresas reales, retos e insignias. Las unidades se irán abriendo a medida que avance el curso.</p>
+        <div class="chips"><span class="chip">👨‍🏫 Pablo Jordán</span><span class="chip">🖥️ Caso guía: PC Componentes</span><span class="chip">🎮 Retos e insignias</span></div>
+      </div>
+      <div class="ring-box">
+        <div class="ring">
+          <svg width="170" height="170" viewBox="0 0 170 170"><circle cx="85" cy="85" r="72" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="12"/><circle id="ring-arc" cx="85" cy="85" r="72" fill="none" stroke="url(#rg)" stroke-width="12" stroke-linecap="round" stroke-dasharray="452.4" stroke-dashoffset="452.4" style="transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)"/><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#6a4cf0"/><stop offset=".6" stop-color="#ff4f8b"/><stop offset="1" stop-color="#ffc145"/></linearGradient></defs></svg>
+          <div class="val"><b id="ring-num">0</b><small>de 8 abiertas</small></div>
+        </div>
+        <div class="mini-stats">
+          <div><b>8</b><small>Unidades</small></div>
+          <div><b id="st-open">0</b><small>Disponibles</small></div>
+          <div><b id="st-soon">8</b><small>Próximamente</small></div>
+        </div>
       </div>
     </div>
 
-    <!-- PROGRESO -->
-    <div class="progress-section">
-      <h3>Progreso del curso</h3>
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 12.5%"></div></div>
-      <div class="progress-label" id="progress-label">1 de 8 unidades publicadas</div>
+    <div class="section-head">
+      <div><h2>El <em>temario</em>, unidad a unidad</h2><p>Entra en las unidades disponibles. Las bloqueadas se abrirán cuando las trabajemos en clase.</p></div>
+      <div class="legend"><span><i style="background:#13a35a"></i>Disponible</span><span><i style="background:#b9b4cc"></i>Próximamente</span></div>
     </div>
-
-    <!-- LISTA UTs -->
-    <div class="ut-grid">
-
-      <!-- UT1 — DISPONIBLE -->
-      <div class="ut-card available" onclick="window.location.href='ut1.html'">
-        <div class="ut-num-badge badge-available">UT 1</div>
-        <div class="ut-info">
-          <h4>El sistema comercial y el entorno de la empresa</h4>
-          <p>Variables controlables (4Ps) · Mercado · PESTEL · 5 Fuerzas de Porter · Instituciones</p>
-          <span class="status-pill pill-available">Disponible</span>
-        </div>
-        <div class="ut-arrow">→</div>
-      </div>
-
-      <!-- UT2 — lista, bloqueada hasta que empiece en clase -->
-      <div class="ut-card locked">
-        <div class="ut-num-badge badge-locked">UT 2</div>
-        <div class="ut-info">
-          <h4>Sistema de Información de Marketing (SIM)</h4>
-          <p>El SIM · Estructura y subsistemas · Idoneidad · Investigación comercial · Ética ICC/ESOMAR</p>
-          <span class="status-pill pill-locked">🔒 No disponible</span>
-        </div>
-        <div class="ut-arrow">🔒</div>
-      </div>
-
-      <!-- UT3 -->
-      <div class="ut-card locked">
-        <div class="ut-num-badge badge-locked">UT 3</div>
-        <div class="ut-info">
-          <h4>Plan de investigación comercial</h4>
-          <p>Fases del plan · Definición del problema · Diseño de la investigación · Presupuesto</p>
-          <span class="status-pill pill-locked">🔒 No disponible</span>
-        </div>
-        <div class="ut-arrow">🔒</div>
-      </div>
-
-      <!-- UT4 -->
-      <div class="ut-card locked">
-        <div class="ut-num-badge badge-locked">UT 4</div>
-        <div class="ut-info">
-          <h4>Información secundaria</h4>
-          <p>Fuentes internas (CRM, data warehouse) y externas (INE, CIS, EGM) · Buscadores y operadores · SEO/SEM · Tratamiento y análisis</p>
-          <span class="status-pill pill-locked">🔒 No disponible</span>
-        </div>
-        <div class="ut-arrow">🔒</div>
-      </div>
-
-      <!-- UT5 -->
-      <div class="ut-card locked">
-        <div class="ut-num-badge badge-locked">UT 5</div>
-        <div class="ut-info">
-          <h4>Información primaria</h4>
-          <p>Observación · Entrevista en profundidad, focus group y técnicas proyectivas · Encuestas (CAPI, CATI, CAWI) y paneles · Cuestionario y escalas · Experimentación y neuromarketing</p>
-          <span class="status-pill pill-locked">🔒 No disponible</span>
-        </div>
-        <div class="ut-arrow">🔒</div>
-      </div>
-
-      <!-- UT6 -->
-      <div class="ut-card locked">
-        <div class="ut-num-badge badge-locked">UT 6</div>
-        <div class="ut-info">
-          <h4>El muestreo</h4>
-          <p>Población y muestra · Tipos de muestreo probabilístico y no probabilístico · Tamaño muestral</p>
-          <span class="status-pill pill-locked">🔒 No disponible</span>
-        </div>
-        <div class="ut-arrow">🔒</div>
-      </div>
-
-      <!-- UT7 -->
-      <div class="ut-card locked">
-        <div class="ut-num-badge badge-locked">UT 7</div>
-        <div class="ut-info">
-          <h4>Análisis estadístico de datos</h4>
-          <p>Estadística descriptiva · Media, moda y mediana · Varianza · Tablas y gráficos de frecuencias</p>
-          <span class="status-pill pill-locked">🔒 No disponible</span>
-        </div>
-        <div class="ut-arrow">🔒</div>
-      </div>
-
-      <!-- UT8 -->
-      <div class="ut-card locked">
-        <div class="ut-num-badge badge-locked">UT 8</div>
-        <div class="ut-info">
-          <h4>Bases de datos</h4>
-          <p>Diseño y gestión de bases de datos comerciales · CRM · Segmentación · Minería de datos</p>
-          <span class="status-pill pill-locked">🔒 No disponible</span>
-        </div>
-        <div class="ut-arrow">🔒</div>
-      </div>
-
-    </div><!-- /ut-grid -->
-  </div><!-- /container -->
+    <div class="units" id="units"></div>
+  </div>
 
   <footer>
-    Investigación Comercial (1010) · CFGS Marketing y Publicidad · Pablo Jordán
+    <div><b>Proyecto PJP</b> · Investigación Comercial (1010) · CFGS Marketing y Publicidad</div>
+    <div>Hecho por <b>Pablo Jordán</b> · 🔐 Contenido cifrado</div>
   </footer>
-</div><!-- /app -->
+</div>
+
+<div class="toast" id="toast"></div>
 
 <script>
-const PASSWORD = 'PabloPubli';
+/* Llavero generado por tools/publicar.py: claves de las unidades abiertas, cifradas con la contraseña */
+const KEYRING = {"salt": "1jMTvYJ3KsOw/taV523/WQ==", "iter": 310000, "check": {"iv": "vUHgMsFOlkuGTHTi", "ct": "Rcmod63u5oFRMCSGhr+5jFs/7cLBDg=="}, "units": {"ut1": {"iv": "dQANEcjBMS5ftJgR", "ct": "qeRVd5sXb/YqsGZIO4uwY1/nLmnsg8eFcWQKNckIuTTn0B7ih+zD5wpjAewucoYf"}}};
 
-function doLogin() {
-  if (document.getElementById('pwd-input').value === PASSWORD) {
-    document.getElementById('login-screen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-  } else {
-    document.getElementById('login-error').style.display = 'block';
+const UNITS = [
+  {id:'ut1', n:'01', t:'El sistema comercial y el entorno de la empresa', d:'Variables controlables (4Ps) · Mercado · PESTEL · 5 Fuerzas de Porter · Instituciones', g:'linear-gradient(135deg,#533ab7,#0f6e56)'},
+  {id:'ut2', n:'02', t:'Sistema de Información de Marketing (SIM)', d:'El SIM · Estructura y subsistemas · Mapa del SIM · Investigación comercial y su proceso · Ética ICC/ESOMAR', g:'linear-gradient(135deg,#0a3d55,#0f6e8c)'},
+  {id:'ut3', n:'03', t:'Plan de investigación comercial', d:'Fases del plan · Definición del problema · Diseño de la investigación · Presupuesto', g:'linear-gradient(135deg,#7a4f96,#c3a6cf)'},
+  {id:'ut4', n:'04', t:'Información secundaria', d:'Fuentes internas (CRM, data warehouse) y externas (INE, CIS, EGM) · Buscadores y operadores · SEO/SEM · Tratamiento y análisis', g:'linear-gradient(135deg,#12355b,#e4572e)'},
+  {id:'ut5', n:'05', t:'Información primaria', d:'Observación · Entrevista, focus group y técnicas proyectivas · Encuestas y paneles · Cuestionario y escalas · Experimentación', g:'linear-gradient(135deg,#2a1760,#e0447c)'},
+  {id:'ut6', n:'06', t:'El muestreo', d:'Población y muestra · Muestreo probabilístico y no probabilístico · Tamaño muestral', g:'linear-gradient(135deg,#14a39a,#3b7ff2)'},
+  {id:'ut7', n:'07', t:'Análisis estadístico de datos', d:'Estadística descriptiva · Media, moda y mediana · Varianza · Tablas y gráficos de frecuencias', g:'linear-gradient(135deg,#f2b33d,#e4572e)'},
+  {id:'ut8', n:'08', t:'Bases de datos', d:'Diseño y gestión de bases de datos comerciales · CRM · Segmentación · Minería de datos', g:'linear-gradient(135deg,#0f6e56,#17c3b2)'}
+];
+const OPEN = KEYRING ? Object.keys(KEYRING.units) : [];
+const $ = id => document.getElementById(id);
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const tob64 = u => btoa(String.fromCharCode(...new Uint8Array(u)));
+const ss = { get:k=>{ try{ return sessionStorage.getItem(k); }catch(e){ return null; } }, set:(k,v)=>{ try{ sessionStorage.setItem(k,v); }catch(e){} }, clear:()=>{ try{ Object.keys(sessionStorage).filter(k=>k.startsWith('pjp:')).forEach(k=>sessionStorage.removeItem(k)); }catch(e){} } };
+
+/* Cinta de palabras */
+(function(){ const w=['Investigar','Observar','Preguntar','Medir','Experimentar','Analizar','Decidir','Proyecto PJP','Marketing','Publicidad'];
+  const html=w.map(x=>`<span class="${x==='Proyecto PJP'?'hl':''}">${x}</span><span>✦</span>`).join('');
+  $('track').innerHTML=html+html; })();
+
+/* Mensajes de acceso (cuando se intenta entrar a una unidad por URL) */
+function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),4200); }
+const params=new URLSearchParams(location.search);
+const intento=params.get('acceso');
+if(intento){ history.replaceState(null,'',location.pathname); }
+
+/* LOGIN: la contraseña deriva una clave (PBKDF2) que descifra el llavero. No hay contraseña en el código. */
+async function login(pwd){
+  if(!KEYRING || !window.crypto || !crypto.subtle) throw new Error('nocrypto');
+  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pwd),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(KEYRING.salt),iterations:KEYRING.iter,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+  await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(KEYRING.check.iv)},key,b64(KEYRING.check.ct)); /* falla si la contraseña no es correcta */
+  for(const id of OPEN){
+    const k=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(KEYRING.units[id].iv)},key,b64(KEYRING.units[id].ct));
+    ss.set('pjp:'+id,tob64(k));
   }
+  ss.set('pjp:auth','1');
 }
+$('eye').onclick=()=>{ const i=$('pwd'); i.type=i.type==='password'?'text':'password'; };
+$('login-form').addEventListener('submit',async e=>{
+  e.preventDefault();
+  const pwd=$('pwd').value; if(!pwd) return;
+  const go=$('go'); go.disabled=true; go.classList.add('loading'); $('go-txt').textContent='Desbloqueando…'; $('msg').textContent='';
+  try{ await login(pwd); showApp(true); }
+  catch(err){
+    $('msg').textContent= err.message==='nocrypto' ? 'Tu navegador no permite abrir el contenido cifrado. Prueba con Chrome, Edge, Firefox o Safari actualizados.' : 'Contraseña incorrecta. Inténtalo de nuevo.';
+    const c=$('login-form'); c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake');
+  }
+  go.disabled=false; go.classList.remove('loading'); $('go-txt').textContent='Entrar al temario →';
+});
+$('logout').onclick=()=>{ ss.clear(); $('app').style.display='none'; $('login').style.display='grid'; $('pwd').value=''; scrollTo(0,0); };
 
-function doLogout() {
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('pwd-input').value = '';
-  document.getElementById('login-error').style.display = 'none';
+function renderUnits(){
+  $('units').innerHTML=UNITS.map((u,i)=>{
+    const open=OPEN.includes(u.id)&&ss.get('pjp:'+u.id);
+    return `<div class="unit ${open?'open':'locked'}" data-id="${u.id}" style="--g:${u.g};animation-delay:${i*0.06}s" ${open?'role="link" tabindex="0"':''}>
+      <span class="band"></span>
+      <div class="num">${u.n}</div><div class="ut">Unidad de trabajo ${+u.n}</div>
+      <h3>${u.t}</h3><p>${u.d}</p>
+      <div class="foot"><span class="state">${open?'● Disponible':'Próximamente'}</span>${open?'<span class="arrow">→</span>':'<span class="lock">🔒</span>'}</div>
+    </div>`; }).join('');
+  document.querySelectorAll('.unit').forEach(el=>{
+    const go=()=>{ if(el.classList.contains('open')) location.href=el.dataset.id+'.html'; else { el.classList.remove('nope'); void el.offsetWidth; el.classList.add('nope'); toast('🔒 Esta unidad se abrirá cuando la trabajemos en clase.'); } };
+    el.addEventListener('click',go); el.addEventListener('keydown',e=>{ if(e.key==='Enter') go(); });
+  });
+  const n=OPEN.length;
+  $('st-open').textContent=n; $('st-soon').textContent=8-n;
+  let c=0; const tick=()=>{ $('ring-num').textContent=c; if(c<n){ c++; setTimeout(tick,140); } }; tick();
+  requestAnimationFrame(()=>setTimeout(()=>{ $('ring-arc').style.strokeDashoffset=452.4*(1-n/8); },120));
 }
-
-/* Cuando añadas una nueva UT, cambia este número y actualiza
-   el onclick del card correspondiente a window.location.href='ut2.html' etc. */
-const utsDisponibles = 1;
-const total = 8;
-document.getElementById('ut-disponibles').textContent = utsDisponibles;
-document.getElementById('ut-proximamente').textContent = total - utsDisponibles;
-document.getElementById('progress-fill').style.width = (utsDisponibles / total * 100) + '%';
-document.getElementById('progress-label').textContent = utsDisponibles + ' de ' + total + ' unidades publicadas';
+function showApp(fresh){
+  $('login').style.display='none'; $('app').style.display='block'; scrollTo(0,0); renderUnits();
+  if(intento){ toast(OPEN.includes(intento)?'✅ Ya puedes entrar en la unidad.':'🔒 Esa unidad todavía no está disponible.'); }
+  else if(fresh) toast('👋 ¡Bienvenido/a al temario del Proyecto PJP!');
+}
+if(ss.get('pjp:auth')) showApp(false);
+else if(intento) toast('🔐 Para entrar en una unidad primero tienes que acceder con la contraseña.');
 </script>
 </body>
 </html>
