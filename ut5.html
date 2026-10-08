@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UT5 · Información primaria · Pablo Jordán</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --bg:#f7f5fb; --bg2:#ffffff; --text:#1a1726; --text2:#615c70;
+  --border:rgba(30,10,60,0.1); --ink:#2a1760; --ink2:#1a0e40;
+  --pink:#e0447c; --pink2:#bf2c60; --teal:#14a39a; --sun:#f2b33d; --sky:#3b7ff2;
+  --card-r:14px; --shadow:0 2px 12px rgba(40,20,80,0.07);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+h1,h2,h3,.display { font-family:'Sora','Segoe UI',system-ui,sans-serif; letter-spacing:-0.01em; }
+code { font-family:Consolas,monospace; background:rgba(0,0,0,0.05); padding:0 0.25rem; border-radius:4px; }
+
+header { background:var(--ink2); color:white; padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+header h1 { font-size:1.05rem; font-weight:800; }
+header span { font-size:0.75rem; opacity:0.6; }
+.back-btn { background:rgba(255,255,255,0.15); color:white; padding:0.4rem 1rem; border-radius:8px; font-size:0.8rem; text-decoration:none; transition:background .2s; }
+.back-btn:hover { background:rgba(255,255,255,0.25); }
+.scroll-progress { position:absolute; left:0; bottom:0; height:3px; width:0; background:linear-gradient(90deg,var(--pink),var(--sun)); }
+.container { max-width:980px; margin:0 auto; padding:2rem 1.5rem; }
+
+/* HERO */
+.ut-hero { background:radial-gradient(circle at 88% 15%,rgba(224,68,124,0.6),transparent 42%),radial-gradient(circle at 10% 110%,rgba(20,163,154,0.45),transparent 45%),linear-gradient(135deg,#1a0e40 0%,#2a1760 60%,#3d2387 100%); border-radius:20px; padding:2.6rem 2.5rem 2rem; color:white; margin-bottom:1.5rem; position:relative; overflow:hidden; }
+.wave { position:absolute; right:-10px; bottom:18px; width:55%; height:90px; opacity:.35; }
+.wave path { stroke:#ffd0e0; stroke-width:2; fill:none; stroke-dasharray:6 6; animation:dash 14s linear infinite; }
+@keyframes dash { to { stroke-dashoffset:-240; } }
+.hero-tag { display:inline-block; background:var(--pink); font-weight:800; font-size:0.72rem; letter-spacing:1px; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:20px; margin-bottom:0.8rem; position:relative; }
+.ut-hero h2 { font-size:2.3rem; font-weight:800; line-height:1.05; margin-bottom:0.6rem; position:relative; }
+.ut-hero h2 em { font-style:normal; background:linear-gradient(90deg,#ff9cc0,#ffd27a); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.typing { font-size:1rem; opacity:.92; min-height:1.6rem; position:relative; font-weight:500; }
+.typing::after { content:'▍'; animation:blink 1s steps(1) infinite; margin-left:2px; color:#ff9cc0; }
+@keyframes blink { 50%{opacity:0} }
+.hero-chips { position:absolute; right:1.5rem; top:1.4rem; display:flex; flex-direction:column; gap:0.45rem; align-items:flex-end; pointer-events:none; }
+.hchip { background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); border-radius:20px; padding:0.25rem 0.75rem; font-size:0.72rem; font-weight:600; animation:floaty 6s ease-in-out infinite; }
+.hchip:nth-child(2){ animation-delay:-2s; margin-right:1.2rem } .hchip:nth-child(3){ animation-delay:-4s }
+@keyframes floaty { 50%{ transform:translateY(-7px) } }
+.badges { display:flex; flex-wrap:wrap; gap:0.45rem; margin-top:1.3rem; position:relative; align-items:center; }
+.badges-label { font-size:0.72rem; font-weight:700; opacity:.75; margin-right:0.2rem; text-transform:uppercase; letter-spacing:.6px; }
+.badge { font-size:0.74rem; font-weight:700; padding:0.3rem 0.7rem; border-radius:20px; background:rgba(255,255,255,0.08); border:1px dashed rgba(255,255,255,0.35); color:rgba(255,255,255,0.55); transition:all .4s var(--ease); }
+.badge.got { background:var(--sun); color:#3b2600; border:1px solid var(--sun); box-shadow:0 4px 14px rgba(242,179,61,0.45); }
+
+/* TABS */
+.tabs { display:flex; gap:0.5rem; margin-bottom:1.5rem; flex-wrap:wrap; position:sticky; top:64px; z-index:60; background:rgba(247,245,251,0.93); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); padding:0.6rem 0; }
+.tab { padding:0.55rem 1.1rem; border:1.5px solid var(--border); border-radius:30px; background:var(--bg2); cursor:pointer; font-size:0.84rem; font-weight:600; color:var(--text2); transition:all .25s var(--ease); user-select:none; }
+.tab:hover { border-color:var(--pink); color:var(--pink); }
+.tab.active { background:var(--ink); color:white; border-color:var(--ink); box-shadow:0 4px 14px rgba(42,23,96,0.3); transform:translateY(-1px); }
+.tab-content { display:none; }
+.tab-content.active { display:block; animation:fadeIn .45s var(--ease); }
+.tab-content.active > * { animation:rise .55s var(--ease) both; }
+.tab-content.active > *:nth-child(2){animation-delay:.07s} .tab-content.active > *:nth-child(3){animation-delay:.14s}
+.tab-content.active > *:nth-child(4){animation-delay:.21s} .tab-content.active > *:nth-child(5){animation-delay:.28s}
+.tab-content.active > *:nth-child(n+6){animation-delay:.33s}
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes rise { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:none} }
+.swap { animation:rise .4s var(--ease); }
+
+/* BASE */
+.card { background:var(--bg2); border-radius:var(--card-r); border:1px solid var(--border); padding:1.5rem; margin-bottom:1.2rem; box-shadow:var(--shadow); }
+.card h3 { font-size:1.08rem; font-weight:700; margin-bottom:0.8rem; }
+.card p { font-size:0.9rem; line-height:1.7; color:var(--text2); }
+.card p + p { margin-top:0.6rem; }
+.kicker { font-size:0.72rem; font-weight:800; color:var(--pink); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.3rem; }
+.hint { font-size:0.75rem; color:var(--text2); margin:0 0 0.7rem; }
+.btn { border:none; border-radius:10px; padding:0.6rem 1.1rem; font-size:0.83rem; font-weight:700; cursor:pointer; transition:all .2s; font-family:inherit; display:inline-flex; align-items:center; gap:0.4rem; text-decoration:none; }
+.btn-ink { background:var(--ink); color:white; } .btn-ink:hover { background:var(--ink2); }
+.btn-pink { background:var(--pink); color:white; } .btn-pink:hover { background:var(--pink2); }
+.btn-ghost { background:var(--bg); color:var(--text); border:1.5px solid var(--border); } .btn-ghost:hover { border-color:var(--pink); color:var(--pink); }
+.ext { display:inline-flex; align-items:center; gap:0.3rem; font-size:0.76rem; font-weight:700; color:var(--ink); background:#efeafb; border-radius:20px; padding:0.25rem 0.7rem; text-decoration:none; transition:all .2s; margin:0.15rem 0.2rem 0.15rem 0; border:1px solid #dcd2f5; }
+.ext:hover { background:var(--ink); color:white; transform:translateY(-1px); }
+.exam-tip { background:#fff4e0; border:1px solid #f6d49a; border-radius:12px; padding:0.85rem 1rem; font-size:0.83rem; color:#6b4200; line-height:1.6; margin-bottom:1.2rem; }
+.extra { background:#eafaf7; border:1px solid #b6e8e1; border-radius:12px; padding:0.85rem 1rem; font-size:0.83rem; color:#0d5b55; line-height:1.6; margin-bottom:1.2rem; }
+.case { background:#fff0f5; border:1px solid #f6c3d6; border-radius:12px; padding:0.85rem 1rem; font-size:0.84rem; color:#6b1838; line-height:1.6; }
+.case b { color:var(--pink2); }
+.pill { display:inline-block; font-size:0.66rem; font-weight:800; padding:0.15rem 0.55rem; border-radius:20px; text-transform:uppercase; letter-spacing:.4px; }
+.grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+.mini { border-radius:12px; padding:1rem 1.1rem; border:1px solid var(--border); background:white; }
+.mini h4 { font-family:'Sora',sans-serif; font-size:0.95rem; margin-bottom:0.4rem; }
+.mini p, .mini li { font-size:0.8rem; color:var(--text2); line-height:1.6; }
+.mini ul { padding-left:1.1rem; }
+.pros { color:#22562d !important; } .cons { color:#a12c2c !important; }
+
+/* MAPA DE MÉTODOS */
+.methods-map { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; }
+.mm { border-radius:16px; padding:1.2rem 1rem; color:white; cursor:pointer; transition:all .3s var(--ease); position:relative; overflow:hidden; }
+.mm:hover { transform:translateY(-5px); box-shadow:0 14px 28px rgba(0,0,0,0.15); }
+.mm .ico { font-size:2rem; } .card .mm p { color:rgba(255,255,255,0.92); } .mm h4 { font-family:'Sora',sans-serif; font-size:1.05rem; margin:0.4rem 0 0.3rem; } .mm p { font-size:0.78rem; opacity:.9; line-height:1.45; }
+.mm .go { display:inline-block; margin-top:0.6rem; font-size:0.72rem; font-weight:800; background:rgba(255,255,255,0.2); padding:0.2rem 0.6rem; border-radius:20px; }
+.versus { width:100%; border-collapse:separate; border-spacing:0 5px; font-size:0.82rem; }
+.versus th { font-family:'Sora',sans-serif; font-size:0.9rem; padding:0.5rem; }
+.versus td { padding:0.6rem 0.8rem; background:var(--bg); }
+.versus td:first-child { font-weight:800; color:var(--text); border-radius:8px 0 0 8px; width:22%; }
+.versus td:last-child { border-radius:0 8px 8px 0; }
+.versus tr.lit td { background:#fff0f5; }
+
+/* CLASIFICADOR */
+.cls-item { font-size:1rem; font-weight:700; background:var(--bg); border-radius:12px; padding:1.1rem; margin:0.8rem 0; border:1px solid var(--border); text-align:center; }
+.cls-opts { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:0.5rem; }
+.cls-opt { padding:0.7rem; border-radius:10px; border:1.5px solid var(--border); background:var(--bg2); cursor:pointer; font-weight:700; font-size:0.82rem; transition:all .2s; font-family:inherit; }
+.cls-opt:hover:not(:disabled) { border-color:var(--pink); color:var(--pink); transform:translateY(-2px); }
+.cls-opt.ok { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; }
+.cls-opt.ko { background:#fdeaea; border-color:#e99; color:#a12c2c; animation:shake .35s; }
+@keyframes shake { 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.cls-fb { min-height:2.4rem; font-size:0.84rem; margin-top:0.8rem; line-height:1.5; color:var(--text2); text-align:center; }
+.cls-score { font-size:0.76rem; font-weight:800; color:var(--ink); text-align:center; }
+.result-box { text-align:center; padding:1.3rem; background:#eefaf1; border:1px solid #bfe6c8; border-radius:12px; color:#1f5a2c; font-weight:800; margin-top:0.5rem; }
+.play-again { display:block; margin:0.8rem auto 0; padding:0.55rem 1.4rem; background:var(--ink); color:white; border:none; border-radius:8px; cursor:pointer; font-size:0.85rem; font-family:inherit; font-weight:700; }
+
+/* OBSERVACIÓN */
+.pairs { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:0.8rem; }
+.pair { border:1px solid var(--border); border-radius:14px; overflow:hidden; background:white; }
+.pair-head { padding:0.6rem 0.9rem; font-size:0.74rem; font-weight:800; text-transform:uppercase; letter-spacing:.6px; color:var(--ink); background:#efeafb; }
+.pair-tog { display:grid; grid-template-columns:1fr 1fr; }
+.pair-tog button { border:none; background:white; padding:0.55rem; font-weight:800; font-size:0.8rem; cursor:pointer; font-family:inherit; color:var(--text2); border-bottom:3px solid transparent; transition:all .2s; }
+.pair-tog button.on { color:var(--pink2); border-bottom-color:var(--pink); background:#fff6f9; }
+.pair-body { padding:0.8rem 0.9rem; font-size:0.8rem; color:var(--text2); line-height:1.55; min-height:96px; }
+.pair-body b { color:var(--text); }
+.mystery { display:grid; grid-template-columns:1fr 1fr; gap:1rem; align-items:start; }
+.shop { background:linear-gradient(180deg,#fff8ec,#ffeef4); border-radius:14px; padding:1rem; border:1px solid #f3dccb; font-size:0.82rem; line-height:1.6; min-height:230px; }
+.shop .scene { font-size:2.2rem; text-align:center; margin-bottom:0.4rem; }
+.check { display:flex; gap:0.6rem; align-items:flex-start; padding:0.5rem 0.4rem; border-bottom:1px dashed var(--border); cursor:pointer; font-size:0.82rem; border-radius:6px; }
+.check:hover { background:var(--bg); }
+.check .box { width:22px; height:22px; border-radius:6px; border:2px solid var(--ink); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.75rem; color:white; transition:all .2s; }
+.check.on .box { background:var(--teal); border-color:var(--teal); }
+.check.off .box { background:#e07070; border-color:#e07070; }
+
+/* CUALITATIVAS */
+.qual-tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:0.6rem; margin-bottom:1rem; }
+.qt { border:1.5px solid var(--border); background:white; border-radius:14px; padding:0.9rem; cursor:pointer; text-align:center; font-family:inherit; transition:all .3s var(--ease); }
+.qt .i { font-size:1.8rem; display:block; } .qt b { font-size:0.86rem; display:block; margin-top:0.2rem; }
+.qt:hover { transform:translateY(-3px); }
+.qt.sel { background:var(--ink); color:white; border-color:var(--ink); }
+.qual-panel { background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.2rem 1.3rem; font-size:0.86rem; line-height:1.7; color:var(--text2); }
+.qual-panel h4 { font-family:'Sora',sans-serif; color:var(--text); font-size:1.02rem; margin-bottom:0.4rem; }
+.qual-panel ul { padding-left:1.1rem; }
+.facts { display:flex; flex-wrap:wrap; gap:0.4rem; margin:0.6rem 0; }
+.fact { background:white; border:1px solid #dcd2f5; color:var(--ink); font-weight:800; font-size:0.75rem; padding:0.3rem 0.7rem; border-radius:8px; }
+.room { position:relative; height:200px; background:#f0ecfa; border-radius:14px; margin:0.8rem 0; overflow:hidden; }
+.table-oval { position:absolute; left:8%; top:28%; width:58%; height:44%; background:#c9b8f0; border-radius:50%; }
+.seat { position:absolute; width:30px; height:30px; border-radius:50%; background:white; border:2px solid var(--ink); display:flex; align-items:center; justify-content:center; font-size:0.9rem; animation:pulse 3s ease-in-out infinite; }
+.seat.mod { background:var(--pink); border-color:var(--pink2); color:white; font-size:0.7rem; font-weight:800; }
+@keyframes pulse { 50%{ transform:scale(1.08) } }
+.mirror { position:absolute; right:0; top:0; bottom:0; width:24%; background:repeating-linear-gradient(135deg,#d7e6f5 0 8px,#c3d6ea 8px 16px); border-left:4px solid #8aa9c9; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.68rem; font-weight:800; color:#2c4a6b; text-align:center; padding:0.4rem; gap:0.3rem; }
+.lab-proj { background:#1a0e40; color:#efe9ff; border-radius:16px; padding:1.2rem; }
+.proj-tabs { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
+.pj { border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.06); color:#efe9ff; border-radius:20px; padding:0.35rem 0.85rem; font-size:0.78rem; font-weight:700; cursor:pointer; font-family:inherit; transition:all .2s; }
+.pj.sel, .pj:hover { background:var(--pink); border-color:var(--pink); color:white; }
+.pj.done::after { content:' ✓'; }
+.proj-stage { min-height:230px; }
+.big-word { font-family:'Sora',sans-serif; font-size:2.2rem; font-weight:800; text-align:center; margin:0.8rem 0; color:#ffd0e0; }
+.timer { height:6px; background:rgba(255,255,255,0.15); border-radius:6px; overflow:hidden; margin:0.5rem 0 0.8rem; }
+.timer i { display:block; height:100%; width:100%; background:var(--sun); transition:width linear; }
+.proj-in { width:100%; border:none; border-radius:10px; padding:0.7rem 0.9rem; font-size:0.95rem; font-family:inherit; }
+.proj-out { margin-top:0.8rem; background:rgba(255,255,255,0.07); border-radius:10px; padding:0.8rem; font-size:0.82rem; line-height:1.6; }
+.comic { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; background:white; border-radius:12px; padding:0.8rem; color:var(--text); }
+.panel { border:3px solid #1a1726; border-radius:6px; padding:0.6rem; position:relative; min-height:170px; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; background:#fffdf5; }
+.bubble { position:absolute; top:0.5rem; left:0.5rem; right:0.5rem; background:white; border:2px solid #1a1726; border-radius:14px; padding:0.45rem 0.6rem; font-size:0.74rem; line-height:1.4; }
+.bubble::after { content:''; position:absolute; bottom:-10px; left:40%; border:8px solid transparent; border-top-color:#1a1726; }
+.bubble textarea { width:100%; border:none; resize:none; font-family:inherit; font-size:0.78rem; outline:none; background:transparent; min-height:58px; }
+.person { font-size:2.4rem; }
+.photo-card { background:linear-gradient(135deg,#3a2a6b,#6b3a8a); border-radius:12px; height:150px; display:flex; align-items:center; justify-content:center; font-size:3.4rem; margin-bottom:0.6rem; position:relative; }
+.photo-card small { position:absolute; bottom:0.5rem; font-size:0.7rem; opacity:.75; }
+
+/* ENCUESTA */
+.survey-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.7rem; }
+.sv { border-radius:14px; border:1.5px solid var(--border); background:white; padding:0.9rem; cursor:pointer; transition:all .3s var(--ease); font-family:inherit; text-align:left; }
+.sv:hover { transform:translateY(-3px); }
+.sv .acr { font-family:'Sora',sans-serif; font-weight:800; font-size:1.25rem; }
+.sv .nm { font-size:0.75rem; color:var(--text2); }
+.sv.sel { border-color:var(--pink); box-shadow:0 8px 20px rgba(224,68,124,0.2); }
+.sv.win { outline:3px solid var(--sun); outline-offset:2px; }
+.sv-detail { margin-top:1rem; }
+.picker { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:0.6rem; margin-bottom:0.8rem; }
+.picker label { font-size:0.78rem; font-weight:700; color:var(--text2); display:flex; flex-direction:column; gap:0.25rem; }
+.picker select { border:1.5px solid var(--border); border-radius:8px; padding:0.45rem; font-family:inherit; font-size:0.84rem; background:white; }
+.reco { border-radius:12px; padding:0.9rem 1rem; background:#fff7e6; border:1px solid #f6d49a; font-size:0.86rem; line-height:1.6; }
+.panels { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; }
+
+/* CUESTIONARIO */
+.qtypes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
+.qtype { border:1.5px solid var(--border); background:white; border-radius:20px; padding:0.4rem 0.9rem; font-weight:800; font-size:0.8rem; cursor:pointer; font-family:inherit; transition:all .2s; }
+.qtype.sel { background:var(--pink); color:white; border-color:var(--pink); }
+.qbuild { display:grid; grid-template-columns:1fr 1.1fr; gap:1rem; align-items:start; }
+.qtheory { font-size:0.85rem; line-height:1.7; color:var(--text2); }
+.qtheory h4 { font-family:'Sora',sans-serif; color:var(--text); font-size:1rem; margin-bottom:0.3rem; }
+.form-mock { background:white; border-radius:12px; border:1px solid #dadce0; border-top:8px solid #673ab7; padding:1rem 1.1rem; box-shadow:0 4px 16px rgba(0,0,0,0.06); }
+.form-mock .fq { font-size:0.92rem; font-weight:600; color:#202124; margin-bottom:0.7rem; }
+.form-mock label { display:flex; align-items:center; gap:0.5rem; font-size:0.86rem; padding:0.3rem 0; cursor:pointer; color:#202124; }
+.form-mock textarea { width:100%; border:none; border-bottom:1px solid #dadce0; font-family:inherit; font-size:0.86rem; padding:0.3rem 0; resize:none; outline:none; }
+.form-mock .route { margin-top:0.7rem; font-size:0.8rem; font-weight:700; border-radius:8px; padding:0.5rem 0.7rem; display:none; }
+.likert-row { display:flex; justify-content:space-between; gap:0.3rem; }
+.likert-row label { flex-direction:column; font-size:0.68rem; text-align:center; flex:1; }
+.scale-matrix { width:100%; border-collapse:separate; border-spacing:4px; font-size:0.82rem; }
+.scale-matrix th { font-size:0.72rem; text-transform:uppercase; letter-spacing:.4px; color:var(--text2); padding:0.3rem; }
+.scale-matrix td { background:var(--bg); padding:0.6rem; text-align:center; border-radius:8px; transition:all .3s; }
+.scale-matrix td:first-child { text-align:left; font-weight:800; cursor:pointer; }
+.scale-matrix tr:hover td { background:#f4eefe; }
+.scale-matrix tr.sel td { background:var(--ink); color:white; }
+.yes { color:#1f8a4c; font-weight:800; } .no { color:#c0c0c8; }
+.scale-matrix tr.sel .no { color:rgba(255,255,255,0.35); } .scale-matrix tr.sel .yes { color:#7ff0b0; }
+.ladder-detail { margin-top:0.8rem; background:var(--bg); border-radius:12px; padding:1rem 1.1rem; font-size:0.85rem; line-height:1.7; color:var(--text2); border:1px solid var(--border); }
+.ladder-detail h4 { font-family:'Sora',sans-serif; color:var(--text); font-size:1rem; margin-bottom:0.3rem; }
+.ladder-detail .ex { background:white; border-left:4px solid var(--pink); border-radius:8px; padding:0.6rem 0.8rem; margin-top:0.5rem; color:var(--text); }
+.power { height:8px; border-radius:8px; background:var(--border); margin:0.5rem 0; overflow:hidden; }
+.power i { display:block; height:100%; background:linear-gradient(90deg,var(--teal),var(--pink)); transition:width .6s var(--ease); }
+.sd { display:grid; grid-template-columns:110px 1fr 110px; gap:0.5rem; align-items:center; font-size:0.8rem; font-weight:700; margin-bottom:0.45rem; }
+.sd span:last-child { text-align:right; }
+.sd input { width:100%; accent-color:var(--pink); }
+.profile { width:100%; height:120px; background:var(--bg); border-radius:10px; margin-top:0.6rem; }
+
+/* EXPERIMENTACIÓN */
+.xy { display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; margin:0.8rem 0; }
+.var { border-radius:16px; padding:1rem 1.3rem; text-align:center; color:white; min-width:170px; }
+.var .l { font-family:'Sora',sans-serif; font-size:2rem; font-weight:800; }
+.var small { display:block; font-size:0.74rem; opacity:.9; }
+.arrow-anim { font-size:1.8rem; color:var(--pink); animation:nudge 1.4s ease-in-out infinite; }
+@keyframes nudge { 50%{ transform:translateX(8px) } }
+.conds { display:grid; grid-template-columns:repeat(3,1fr); gap:0.7rem; }
+.cond { background:white; border:1px solid var(--border); border-radius:12px; padding:0.9rem; font-size:0.8rem; color:var(--text2); line-height:1.5; }
+.cond b { color:var(--text); display:block; margin-bottom:0.2rem; font-size:0.86rem; }
+.cond .n { font-family:'Sora',sans-serif; font-weight:800; color:var(--pink); font-size:1.3rem; }
+.sim-box { background:#14102b; color:#e8e3ff; border-radius:16px; padding:1.2rem; }
+.sim-controls { display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center; margin-bottom:1rem; }
+.price-btn { border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.06); color:white; border-radius:10px; padding:0.45rem 0.8rem; font-weight:800; cursor:pointer; font-family:inherit; }
+.price-btn.sel { background:var(--pink); border-color:var(--pink); }
+.toggle { display:flex; align-items:center; gap:0.5rem; font-size:0.8rem; font-weight:700; cursor:pointer; }
+.toggle input { accent-color:var(--teal); width:18px; height:18px; }
+.chart { display:flex; align-items:flex-end; gap:0.5rem; height:180px; padding:0.6rem; background:rgba(255,255,255,0.04); border-radius:12px; }
+.bar-grp { flex:1; display:flex; align-items:flex-end; justify-content:center; gap:3px; height:100%; position:relative; }
+.bar { width:42%; border-radius:6px 6px 0 0; transition:height .7s var(--ease); position:relative; }
+.bar span { position:absolute; top:-1.1rem; left:50%; transform:translateX(-50%); font-size:0.62rem; font-weight:800; white-space:nowrap; }
+.bar-lbl { position:absolute; bottom:-1.3rem; font-size:0.66rem; opacity:.75; white-space:nowrap; }
+.legend { display:flex; gap:1rem; font-size:0.74rem; margin-top:1.6rem; flex-wrap:wrap; }
+.legend i { display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:0.3rem; vertical-align:middle; }
+.sim-read { margin-top:0.8rem; font-size:0.84rem; line-height:1.6; background:rgba(255,255,255,0.06); border-radius:10px; padding:0.8rem; }
+.lab-field { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.validity { margin-top:0.6rem; }
+.validity div { display:grid; grid-template-columns:95px 1fr; gap:0.5rem; align-items:center; font-size:0.74rem; font-weight:700; margin-bottom:0.3rem; }
+.vbar { height:9px; background:var(--bg); border-radius:6px; overflow:hidden; } .vbar i { display:block; height:100%; border-radius:6px; }
+.neuro { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; }
+.ad-wrap { position:relative; border-radius:14px; overflow:hidden; max-width:520px; margin:0.8rem auto 0; }
+.ad { background:linear-gradient(135deg,#0d1b2a,#1b3a5c); color:white; padding:1.2rem; display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; min-height:220px; align-items:center; }
+.ad .pc { font-size:5rem; text-align:center; }
+.ad h5 { font-family:'Sora',sans-serif; font-size:1.3rem; line-height:1.15; }
+.ad .price { font-family:'Sora',sans-serif; font-size:2rem; color:#ffd27a; font-weight:800; margin-top:0.4rem; }
+.ad .logo { font-size:0.7rem; font-weight:800; letter-spacing:1px; opacity:.8; margin-top:0.6rem; }
+.heat { position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .6s; mix-blend-mode:screen; }
+.heat.on { opacity:1; }
+.blob { position:absolute; border-radius:50%; filter:blur(10px); }
+.fix { position:absolute; width:24px; height:24px; border-radius:50%; background:white; color:#1a1726; font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; opacity:0; transform:scale(.3); transition:all .4s var(--ease); box-shadow:0 0 0 3px var(--pink); }
+.heat.on .fix { opacity:1; transform:none; }
+
+/* JUEGOS */
+.games-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.2rem; }
+.game-launch { background:var(--bg2); border:1px solid var(--border); border-radius:14px; padding:1.5rem; text-align:center; cursor:pointer; transition:all .25s var(--ease); }
+.game-launch:hover { border-color:var(--pink); transform:translateY(-4px); box-shadow:0 12px 26px rgba(0,0,0,0.09); }
+.game-launch .g-icon { font-size:2.5rem; margin-bottom:0.5rem; }
+.game-launch h4 { font-size:0.92rem; font-weight:800; margin-bottom:0.3rem; }
+.game-launch p { font-size:0.78rem; color:var(--text2); }
+.modal-bg { display:none; position:fixed; inset:0; background:rgba(20,10,45,0.6); z-index:200; align-items:center; justify-content:center; backdrop-filter:blur(3px); }
+.modal-bg.show { display:flex; animation:fadeIn .25s; }
+.modal { background:var(--bg2); border-radius:18px; padding:2rem; max-width:560px; width:92%; max-height:88vh; overflow-y:auto; position:relative; animation:rise .35s var(--ease); }
+.modal-close { position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text2); }
+.modal h2 { font-size:1.2rem; font-weight:800; margin-bottom:1.2rem; }
+.hangman-word { display:flex; gap:0.35rem; flex-wrap:wrap; justify-content:center; margin:1rem 0; }
+.letter-box { width:26px; height:34px; border-bottom:2.5px solid var(--text); display:flex; align-items:center; justify-content:center; font-size:1.05rem; font-weight:800; }
+.hangman-keys { display:flex; flex-wrap:wrap; gap:0.35rem; justify-content:center; margin:1rem 0; }
+.key-btn { padding:0.4rem 0.55rem; min-width:32px; border:1.5px solid var(--border); border-radius:7px; background:var(--bg2); cursor:pointer; font-size:0.85rem; font-weight:700; font-family:inherit; }
+.key-btn:hover:not(:disabled) { border-color:var(--pink); color:var(--pink); }
+.key-btn:disabled { opacity:0.35; cursor:not-allowed; }
+.key-btn.wrong { background:#fdeaea; border-color:#e99; color:#a12c2c; opacity:.8; }
+.key-btn.right { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; opacity:.8; }
+.hangman-drawing { display:block; margin:0 auto 0.5rem; }
+.hangman-status { text-align:center; font-weight:800; font-size:0.95rem; margin:0.5rem 0; }
+.hint-text { text-align:center; font-size:0.8rem; color:var(--text2); background:var(--bg); border-radius:8px; padding:0.5rem; margin-bottom:0.5rem; }
+.grid-sopa { display:inline-grid; gap:2px; user-select:none; touch-action:none; }
+.sopa-cell { width:26px; height:26px; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; border-radius:4px; cursor:pointer; background:var(--bg); border:1px solid var(--border); }
+.sopa-cell.selected { background:#ffe0ea; border-color:var(--pink); color:var(--pink2); }
+.sopa-cell.found { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; }
+.sopa-words { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:0.8rem; justify-content:center; }
+.sopa-word { padding:0.25rem 0.7rem; border-radius:20px; font-size:0.78rem; font-weight:700; background:var(--bg); border:1px solid var(--border); color:var(--text2); }
+.sopa-word.found { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; text-decoration:line-through; }
+.quiz-q { font-weight:700; font-size:0.93rem; margin-bottom:0.7rem; }
+.quiz-options { display:flex; flex-direction:column; gap:0.45rem; margin-bottom:1.2rem; }
+.quiz-opt { padding:0.65rem 1rem; border:1.5px solid var(--border); border-radius:10px; background:var(--bg2); cursor:pointer; font-size:0.85rem; text-align:left; font-family:inherit; transition:all .2s; }
+.quiz-opt:hover { border-color:var(--pink); }
+.quiz-opt.selected { background:#fff0f5; border-color:var(--pink); font-weight:700; }
+.quiz-opt.right { background:#e6f5ea; border-color:#4c9a5b; } .quiz-opt.wrong { background:#fdeaea; border-color:#e99; }
+.memory-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0.6rem; margin:1rem 0; }
+.mem-card { height:76px; perspective:600px; cursor:pointer; }
+.mem-inner { position:relative; width:100%; height:100%; transition:transform 0.45s; transform-style:preserve-3d; }
+.mem-card.flipped .mem-inner { transform:rotateY(180deg); }
+.mem-front,.mem-back { position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; text-align:center; padding:0.3rem; }
+.mem-front { background:linear-gradient(135deg,var(--ink),#4a2d9c); color:white; font-size:1.2rem; }
+.mem-back { background:#fff0f5; border:2px solid var(--pink); color:var(--pink2); transform:rotateY(180deg); font-size:0.68rem; }
+.mem-card.matched .mem-back { background:#e6f5ea; border-color:#4c9a5b; color:#22562d; }
+.mem-status { text-align:center; font-size:0.85rem; color:var(--text2); }
+.toast { position:fixed; left:50%; bottom:24px; transform:translate(-50%,120px); background:var(--ink2); color:white; padding:0.8rem 1.2rem; border-radius:14px; font-weight:700; font-size:0.88rem; z-index:300; box-shadow:0 10px 30px rgba(0,0,0,0.3); transition:transform .5s var(--ease); }
+.toast.show { transform:translate(-50%,0); }
+.confetti { position:fixed; top:-20px; z-index:299; pointer-events:none; animation:fall 1.8s linear forwards; }
+@keyframes fall { to { transform:translateY(105vh) rotate(540deg); opacity:.3; } }
+
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; transition:none !important; } }
+@media(max-width:700px){
+  header { padding:0.8rem 1rem; } .container { padding:1.2rem 1rem; }
+  .ut-hero { padding:2rem 1.3rem 1.5rem; } .ut-hero h2 { font-size:1.75rem; } .hero-chips { display:none; }
+  .tabs { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; } .tabs::-webkit-scrollbar { display:none; } .tab { white-space:nowrap; flex-shrink:0; }
+  .methods-map, .mystery, .qbuild, .lab-field, .neuro, .conds, .panels { grid-template-columns:1fr; }
+  .survey-grid { grid-template-columns:1fr 1fr; }
+  .qual-tabs { grid-template-columns:1fr 1fr 1fr; } .qt b { font-size:0.74rem; }
+  .comic { grid-template-columns:1fr; }
+  .versus td:first-child { width:30%; }
+  .memory-grid { grid-template-columns:repeat(3,1fr); }
+  .sopa-cell { width:22px; height:22px; font-size:0.7rem; }
+  .sd { grid-template-columns:80px 1fr 80px; font-size:0.72rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div><h1>PABLO JORDÁN PROFE</h1><span>Unidad de Trabajo 5</span></div>
+  <a href="index.html" class="back-btn">← Volver al índice</a>
+  <div class="scroll-progress" id="scroll-progress"></div>
+</header>
+
+<div class="container">
+  <div class="ut-hero">
+    <svg class="wave" viewBox="0 0 400 90" preserveAspectRatio="none"><path d="M0 45 Q 25 5 50 45 T 100 45 T 150 45 T 200 45 T 250 45 T 300 45 T 350 45 T 400 45"/><path d="M0 60 Q 25 30 50 60 T 100 60 T 150 60 T 200 60 T 250 60 T 300 60 T 350 60 T 400 60" style="opacity:.5"/></svg>
+    <div class="hero-chips"><span class="hchip">👀 Observación</span><span class="hchip">💬 Encuesta</span><span class="hchip">🧪 Experimento</span></div>
+    <span class="hero-tag">Unidad 5</span>
+    <h2>Información <em>primaria</em></h2>
+    <div class="typing" id="typing"></div>
+    <div class="badges" id="badges"></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="intro" onclick="switchTab('intro',this)">🎤 Punto de partida</div>
+    <div class="tab" data-tab="observacion" onclick="switchTab('observacion',this)">👀 Observación</div>
+    <div class="tab" data-tab="cualitativas" onclick="switchTab('cualitativas',this)">🧠 Técnicas cualitativas</div>
+    <div class="tab" data-tab="encuesta" onclick="switchTab('encuesta',this)">📊 Encuestas y paneles</div>
+    <div class="tab" data-tab="cuestionario" onclick="switchTab('cuestionario',this)">📝 Cuestionario y escalas</div>
+    <div class="tab" data-tab="experimentacion" onclick="switchTab('experimentacion',this)">🧪 Experimentación</div>
+    <div class="tab" data-tab="juegos" onclick="switchTab('juegos',this)">🎮 Juegos</div>
+  </div>
+
+  <!-- ================= INTRO ================= -->
+  <div class="tab-content active" id="tab-intro">
+    <div class="card" style="border-left:4px solid var(--pink)">
+      <div class="kicker">La información primaria</div>
+      <h3>Si la respuesta no existe… la creamos nosotros</h3>
+      <p>La <strong>información primaria</strong> es la que se recoge <strong>específicamente</strong> para resolver el problema de nuestra investigación, directamente de su fuente original (consumidores, clientes, tiendas...). Es <strong>más cara y lenta</strong> de obtener que la secundaria, pero se ajusta <strong>exactamente</strong> a lo que necesitamos.</p>
+      <p>Por eso solo recurrimos a ella cuando la información secundaria <strong>no es suficiente</strong>, justo como le pasó a PC Componentes al final de la UT4.</p>
+    </div>
+    <div class="case">🖥️ <b>Seguimos con el caso:</b> en la UT4, PC Componentes descubrió que ninguna fuente secundaria le decía <b>cuánto pagarían sus clientes por el montaje de PC a domicilio</b>. Ahora toca salir a buscar ese dato. ¿Cómo? Con alguno de los <b>tres métodos</b> de esta unidad.</div>
+    <div style="height:1.2rem"></div>
+
+    <div class="card">
+      <h3>🧭 Los tres métodos para obtener información primaria</h3>
+      <p class="hint">Toca cada método para ir a su apartado.</p>
+      <div class="methods-map">
+        <div class="mm" style="background:linear-gradient(135deg,#14a39a,#0d7a73)" onclick="goTab('observacion')"><div class="ico">👀</div><h4>Observación</h4><p><strong>Registra el comportamiento</strong> de consumidores o usuarios sin preguntarles.</p><span class="go">Ver →</span></div>
+        <div class="mm" style="background:linear-gradient(135deg,#e0447c,#a82355)" onclick="goTab('encuesta')"><div class="ico">💬</div><h4>Interrogación</h4><p><strong>Establecen un diálogo</strong> con los participantes. Pueden ser <strong>cualitativos</strong> (entrevistas, focus group...) o <strong>cuantitativos</strong> (encuestas, paneles).</p><span class="go">Ver →</span></div>
+        <div class="mm" style="background:linear-gradient(135deg,#3b7ff2,#2a55b8)" onclick="goTab('experimentacion')"><div class="ico">🧪</div><h4>Experimentación</h4><p><strong>Modifican alguna variable</strong> que se controla y miden el efecto en otra variable que interese.</p><span class="go">Ver →</span></div>
+      </div>
+      <p style="margin-top:0.9rem">Los métodos de interrogación se clasifican en <strong>cualitativos</strong> y <strong>cuantitativos</strong> según la naturaleza de la información. En general: <strong>cualitativos</strong> cuando hay que <strong>acercarse y entender</strong> un problema u oportunidad; <strong>cuantitativos</strong> cuando el objetivo es <strong>cuantificar</strong> un fenómeno.</p>
+    </div>
+
+    <div class="card">
+      <h3>🔢 Antes de nada: ¿qué tipo de dato tengo?</h3>
+      <div class="grid2">
+        <div class="mini" style="border-top:5px solid var(--pink)"><h4>🗨️ Datos cualitativos</h4><p>Expresan <strong>cualidades</strong>, opiniones o categorías, no cantidades.</p><p style="margin-top:0.3rem"><em>«Me gusta mucho esta marca»</em>, el color favorito, la marca de móvil.</p></div>
+        <div class="mini" style="border-top:5px solid var(--sky)"><h4>🔢 Datos cuantitativos</h4><p>Se expresan con <strong>números</strong>. Pueden ser:</p><ul><li><strong>Discretos:</strong> valores enteros, se cuentan (nº de compras, edad en años cumplidos).</li><li><strong>Continuos:</strong> pueden tomar cualquier valor intermedio, se miden (peso, temperatura, tiempo).</li></ul></div>
+      </div>
+      <div style="height:1rem"></div>
+      <p style="font-weight:700;color:var(--text)">🎯 Reto «Clasificador de datos» (6 aciertos o más = insignia)</p>
+      <div id="cls-datos"></div>
+    </div>
+
+    <div class="card">
+      <h3>⚖️ Investigación cualitativa vs. cuantitativa</h3>
+      <p class="hint">Pasa el ratón (o toca) cada fila: son preguntas clásicas de examen.</p>
+      <table class="versus">
+        <tr><th></th><th style="color:var(--pink2)">🧠 Cualitativa</th><th style="color:var(--sky)">📊 Cuantitativa</th></tr>
+        <tr><td>Objetivos</td><td>Conseguir un entendimiento cualitativo de las <strong>motivaciones subyacentes</strong> del comportamiento de consumo</td><td><strong>Cuantificar</strong> un fenómeno y <strong>generalizar</strong> los resultados de una muestra a la población</td></tr>
+        <tr><td>Muestras</td><td><strong>Pequeñas</strong></td><td><strong>Grandes</strong></td></tr>
+        <tr><td>Tipo de análisis</td><td><strong>Contenido</strong> (no estadístico)</td><td><strong>Estadístico</strong></td></tr>
+        <tr><td>Unidad de análisis</td><td><strong>Significados</strong></td><td><strong>Variables</strong></td></tr>
+        <tr><td>Resultados</td><td>Para un <strong>entendimiento inicial</strong></td><td>Para <strong>establecer conclusiones</strong> y recomendar alternativas de acción</td></tr>
+        <tr><td>Enfoque</td><td><strong>Exploratorio</strong></td><td><strong>Descriptivo y causal</strong></td></tr>
+        <tr><td>Métodos</td><td>Entrevistas en profundidad, sesiones de grupo y técnicas proyectivas</td><td>Encuestas (personales, telefónicas, por web) y paneles</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="kicker">1.2 · Fiabilidad y coste de la información primaria</div>
+      <h3>⚠️ Toda investigación primaria tiene errores</h3>
+      <p>La investigación primaria <strong>siempre está sujeta a errores</strong> que limitan su fiabilidad. Hay dos grandes familias:</p>
+      <div class="grid2" style="margin-top:0.8rem">
+        <div class="mini" style="border-top:5px solid var(--pink)"><h4>🎯 Error muestral</h4><p>Aparece porque no entrevistamos u observamos a <strong>toda la población</strong>, solo a una parte (la muestra). La buena noticia: es <strong>cuantificable</strong> (se estima el porcentaje máximo de error). Lo verás en la UT6.</p></div>
+        <div class="mini" style="border-top:5px solid var(--sun)"><h4>🐞 Errores no muestrales</h4><p>No se sabe lo grandes que son. Los provoca:</p><ul><li><b>El investigador:</b> población mal definida, muestra no representativa, encuestadores no adecuados o mal formados, cuestionario mal diseñado.</li><li><b>El entrevistador:</b> formula mal las preguntas, no sigue las instrucciones, hace fraude o simula entrevistas, o no entrevista a la persona adecuada.</li><li><b>El entrevistado:</b> no responde por desconfianza, responde inexacto (no lo sabe o se precipita), no es sincero o da la respuesta que cree que <strong>el entrevistador espera</strong>.</li></ul></div>
+      </div>
+      <div style="height:1rem"></div>
+      <p>Para <strong>reducir los errores</strong> casi siempre hay que <strong>gastar más</strong> (muestras más grandes, entrevistadores mejor formados). Por eso se hace un <strong>análisis coste-beneficio</strong> y se decide hasta qué nivel de fiabilidad llegar con el presupuesto disponible. Los costes de la información primaria incluyen:</p>
+      <div class="facts" style="margin-top:0.6rem"><span class="fact">📝 Diseño y administración de encuestas</span><span class="fact">🎙️ Honorarios de entrevistas en profundidad</span><span class="fact">🎁 Incentivos a los participantes</span><span class="fact">👷 Personal de campo</span><span class="fact">🏢 Alquiler de espacios (focus groups, análisis)</span></div>
+      <div style="height:1rem"></div>
+      <p style="font-weight:700;color:var(--text)">🐞 Reto: ¿quién ha provocado el error?</p>
+      <div id="cls-err"></div>
+    </div>
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> la información primaria es <strong>más cara</strong> que la secundaria (el EGM es secundaria, ¡ojo!). La interrogación <strong>no</strong> es solo cuantitativa ni solo cualitativa: se clasifica según la naturaleza de la información.</div>
+  </div>
+
+  <!-- ================= OBSERVACIÓN ================= -->
+  <div class="tab-content" id="tab-observacion">
+    <div class="card" style="border-left:4px solid var(--teal)">
+      <div class="kicker">Método de observación</div>
+      <h3>👀 Mirar sin preguntar</h3>
+      <p>La observación <strong>registra el comportamiento</strong> de los consumidores o usuarios <strong>sin preguntarles</strong>. No se pueden observar comportamientos que ocurren en la intimidad o que no dejan rastro. Para que los datos sean precisos y fiables, la observación debe ser <strong>sistemática</strong>: organizada, planificada y siguiendo un esquema previo.</p>
+      <p>En la <strong>observación cualitativa</strong> un investigador toma notas o graba el comportamiento para interpretarlo después. En la <strong>observación cuantitativa</strong> se recopilan datos, normalmente con algún <strong>dispositivo electrónico</strong> que ayuda en los recuentos y mediciones.</p>
+      <div class="grid2" style="margin-top:0.8rem">
+        <div class="mini"><h4 class="pros">✅ Ventajas</h4><ul><li>Datos objetivos del comportamiento real.</li><li>No depende de la memoria ni la sinceridad del consumidor.</li><li>Útil con niños o con quien no puede expresarse.</li></ul></div>
+        <div class="mini"><h4 class="cons">⚠️ Inconvenientes</h4><ul><li>No explica motivaciones ni actitudes.</li><li>El observado puede cambiar su conducta si se sabe observado.</li><li>Puede ser lenta y costosa.</li></ul></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔀 Tipos de observación</h3>
+      <p class="hint">Cada criterio tiene dos caras. Cambia entre ellas para ver la definición y un ejemplo.</p>
+      <div class="pairs" id="pairs"></div>
+    </div>
+
+    <div class="card">
+      <div class="kicker">2.4 · Observación cualitativa</div>
+      <h3>🎥 Observación cualitativa: grabar, interpretar… o infiltrarse</h3>
+      <p>Suele apoyarse en <strong>dispositivos de grabación</strong> (normalmente videocámaras) para analizar el comportamiento después: por ejemplo, grabar a compradores usando un electrodoméstico. Pero hay dos tipos muy relevantes <strong>sin dispositivos de registro</strong>: la <strong>observación participante</strong> (etnografía, arriba) y el <strong>cliente misterioso</strong>.</p>
+      <div class="grid2" style="margin:0.8rem 0">
+        <div class="mini"><h4>🎯 Aplicaciones</h4><p>Observar a los vendedores cuando interactúan con los clientes; adoptar la perspectiva del consumidor en distintas situaciones.</p></div>
+        <div class="mini"><h4 class="pros">✅ Ventaja</h4><p>Proporciona información <strong>imposible de obtener</strong> de otra manera.</p><h4 class="cons" style="margin-top:0.5rem">⚠️ Inconveniente</h4><p>Es <strong>muy lenta</strong> y requiere investigadores <strong>muy especializados</strong>.</p></div>
+      </div>
+      <h3>🕵️ El cliente misterioso (mystery shopper)</h3>
+      <p>El investigador <strong>se hace pasar por comprador</strong> y <strong>en ningún momento desvela su identidad</strong>. Interactuando con vendedores y con otros compradores obtiene información muy relevante. Pruébalo:</p>
+      <div style="height:0.8rem"></div>
+      <div class="mystery">
+        <div class="shop" id="shop"></div>
+        <div>
+          <p style="font-weight:700;color:var(--text);font-size:0.85rem;margin-bottom:0.4rem">📋 Ficha de evaluación: marca lo que se cumplió</p>
+          <div id="checklist"></div>
+          <div id="ms-score" style="margin-top:0.6rem;font-size:0.84rem;font-weight:800;color:var(--ink)"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🦅 Reto «Ojo de halcón»: ¿qué tipo de observación es?</h3>
+      <div id="cls-obs"></div>
+    </div>
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> el <strong>dustbin check</strong> (revisar la basura de envases de una familia) es observación <strong>indirecta</strong>. Ambiente no manipulado y conducta no forzada = <strong>natural</strong>. Si el investigador se integra en el grupo = observación <strong>participante</strong>.</div>
+  </div>
+
+  <!-- ================= CUALITATIVAS ================= -->
+  <div class="tab-content" id="tab-cualitativas">
+    <div class="card" style="border-left:4px solid var(--pink)">
+      <div class="kicker">Interrogación cualitativa</div>
+      <h3>🧠 Entender el porqué</h3>
+      <p>Los <strong>objetivos</strong> de la investigación deciden si hace falta información cualitativa, cuantitativa o ambas. Las técnicas cualitativas buscan <strong>profundidad</strong>: sirven para temas delicados (sobre el consumo de alcohol, una encuesta en la calle es demasiado directa; mejor una entrevista en profundidad, más íntima) y para descubrir <strong>motivaciones subconscientes</strong> (¿por qué alguien se compra un deportivo, más caro y menos práctico que un utilitario?).</p>
+      <div class="grid2" style="margin-top:0.8rem">
+        <div class="mini"><h4 class="cons">⚠️ Limitación 1</h4><p>Sus resultados <strong>no suelen ser representativos</strong> de la población, por el pequeño tamaño de las muestras (se usan pequeñas para poder profundizar).</p></div>
+        <div class="mini"><h4 class="cons">⚠️ Limitación 2</h4><p>No exigen mucha estadística, pero sí conocimientos de <strong>psicología, antropología y sociología</strong> para interpretar bien la información.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="qual-tabs">
+        <button class="qt sel" onclick="showQual(0,this)"><span class="i">🎙️</span><b>Entrevista en profundidad</b></button>
+        <button class="qt" onclick="showQual(1,this)"><span class="i">👥</span><b>Focus group</b></button>
+        <button class="qt" onclick="showQual(2,this)"><span class="i">🪞</span><b>Técnicas proyectivas</b></button>
+      </div>
+      <div class="qual-panel" id="qual-panel"></div>
+    </div>
+
+    <div class="lab-proj">
+      <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:0.3rem">🪞 Laboratorio proyectivo</div>
+      <p style="font-size:0.8rem;opacity:.8;margin-bottom:0.9rem">Prueba las cuatro técnicas como si fueras el participante. Tus respuestas no se envían a nadie. Completa las cuatro para ganar la insignia «Psicólogo del consumidor».</p>
+      <div class="proj-tabs" id="proj-tabs"></div>
+      <div class="proj-stage" id="proj-stage"></div>
+    </div>
+    <div style="height:1.2rem"></div>
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> <strong>entrevista en profundidad</strong> = gran profundidad y flexibilidad para guiar la conversación. <strong>Focus group</strong> = hasta unos <strong>90 minutos</strong>, sirve para <strong>generar ideas y hacer descubrimientos no previstos</strong>. Asociación de palabras, terminación de frases e historias, cómics incompletos e interpretación de fotografías = <strong>técnicas proyectivas</strong>.</div>
+  </div>
+
+  <!-- ================= ENCUESTA ================= -->
+  <div class="tab-content" id="tab-encuesta">
+    <div class="card" style="border-left:4px solid var(--sky)">
+      <div class="kicker">Interrogación cuantitativa</div>
+      <h3>📊 La encuesta: preguntar a muchos, de forma estructurada</h3>
+      <p>La investigación cuantitativa obtiene <strong>datos numéricos y medibles</strong> sobre el comportamiento y las preferencias de los consumidores. Sus métodos más usados son las <strong>encuestas</strong> (cuestionarios para obtener respuestas precisas de un grupo de personas) y los <strong>paneles</strong> (analizan la evolución de opiniones y hábitos a lo largo del tiempo).</p>
+      <p>En la <strong>encuesta</strong> se obtiene información cuantitativa mediante <strong>entrevistas</strong> cuyas preguntas están recogidas en un <strong>cuestionario</strong>. Los <strong>objetivos</strong>, el <strong>alcance</strong> y los <strong>recursos</strong> disponibles determinan qué tipo de encuesta conviene. Por ejemplo: con población rural muy dispersa, mejor telefónica que personal; y si no hay listado de teléfonos, online.</p>
+    </div>
+
+    <div class="card">
+      <div class="survey-grid" id="survey-grid"></div>
+      <div class="sv-detail" id="sv-detail"></div>
+    </div>
+
+    <div class="card">
+      <h3>🤖 ¿Qué tipo de encuesta me conviene?</h3>
+      <p class="hint">Ajusta tu situación y el recomendador te dirá cuál encaja mejor.</p>
+      <div class="picker">
+        <label>💰 Presupuesto<select id="p-budget" onchange="recommend()"><option value="0">Muy ajustado</option><option value="1" selected>Medio</option><option value="2">Amplio</option></select></label>
+        <label>⏱️ Plazo<select id="p-time" onchange="recommend()"><option value="0">Lo necesito ya</option><option value="1" selected>Normal</option></select></label>
+        <label>🖼️ ¿Hay que enseñar productos o imágenes?<select id="p-img" onchange="recommend()"><option value="0" selected>No</option><option value="1">Sí</option></select></label>
+        <label>📏 Cuestionario<select id="p-len" onchange="recommend()"><option value="0" selected>Corto</option><option value="1">Largo</option></select></label>
+        <label>🌐 ¿El público usa internet?<select id="p-net" onchange="recommend()"><option value="1" selected>Sí, casi todo</option><option value="0">No mucho (p. ej. mayores)</option></select></label>
+      </div>
+      <div class="reco" id="reco"></div>
+    </div>
+
+    <div class="card">
+      <h3>🔁 Los paneles: la misma muestra, una y otra vez</h3>
+      <p>Los paneles son <strong>métodos permanentes</strong> de recogida de información: están formados por <strong>personas o empresas que se comprometen a aportar información de manera regular</strong>. Así se ve la evolución en el tiempo (un diseño <strong>longitudinal</strong>, ¿te acuerdas de la UT2?).</p>
+      <p>Quienes forman el panel (<strong>panelistas</strong>) reciben una <strong>contraprestación</strong>: dinero o cheques de compra si son consumidores, o asesoramiento e informes si son empresas. Solo las empresas muy grandes mantienen paneles propios; lo normal es que los gestionen <strong>empresas especializadas</strong>.</p>
+      <div style="height:0.8rem"></div>
+      <div class="panels">
+        <div class="mini" style="border-top:5px solid var(--pink)"><h4>🛒 Panel de consumidores</h4><p>Participan <strong>consumidores</strong> de productos diversos, que informan de sus compras de forma continua.</p><a class="ext" href="https://www.kantar.com/es" target="_blank" rel="noopener">Kantar ↗</a></div>
+        <div class="mini" style="border-top:5px solid var(--teal)"><h4>🏪 Panel de detallistas</h4><p>Formado por <strong>establecimientos de venta</strong>: informan de ventas, stock, precios y presencia de marcas.</p><a class="ext" href="https://nielseniq.com/global/es/" target="_blank" rel="noopener">NielsenIQ ↗</a></div>
+        <div class="mini" style="border-top:5px solid var(--sky)"><h4>📺 Panel de audiencias</h4><p>Compuesto por <strong>espectadores de diversos medios</strong> de comunicación. Ejemplo del tema: el panel de audiencia televisiva del <strong>Estudio General de Medios (EGM)</strong>.</p><a class="ext" href="https://www.aimc.es/egm/" target="_blank" rel="noopener">AIMC · EGM ↗</a></div>
+      </div>
+    </div>
+
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> <strong>CAPI</strong> = entrevista personal asistida por ordenador. Personal: ventaja = <strong>mayor control del entrevistado e información del entorno</strong>. Telefónica (CATI): ventaja = <strong>coste bajo y menor tiempo</strong>. Online (CAWI): inconveniente = <strong>baja tasa de respuesta</strong>. Panel de detallistas = participan <strong>establecimientos de venta</strong>.</div>
+  </div>
+
+  <!-- ================= CUESTIONARIO ================= -->
+  <div class="tab-content" id="tab-cuestionario">
+    <div class="card" style="border-left:4px solid #673ab7">
+      <div class="kicker">El cuestionario</div>
+      <h3>📝 La herramienta que lo decide todo</h3>
+      <p>Igual que la guía de entrevista en los grupos y en las entrevistas en profundidad, el <strong>cuestionario</strong> <strong>traduce las necesidades de investigación a un conjunto de preguntas</strong>. En los métodos cuantitativos tiene una <strong>importancia capital</strong>: debe ser <strong>interesante y fluido</strong> para que los entrevistados cooperen, y su diseño busca <strong>minimizar el error de respuesta</strong>.</p>
+      <div style="margin-top:0.6rem"><a class="ext" href="https://www.google.com/intl/es/forms/about/" target="_blank" rel="noopener">Google Forms ↗</a><a class="ext" href="https://forms.office.com/" target="_blank" rel="noopener">Microsoft Forms ↗</a><a class="ext" href="https://www.typeform.com/es/" target="_blank" rel="noopener">Typeform ↗</a><a class="ext" href="https://www.surveymonkey.com/" target="_blank" rel="noopener">SurveyMonkey ↗</a></div>
+    </div>
+
+    <div class="card">
+      <div class="kicker">5.1 · Estructura del cuestionario</div>
+      <h3>🧱 Seis secciones, en este orden</h3>
+      <p class="hint">Toca cada bloque. Fíjate en el orden: de lo fácil a lo central, y lo personal al final.</p>
+      <div class="qtypes" id="struct-steps"></div>
+      <div class="ladder-detail" id="struct-detail" style="margin-top:0.2rem"></div>
+    </div>
+
+    <div class="card">
+      <div class="kicker">5.2 · Tipos de preguntas</div>
+      <h3>❓ Tipos de preguntas</h3>
+      <p class="hint">Elige un tipo: a la izquierda la teoría; a la derecha la pregunta tal y como la vería el encuestado (¡puedes responderla!).</p>
+      <div class="qtypes" id="qtypes"></div>
+      <div class="qbuild">
+        <div class="qtheory" id="qtheory"></div>
+        <div class="form-mock" id="form-mock"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="kicker">5.3 · Las escalas básicas de medida</div>
+      <h3>📏 Escalas de medida</h3>
+      <p>La escala determina <strong>qué propiedades tienen los números</strong> que asignamos a las respuestas y, por tanto, <strong>qué análisis</strong> podemos hacer después. De menos a más potente: nominal → ordinal → de intervalo → de razón. Toca cada fila.</p>
+      <div style="height:0.6rem"></div>
+      <div style="overflow-x:auto"><table class="scale-matrix" id="scale-matrix"></table></div>
+      <div class="ladder-detail" id="ladder-detail"></div>
+    </div>
+
+    <div class="card">
+      <h3>🏗️ Reto «Arquitecto de cuestionarios»: ¿qué escala es?</h3>
+      <div id="cls-esc"></div>
+    </div>
+
+    <div class="card">
+      <h3>➕ Escalas que usarás en marketing</h3>
+      <div class="extra" style="margin-bottom:0.8rem">📚 <strong>Ampliación:</strong> estas escalas no vienen así en el tema, pero las vas a ver en cualquier estudio real (y en tu práctica con Google Forms).</div>
+      <div class="grid2">
+        <div class="mini"><h4>📶 Escala Likert</h4><p>Grado de <strong>acuerdo</strong> con una afirmación, normalmente de 5 puntos: <em>Totalmente en desacuerdo → Totalmente de acuerdo</em>.</p></div>
+        <div class="mini"><h4>⭐ NPS (Net Promoter Score)</h4><p>«¿Recomendarías esta marca a un amigo?» de 0 a 10. Promotores (9-10) menos detractores (0-6) = índice de lealtad.</p></div>
+      </div>
+      <div style="height:1rem"></div>
+      <p style="font-weight:700;color:var(--text);font-size:0.88rem">↔️ Diferencial semántico: valora PC Componentes y mira su perfil de imagen</p>
+      <p class="hint">Se colocan pares de adjetivos opuestos y el encuestado marca su posición entre ellos.</p>
+      <div id="sd"></div>
+      <svg class="profile" id="profile" viewBox="0 0 400 120" preserveAspectRatio="none"></svg>
+    </div>
+
+    <div class="card">
+      <h3>🚫 Las preguntas que nunca debes hacer</h3>
+      <p class="hint">Detecta el fallo de cada pregunta: así se evita el error «provocado por el investigador».</p>
+      <div id="cls-bad"></div>
+    </div>
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> «¿Qué te parece la experiencia de compra en IKEA? ……» = <strong>abierta</strong>. La que decide si se continúa o se salta a otra parte = <strong>filtro</strong>. Respuestas «No me gusta nada – Ni me gusta ni me disgusta – Me gusta mucho» = <strong>de escala</strong>.</div>
+  </div>
+
+  <!-- ================= EXPERIMENTACIÓN ================= -->
+  <div class="tab-content" id="tab-experimentacion">
+    <div class="card" style="border-left:4px solid var(--sky)">
+      <div class="kicker">Método de experimentación</div>
+      <h3>🧪 Cambiar algo y medir qué pasa</h3>
+      <p>A diferencia de la interrogación y la observación, la experimentación <strong>no recoge datos de forma pasiva</strong>: <strong>manipula (modifica) alguna variable experimental</strong> y <strong>mide otra variable dependiente</strong> para ver el efecto de la primera sobre la segunda. Como intenta demostrar que una variable causa un efecto en otra, también se llama <strong>investigación causal</strong>. Casi siempre proporciona información <strong>cuantitativa</strong>.</p>
+      <div class="xy">
+        <div class="var" style="background:var(--pink)"><div class="l">X</div><small>Variable independiente<br>(la que manipulamos)<br>Ej.: el precio</small></div>
+        <div class="arrow-anim">➜</div>
+        <div class="var" style="background:var(--sky)"><div class="l">Y</div><small>Variable dependiente<br>(la que medimos)<br>Ej.: las ventas</small></div>
+      </div>
+      <p>Las <strong>variables experimentales</strong> suelen ser las del <strong>marketing mix</strong> (precio, marca, atributos del producto, publicidad, promoción...). Las <strong>dependientes</strong> suelen ser las <strong>ventas</strong>, la <strong>actitud hacia la marca</strong> o la <strong>intención de compra</strong>.</p>
+      <div class="grid2" style="margin-top:0.8rem">
+        <div class="mini"><h4>🏷️ Promoción de ventas</h4><p><strong>Mercados de prueba</strong> de ámbito limitado para analizar los efectos que tendría una campaña de promoción.</p></div>
+        <div class="mini"><h4>📣 Campañas publicitarias</h4><p>Distintos <strong>medios y soportes</strong> en localizaciones diferentes para descubrir cuál es el más eficaz.</p></div>
+        <div class="mini"><h4>🛒 Merchandising</h4><p>Efectos de las acciones de marketing en el <strong>punto de venta</strong>.</p></div>
+        <div class="mini"><h4>💶 Política de precios</h4><p>Cómo varía la demanda con el precio, para fijar una política de precios <strong>más eficaz</strong>.</p></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>🔗 Tres condiciones para demostrar causalidad</h3>
+      <div class="conds">
+        <div class="cond"><span class="n">1</span><b>Variación conjunta</b>Las dos variables cambian de manera conjunta.</div>
+        <div class="cond"><span class="n">2</span><b>Orden temporal</b>La variable causa (X) cambia <em>antes</em> que la variable dependiente (Y).</div>
+        <div class="cond"><span class="n">3</span><b>Sin otros factores</b>No hay otros factores que actúen sobre la variable dependiente (p. ej., que las ventas no suban porque un competidor ha subido su precio). Para eso sirve el <strong>grupo de control</strong>.</div>
+      </div>
+    </div>
+
+    <div class="sim-box">
+      <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:0.3rem">🧪 Simulador: PCC prueba el precio del montaje</div>
+      <p style="font-size:0.8rem;opacity:.8;margin-bottom:0.9rem">Durante 4 semanas, PCC cambia el precio del montaje en Cartagena (grupo experimental). Lorca, una ciudad parecida, mantiene el precio actual de 49 € (grupo de control). En la semana 3 llega el Black Friday… Elige un precio (X), activa el grupo de control y lanza el experimento.</p>
+      <div class="sim-controls">
+        <span style="font-size:0.8rem;font-weight:700">Precio X:</span>
+        <div id="price-btns" style="display:flex;gap:0.4rem;flex-wrap:wrap"></div>
+        <label class="toggle"><input type="checkbox" id="ctrl" checked> Grupo de control</label>
+        <button class="btn btn-pink" onclick="runExp()">▶ Lanzar experimento</button>
+      </div>
+      <div class="chart" id="chart"></div>
+      <div class="legend"><span><i style="background:var(--pink)"></i>Cartagena (experimental)</span><span id="leg-ctrl"><i style="background:#8a86a8"></i>Lorca (control, 49 €)</span></div>
+      <div class="sim-read" id="sim-read">Lanza el experimento para ver los resultados.</div>
+      <div id="exp-q" style="margin-top:0.8rem"></div>
+    </div>
+    <div style="height:1.2rem"></div>
+
+    <div class="card">
+      <h3>🏛️ ¿Laboratorio o campo?</h3>
+      <div class="lab-field">
+        <div class="mini" style="border-top:5px solid var(--sky)"><h4>🔬 Experimento de laboratorio</h4><p>En un <strong>ambiente diseñado o controlado</strong> por el investigador: un punto de venta simulado o una habitación con temperatura, luz y ruido controlados.</p><div class="validity"><div>Validez interna<span class="vbar"><i style="width:90%;background:var(--teal)"></i></span></div><div>Validez externa<span class="vbar"><i style="width:35%;background:var(--pink)"></i></span></div></div></div>
+        <div class="mini" style="border-top:5px solid var(--pink)"><h4>🏪 Experimento de campo</h4><p>Se modifica la variable en el <strong>mercado real</strong>: bajar el precio en una tienda y analizar cómo varían sus ventas.</p><div class="validity"><div>Validez interna<span class="vbar"><i style="width:45%;background:var(--teal)"></i></span></div><div>Validez externa<span class="vbar"><i style="width:90%;background:var(--pink)"></i></span></div></div></div>
+      </div>
+      <p style="margin-top:0.8rem"><strong>Validez interna:</strong> en laboratorio se controla mejor que el experimento no se vea afectado por otras variables (como las acciones de los competidores). <strong>Validez externa:</strong> en el mercado real los resultados son más fáciles de <strong>generalizar</strong> a la realidad. Lo óptimo es <strong>maximizar ambas</strong>.</p>
+    </div>
+
+    <div class="card">
+      <h3>🧠 Neuromarketing: medir lo que no se dice</h3>
+      <p>La variable dependiente se puede medir con técnicas de interrogación o con <strong>dispositivos electrónicos</strong> que miden <strong>respuestas automáticas del cuerpo humano</strong>:</p>
+      <div style="height:0.8rem"></div>
+      <div class="neuro">
+        <div class="mini" style="border-top:5px solid var(--sky)"><h4>👁️ Eyetrackers</h4><p>Registran <strong>dónde dirige la vista</strong> la persona en cada momento: qué imágenes captan su interés, qué textos lee y con qué rapidez.</p><p><b>Uso:</b> diseño de <strong>páginas web</strong>, de <strong>envases</strong> y de la colocación de productos en el <strong>punto de venta</strong>.</p><a class="ext" href="https://www.tobii.com/" target="_blank" rel="noopener">Tobii ↗</a></div>
+        <div class="mini" style="border-top:5px solid var(--teal)"><h4>💓 Mediciones psicofisiológicas</h4><p><strong>Tasa cardiaca</strong>, conductancia de la piel, miografía y <strong>reconocimiento facial</strong>: respuestas involuntarias del sistema nervioso ante un estímulo (más excitación = más ritmo cardiaco y sudoración).</p><p><b>Uso:</b> medir la <strong>activación emocional</strong> ante acciones de marketing.</p></div>
+        <div class="mini" style="border-top:5px solid var(--pink)"><h4>⚡ Actividad cerebral</h4><p><strong>Electroencefalograma (EEG)</strong> y <strong>resonancia magnética funcional (fMRI)</strong>: miden cuándo y qué parte del cerebro se activa ante un estímulo, a nivel subconsciente.</p><p><b>Uso:</b> los especialistas en neurociencia infieren qué <strong>emoción</strong> o procesamiento ha generado.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:1rem"><button class="btn btn-ink" onclick="toggleHeat(this)">👁️ Ver mapa de calor del eye tracking</button></div>
+      <div class="ad-wrap">
+        <div class="ad"><div class="pc">🖥️</div><div><h5>Tu PC gaming, montado en casa</h5><div class="price">49 €</div><div class="logo">PCCOMPONENTES · MONTAJE A DOMICILIO</div></div></div>
+        <div class="heat" id="heat">
+          <span class="blob" style="left:58%;top:22%;width:150px;height:70px;background:radial-gradient(circle,rgba(255,0,0,.9),rgba(255,200,0,.4),transparent 70%)"></span>
+          <span class="blob" style="left:60%;top:52%;width:100px;height:60px;background:radial-gradient(circle,rgba(255,60,0,.95),rgba(255,220,0,.45),transparent 70%)"></span>
+          <span class="blob" style="left:8%;top:25%;width:130px;height:120px;background:radial-gradient(circle,rgba(255,170,0,.7),rgba(0,200,120,.3),transparent 70%)"></span>
+          <span class="blob" style="left:58%;top:78%;width:120px;height:30px;background:radial-gradient(circle,rgba(0,180,255,.5),transparent 70%)"></span>
+          <span class="fix" style="left:20%;top:40%;transition-delay:.1s">1</span>
+          <span class="fix" style="left:66%;top:28%;transition-delay:.3s">2</span>
+          <span class="fix" style="left:66%;top:56%;transition-delay:.5s">3</span>
+          <span class="fix" style="left:70%;top:80%;transition-delay:.7s">4</span>
+        </div>
+      </div>
+      <p class="hint" style="text-align:center;margin-top:0.6rem" id="heat-txt">Datos simulados con fines didácticos.</p>
+    </div>
+    <div class="exam-tip">💡 <strong>Para el examen:</strong> X = variable <strong>independiente</strong>. Laboratorio = ambiente <strong>diseñado o controlado</strong>. Mercado real = resultados más fáciles de generalizar = <strong>validez externa</strong>. Tasa cardiaca y reconocimiento facial = <strong>mediciones psicofisiológicas</strong>.</div>
+  </div>
+
+  <!-- ================= JUEGOS ================= -->
+  <div class="tab-content" id="tab-juegos">
+    <div class="card"><h3>🎮 Zona de repaso — UT5</h3><p>Cuatro juegos para dominar la información primaria. ¡A por el 10!</p></div>
+    <div class="games-grid">
+      <div class="game-launch" onclick="openAhorcado()"><div class="g-icon">🪢</div><h4>Ahorcado</h4><p>Términos clave de la unidad</p></div>
+      <div class="game-launch" onclick="openSopa()"><div class="g-icon">🔍</div><h4>Sopa de letras</h4><p>Siglas, escalas y técnicas</p></div>
+      <div class="game-launch" onclick="openQuiz()"><div class="g-icon">📝</div><h4>Quiz exprés</h4><p>15 preguntas tipo examen</p></div>
+      <div class="game-launch" onclick="openMemoria()"><div class="g-icon">🃏</div><h4>Memoria</h4><p>Une cada concepto con su definición</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-ahorcado"><div class="modal"><button class="modal-close" onclick="closeModal('modal-ahorcado')">✕</button><h2>🪢 Ahorcado — UT5</h2><div id="hangman-content"></div></div></div>
+<div class="modal-bg" id="modal-sopa"><div class="modal"><button class="modal-close" onclick="closeModal('modal-sopa')">✕</button><h2>🔍 Sopa de letras — UT5</h2><div id="sopa-content"></div></div></div>
+<div class="modal-bg" id="modal-quiz"><div class="modal"><button class="modal-close" onclick="closeModal('modal-quiz')">✕</button><h2>📝 Quiz — UT5</h2><div id="quiz-content"></div></div></div>
+<div class="modal-bg" id="modal-memoria"><div class="modal" style="max-width:640px"><button class="modal-close" onclick="closeModal('modal-memoria')">✕</button><h2>🃏 Memoria — UT5</h2><div id="memoria-content"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== NAVEGACIÓN ===== */
+function switchTab(id,el,noScroll){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active'); document.getElementById('tab-'+id).classList.add('active');
+  try{ history.replaceState(null,'','#'+id); }catch(e){}
+  try{ el.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'}); }catch(e){}
+  if(!noScroll){ const tabs=document.querySelector('.tabs'); const top=tabs.getBoundingClientRect().top+scrollY-document.querySelector('header').offsetHeight-4; if(scrollY>top) scrollTo({top,behavior:'smooth'}); }
+}
+function goTab(id){ switchTab(id,document.querySelector(`.tab[data-tab="${id}"]`),true); const tabs=document.querySelector('.tabs'); scrollTo({top:tabs.getBoundingClientRect().top+scrollY-document.querySelector('header').offsetHeight-4,behavior:'smooth'}); }
+function fitTabs(){ document.querySelector('.tabs').style.top=document.querySelector('header').offsetHeight+'px'; }
+addEventListener('resize',fitTabs);
+addEventListener('scroll',()=>{ const h=document.documentElement.scrollHeight-innerHeight; document.getElementById('scroll-progress').style.width=(h>0?scrollY/h*100:0)+'%'; },{passive:true});
+document.addEventListener('DOMContentLoaded',()=>{ fitTabs(); const id=location.hash.slice(1), t=id&&document.querySelector(`.tab[data-tab="${id}"]`); if(t) switchTab(id,t,true); });
+function openModal(id){ document.getElementById(id).classList.add('show'); }
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('show'); }));
+const shuffle=a=>{ const b=[...a]; for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; } return b; };
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function swapAnim(el){ el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); }
+
+(function(){
+  const lines=['Si la respuesta no existe… la creamos nosotros.','Observar · preguntar · experimentar.','Una buena pregunta vale más que mil datos.'];
+  const el=document.getElementById('typing'); let li=0,ci=0,del=false;
+  if(reduced){ el.textContent=lines[0]; return; }
+  (function tick(){ const l=lines[li]; el.textContent=l.slice(0,ci);
+    if(!del&&ci<l.length){ ci++; setTimeout(tick,45); } else if(!del){ del=true; setTimeout(tick,2200); } else if(ci>0){ ci--; setTimeout(tick,18); } else { del=false; li=(li+1)%lines.length; setTimeout(tick,300); } })();
+})();
+
+/* ===== INSIGNIAS ===== */
+const BADGES=[['datos','🔢 Clasificador de datos'],['halcon','🦅 Ojo de halcón'],['psico','🧠 Psicólogo del consumidor'],['arquitecto','🏗️ Arquitecto de cuestionarios'],['cientifico','🧪 Científico de mercado']];
+let got={}; try{ got=JSON.parse(localStorage.getItem('ut5-badges')||'{}')||{}; }catch(e){ got={}; }
+function renderBadges(){ document.getElementById('badges').innerHTML='<span class="badges-label">Tus insignias</span>'+BADGES.map(([k,n])=>`<span class="badge ${got[k]?'got':''}">${got[k]?n:'🔒 '+n.split(' ').slice(1).join(' ')}</span>`).join(''); }
+function award(k){ if(got[k]) return; got[k]=true; try{ localStorage.setItem('ut5-badges',JSON.stringify(got)); }catch(e){} renderBadges(); toast('🏅 ¡Insignia conseguida! '+BADGES.find(b=>b[0]===k)[1]); confetti(); }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('show'),3200); }
+function confetti(){ if(reduced) return; const em=['🎉','✨','💜','🩷','⭐','🧪']; for(let i=0;i<28;i++){ const s=document.createElement('span'); s.className='confetti'; s.textContent=em[i%em.length]; s.style.left=Math.random()*100+'vw'; s.style.animationDelay=Math.random()*0.5+'s'; s.style.fontSize=(0.8+Math.random()*0.9)+'rem'; document.body.appendChild(s); setTimeout(()=>s.remove(),2600); } }
+renderBadges();
+
+/* ===== CLASIFICADOR ===== */
+function makeClassifier(boxId,options,items,onFinish){
+  const st={};
+  function start(){ st.items=shuffle(items); st.i=0; st.ok=0; render(); }
+  function render(){
+    const box=document.getElementById(boxId);
+    if(st.i>=st.items.length){ const nota=(st.ok/st.items.length*10).toFixed(1); box.innerHTML=`<div class="result-box">${nota>=8?'🏆':nota>=5?'👍':'💪'} ${st.ok}/${st.items.length} aciertos · Nota: ${nota}/10</div><button class="play-again">Jugar otra vez</button>`; box.querySelector('button').onclick=start; if(onFinish) onFinish(st.ok,st.items.length); return; }
+    const it=st.items[st.i];
+    box.innerHTML=`<div class="cls-score">Pregunta ${st.i+1} de ${st.items.length} · Aciertos: ${st.ok}</div><div class="cls-item swap">${it.q}</div><div class="cls-opts">${options.map((o,k)=>`<button class="cls-opt" data-k="${k}">${o}</button>`).join('')}</div><div class="cls-fb"></div>`;
+    box.querySelectorAll('.cls-opt').forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+  }
+  function answer(k){ const box=document.getElementById(boxId), it=st.items[st.i], btns=box.querySelectorAll('.cls-opt'); btns.forEach(b=>b.disabled=true); btns[it.a].classList.add('ok'); if(k===it.a) st.ok++; else btns[k].classList.add('ko'); box.querySelector('.cls-fb').innerHTML=(k===it.a?'✅ <strong>¡Correcto!</strong> ':'❌ <strong>No exactamente.</strong> ')+it.why; box.querySelector('.cls-score').textContent=`Pregunta ${st.i+1} de ${st.items.length} · Aciertos: ${st.ok}`; setTimeout(()=>{ st.i++; render(); }, k===it.a?1600:3000); }
+  start();
+}
+
+/* ===== INTRO ===== */
+makeClassifier('cls-datos',['🗨️ Cualitativo','🔢 Cuanti. discreto','📐 Cuanti. continuo'],[
+  {q:'«Me encanta esta marca»',a:0,why:'Es una opinión, no una cantidad.'},
+  {q:'Número de veces que compras online al mes',a:1,why:'Se cuenta con números enteros: discreto.'},
+  {q:'La edad en años cumplidos',a:1,why:'En años cumplidos solo toma valores enteros: discreto.'},
+  {q:'La temperatura de una tienda',a:2,why:'Puede tomar cualquier valor intermedio (21,7 ºC): continuo.'},
+  {q:'La marca de tu móvil',a:0,why:'Es una categoría: cualitativo.'},
+  {q:'El tiempo que pasas en una web, en segundos con decimales',a:2,why:'Se mide y admite decimales: continuo.'},
+  {q:'Número de hijos de un hogar',a:1,why:'No existen 2,5 hijos: discreto.'},
+  {q:'Tu color favorito',a:0,why:'Es una cualidad: cualitativo.'}
+],(ok)=>{ if(ok>=6) award('datos'); });
+document.querySelectorAll('.versus tr').forEach(tr=>{ tr.addEventListener('mouseenter',()=>tr.classList.add('lit')); tr.addEventListener('mouseleave',()=>tr.classList.remove('lit')); tr.addEventListener('click',()=>tr.classList.toggle('lit')); });
+
+/* ===== OBSERVACIÓN ===== */
+const pairs=[
+  ['¿Lo saben?',[['Encubierta','Las personas observadas <b>no saben</b> que lo están siendo. Se usa cuando saberse vigiladas cambiaría su conducta.','Lego reúne a niños en una sala para que jueguen con una pieza nueva y los observa desde una habitación contigua.'],['No encubierta','Lo <b>normal</b>: las personas tienen <b>derecho a saber</b> que las observan. En cualquier caso, después siempre se les debe comunicar que han participado en un estudio.','Un hogar que acepta que graben cómo usa un electrodoméstico.']]],
+  ['¿Dónde?',[['Natural','En un ambiente <b>no manipulado</b> y sin forzar el comportamiento. Es la forma <b>más realista</b> de observación.','El comportamiento de un comprador en el punto de venta mientras hace su compra.'],['Artificial','Se <b>altera el ambiente</b> o se <b>provoca</b> el comportamiento.','Se monta una tienda de decorado y se pide a la gente que compre como lo haría en la realidad.']]],
+  ['¿Cuándo?',[['Directa','El investigador observa el comportamiento <b>mientras ocurre</b>, sin intervenir ni influir en él.','Registrar qué productos cogen los clientes en un supermercado y cuáles dejan en el estante.'],['Indirecta','Se observan <b>resultados o rastros</b> de comportamientos que ya han ocurrido.','<b>Dustbin check</b>: revisar los envases que tira una familia para saber qué consume, de qué tamaño y con qué frecuencia.']]],
+  ['¿Quién registra?',[['Humana','La realiza directamente el investigador o la investigadora, <b>sin ningún aparato</b> que ayude a registrar.','Un investigador con una ficha de observación en tienda.'],['No humana','Se usa algún <b>dispositivo electrónico o mecánico</b> para registrar los comportamientos.','Un contador de personas en la entrada o un audímetro.']]],
+  ['¿Se integra?',[['Participante','El investigador <b>se integra en el grupo</b> que quiere observar, como uno más, durante un largo periodo, y lleva un <b>diario</b>. Viene de la antropología: también se llama <b>etnografía</b>.','Hacerse socio de una peña de aficionados al fútbol para entender a sus miembros.'],['No participante','El investigador se queda <b>fuera</b>, como espectador.','Observar desde la grada cómo se comporta la peña.']]]
+];
+document.getElementById('pairs').innerHTML=pairs.map((p,i)=>`<div class="pair"><div class="pair-head">${p[0]}</div><div class="pair-tog">${p[1].map((o,k)=>`<button class="${k===0?'on':''}" onclick="pairSel(${i},${k},this)">${o[0]}</button>`).join('')}</div><div class="pair-body" id="pb${i}"></div></div>`).join('');
+function pairSel(i,k,btn){ if(btn){ btn.parentNode.querySelectorAll('button').forEach(b=>b.classList.remove('on')); btn.classList.add('on'); } const o=pairs[i][1][k], b=document.getElementById('pb'+i); b.innerHTML=`${o[1]}<br><span style="color:var(--pink2)">📌 ${o[2]}</span>`; swapAnim(b); }
+pairs.forEach((_,i)=>pairSel(i,0));
+
+const msScene=`<div class="scene">🏬🕵️</div><b>Visita a la tienda PCC de Murcia · sábado 11:40</b><br>Al entrar, nadie saluda. Hay 3 personas en cola y el dependiente tarda <b>9 minutos</b> en atenderte. Cuando lo hace, es amable y te explica bien las dos gráficas que dudas. Te ofrece el <b>servicio de montaje</b> sin que lo pidas. El ticket incluye el precio correcto, pero no te dan la encuesta de satisfacción.`;
+const msItems=[['Saludo al entrar en menos de 30 s',0],['Tiempo de espera inferior a 5 min',0],['Trato amable y explicación clara',1],['Ofrece el servicio de montaje',1],['Precio cobrado = precio etiquetado',1],['Entrega la encuesta de satisfacción',0]];
+document.getElementById('shop').innerHTML=msScene;
+let msAns={};
+document.getElementById('checklist').innerHTML=msItems.map((m,i)=>`<div class="check" onclick="msCheck(${i},this)"><span class="box"></span><span>${m[0]}</span></div>`).join('');
+function msCheck(i,el){
+  const s=(msAns[i]===undefined)?1:(msAns[i]===1?0:1); msAns[i]=s;
+  el.classList.toggle('on',s===1); el.classList.toggle('off',s===0); el.querySelector('.box').textContent=s?'✓':'✕';
+  const n=Object.keys(msAns).length, sc=document.getElementById('ms-score');
+  if(n<msItems.length){ sc.textContent=`Has evaluado ${n}/${msItems.length} puntos. Toca de nuevo para cambiar ✓/✕.`; return; }
+  const ok=msItems.filter((m,k)=>msAns[k]===m[1]).length, cumple=msItems.filter(m=>m[1]).length;
+  sc.innerHTML=`${ok===msItems.length?'🎯 ¡Ficha perfecta!':'🔍 Has acertado '+ok+'/'+msItems.length+'.'} La tienda cumple <b>${cumple} de ${msItems.length}</b> estándares (${Math.round(cumple/msItems.length*100)} %). Fallos: saludo, espera y encuesta.`;
+}
+makeClassifier('cls-obs',['↩️ Indirecta','🌳 Natural','🧫 Artificial','🤝 Participante','📷 No humana'],[
+  {q:'Revisar cada semana los envases que tira una familia (dustbin check)',a:0,why:'Se observan los rastros del comportamiento: indirecta.'},
+  {q:'Mirar, sin intervenir, cómo eligen los clientes en un supermercado real',a:1,why:'Ambiente no manipulado y conducta no forzada: natural.'},
+  {q:'Montar una sala con estanterías para ver cómo eligen yogures',a:2,why:'El ambiente lo prepara el investigador: artificial.'},
+  {q:'El investigador se apunta a un club de running para estudiar a sus miembros',a:3,why:'Se integra en el grupo observado: participante.'},
+  {q:'Un audímetro registra qué canal se ve en un hogar',a:4,why:'Lo registra un aparato: no humana.'},
+  {q:'Analizar los tickets de compra del mes pasado',a:0,why:'Son huellas de un comportamiento ya ocurrido: indirecta.'},
+  {q:'Cámaras que cuentan cuánta gente se para frente a un escaparate',a:4,why:'Observación mecánica o electrónica: no humana.'},
+  {q:'Un laboratorio que simula una tienda online para grabar la pantalla',a:2,why:'Entorno diseñado y controlado: artificial.'}
+],(ok)=>{ if(ok>=6) award('halcon'); });
+
+/* ===== CUALITATIVAS ===== */
+const quals=[
+  `<h4>🎙️ 2.1 · Entrevista en profundidad</h4>Es un <strong>método de interrogación directo</strong>. El entrevistador lleva un <strong>guion</strong> con temas amplios o preguntas abiertas, deja que la persona se alargue lo que quiera y tiene <strong>libertad para plantear preguntas no previstas</strong> si surge algo interesante. Es <strong>fundamental el papel del entrevistador</strong>: empático, persuasivo, capaz de estimular la conversación y de crear un vínculo con el entrevistado.
+   <div class="facts"><span class="fact">👤 1 a 1</span><span class="fact">⏱️ No más de 1 hora</span><span class="fact">📝 Guion de temas amplios</span><span class="fact">🎧 Conviene grabar y transcribir</span></div>
+   <ul><li><b>Aplicaciones:</b> entrevistar a <strong>especialistas y expertos</strong>; apoyo para <strong>desarrollar hipótesis</strong>; cuando <strong>no se sabe mucho</strong> de un tema.</li><li><b class="pros">Ventajas:</b> <strong>gran profundidad</strong> en la información y <strong>flexibilidad</strong> para guiar la conversación según el interés de cada tema.</li><li><b class="cons">Inconvenientes:</b> mayor <strong>dependencia de la habilidad del entrevistador</strong>; se necesita <strong>mucho tiempo</strong>.</li></ul>
+   <div class="case" style="margin-top:0.6rem">🖥️ PCC entrevista a 8 clientes que devolvieron piezas «por no saber montarlas» para entender qué les frenó.</div>`,
+  `<h4>👥 2.2 · Focus group (sesión de grupo)</h4>Otro método de interrogación directo y la <strong>técnica cualitativa más utilizada</strong>. El grupo debate abiertamente: no se trata de que cada uno opine aislado, sino de crear una <strong>dinámica de grupo</strong> en la que los comentarios de unos estimulen a los demás.
+   <div class="facts"><span class="fact">👥 8-12 personas</span><span class="fact">⏱️ No más de 90 min</span><span class="fact">🎁 Contraprestación (vales)</span><span class="fact">⚖️ Grupo homogéneo</span></div>
+   <p style="margin:0.4rem 0"><b>Claves del éxito:</b></p>
+   <ul><li><b>El lugar:</b> sala con <strong>grabación de vídeo</strong> y, si es posible, <strong>espejo</strong> para observar desde una sala contigua sin interferir.</li><li><b>El moderador:</b> motiva a que participen todos, mantiene la armonía y el equilibrio y dirige la conversación.</li><li><b>Los participantes:</b> entre <strong>8 y 12</strong>, con contraprestación (normalmente vales de compra) y <strong>homogéneos</strong> (sobre todo en nivel educativo y de renta).</li><li><b>La guía de discusión:</b> guion en <strong>3 partes</strong>: 1) reglas y objetivos; 2) debate de los temas (la parte más extensa); 3) conclusiones.</li></ul>
+   <div class="room"><div class="table-oval"></div>
+     <span class="seat mod" style="left:34%;top:12%">MOD</span>
+     <span class="seat" style="left:12%;top:20%">🙂</span><span class="seat" style="left:56%;top:20%;animation-delay:-.5s">😀</span>
+     <span class="seat" style="left:4%;top:44%;animation-delay:-1s">🙃</span><span class="seat" style="left:63%;top:44%;animation-delay:-1.5s">🤔</span>
+     <span class="seat" style="left:12%;top:70%;animation-delay:-2s">😎</span><span class="seat" style="left:34%;top:76%;animation-delay:-2.5s">🙂</span><span class="seat" style="left:56%;top:70%;animation-delay:-.8s">😊</span><span class="seat" style="left:22%;top:8%;animation-delay:-1.2s">🧐</span>
+     <div class="mirror">🪟<span>Espejo unidireccional</span><span>👀 el cliente observa</span></div></div>
+   <ul><li><b>Aplicaciones:</b> <strong>generar nuevas ideas y hacer descubrimientos no previstos</strong>.</li><li><b class="pros">Ventajas:</b> son muy <strong>flexibles</strong> y los participantes sienten <strong>menos ansiedad ante temas difíciles</strong>, así que responden con más sinceridad.</li><li><b class="cons">Inconvenientes:</b> puede dar lugar a <strong>interpretaciones erróneas</strong>; a veces los grupos son <strong>difíciles de manejar</strong> y de orientar.</li></ul>`,
+  `<h4>🪞 2.3 · Técnicas proyectivas</h4>Se pide a los participantes que <strong>interpreten un objeto, una imagen o el comportamiento de otras personas</strong>, de modo que proyecten <strong>de manera indirecta</strong> sus motivaciones y actitudes y así <strong>venzan sus mecanismos de defensa</strong>. Todas funcionan igual: se presenta un <strong>estímulo</strong> y se pide una <strong>respuesta</strong>. Facilitan la expresión de aspectos <strong>inconscientes</strong>.
+   <div class="facts"><span class="fact">🔤 Asociación de palabras</span><span class="fact">✍️ Terminación de frases e historias</span><span class="fact">💬 Cómics incompletos</span><span class="fact">🖼️ Interpretación de fotografías</span><span class="fact">🎭 Representación de papeles</span></div>
+   <ul><li><b>🎭 Representación de papeles (role playing):</b> la persona adopta el papel de otra (un vendedor, un vecino...) y expresa lo que diría o cómo actuaría en una situación.</li><li><b>Aplicaciones:</b> se suelen usar <strong>combinadas en las sesiones de grupo</strong>.</li><li><b class="pros">Ventajas:</b> generan información que la gente <strong>no daría si se le preguntara directamente</strong>.</li><li><b class="cons">Inconvenientes:</b> quienes investigan tienen que estar <strong>muy cualificados</strong>.</li></ul>
+   <p style="margin-top:0.5rem">👇 Prueba cuatro de ellas en el laboratorio de abajo.</p>`
+];
+function showQual(i,el){ document.querySelectorAll('.qt').forEach(b=>b.classList.remove('sel')); if(el) el.classList.add('sel'); const p=document.getElementById('qual-panel'); p.innerHTML=quals[i]; swapAnim(p); }
+showQual(0);
+
+const projDone=new Set();
+const projNames=['🔤 Asociación de palabras','✍️ Terminación de frases','💬 Cómic incompleto','🖼️ Interpretación de fotos'];
+function renderProjTabs(sel){ document.getElementById('proj-tabs').innerHTML=projNames.map((n,i)=>`<button class="pj ${i===sel?'sel':''} ${projDone.has(i)?'done':''}" onclick="proj(${i})">${n}</button>`).join(''); }
+function markProj(i){ projDone.add(i); renderProjTabs(curProj); if(projDone.size===4) award('psico'); }
+let curProj=0, wa={};
+function proj(i){
+  curProj=i; renderProjTabs(i); clearTimeout(wa.to);
+  const st=document.getElementById('proj-stage');
+  if(i===0){
+    const words=['Montar un PC','Black Friday','Tienda online','Marca blanca','Influencer','Envío gratis'];
+    wa={words:shuffle(words).slice(0,4),i:0,ans:[]};
+    st.innerHTML=`<p style="font-size:0.82rem;opacity:.85">Escribe <b>lo primero</b> que te venga a la cabeza al ver cada palabra. Tendrás 6 segundos por palabra: no pienses, ¡responde!</p><div class="big-word" id="wa-word">¿Preparado?</div><div style="text-align:center"><button class="btn btn-pink" id="wa-start">▶ Empezar</button></div><div class="timer" style="display:none"><i id="wa-bar"></i></div><input class="proj-in" id="wa-in" placeholder="Escribe y pulsa Enter..." autocomplete="off" style="display:none"><div class="proj-out" id="wa-out" style="display:none"></div>`;
+    const inp=document.getElementById('wa-in'); inp.onkeydown=e=>{ if(e.key==='Enter') waNext(); };
+    document.getElementById('wa-start').onclick=function(){ this.parentNode.remove(); document.querySelector('.timer').style.display='block'; inp.style.display='block'; waShow(); inp.focus({preventScroll:true}); };
+  } else if(i===1){
+    const fr=['Cuando veo un producto que es mucho más barato que el resto, lo primero que pienso es...','Lo que realmente me empuja a comprar algo que no tenía planeado es...','Lo que más miedo me da de comprar en una web que no conozco es...'];
+    const obj=['Desconfianza («será malo») frente a oportunidad («¡una ganga!»).','El detonante real: ¿oferta limitada?, ¿envase?, ¿un influencer?','Las barreras de entrada: ¿robo de datos?, ¿devoluciones?, ¿que no llegue?'];
+    st.innerHTML=fr.map((f,k)=>`<p style="font-size:0.88rem;margin:0.6rem 0 0.3rem"><b>${k+1}.</b> «${f}»</p><input class="proj-in tf" placeholder="Completa la frase...">`).join('')+`<button class="btn btn-pink" style="margin-top:0.8rem" id="tf-btn">Ver qué buscaba el investigador</button><div class="proj-out" id="tf-out" style="display:none"></div>`;
+    document.getElementById('tf-btn').onclick=()=>{ const o=document.getElementById('tf-out'); o.style.display='block'; o.innerHTML='🔎 <b>Objetivo de cada frase:</b><br>'+obj.map((x,k)=>`${k+1}. ${x}`).join('<br>'); swapAnim(o); markProj(1); };
+  } else if(i===2){
+    st.innerHTML=`<p style="font-size:0.82rem;opacity:.85;margin-bottom:0.6rem">Viernes, 17:55. El empleado tiene la mochila puesta y las entradas del concierto en el móvil. <b>¿Qué diría el personaje B?</b></p>
+     <div class="comic"><div class="panel"><div class="bubble">Sé que tienes entradas para esta noche, pero el cliente ha adelantado la entrega. Necesito que te quedes. No serán más de 3 horas.</div><div class="person">👔</div><b style="font-size:0.7rem">A · Jefe</b></div>
+     <div class="panel"><div class="bubble"><textarea id="comic-in" placeholder="Escribe lo que diría..."></textarea></div><div class="person">🎒</div><b style="font-size:0.7rem">B · Empleado</b></div></div>
+     <button class="btn btn-pink" style="margin-top:0.8rem" id="cm-btn">Interpretar mi respuesta</button><div class="proj-out" id="cm-out" style="display:none"></div>`;
+    document.getElementById('cm-btn').onclick=()=>{ const t=(document.getElementById('comic-in').value||'').toLowerCase(); let r='🤝 <b>Respuesta asertiva o de negociación</b>: buscas un punto intermedio («¿y si lo termino mañana?»).';
+      if(/vale|no te preocupes|claro|sin problema|cancelo|de acuerdo/.test(t)) r='🙇 <b>Respuesta sumisa</b>: priorizas no tener conflicto aunque pierdas tus planes (miedo o falta de límites).';
+      if(/broma|en serio|triple|pagar|ni de coña|no pienso|paso/.test(t)) r='🔥 <b>Respuesta agresiva o sarcástica</b>: indica cansancio («burnout») o un conflicto latente.';
+      const o=document.getElementById('cm-out'); o.style.display='block'; o.innerHTML=(t.trim()?r:'✍️ Escribe algo en el bocadillo primero.')+'<br><span style="opacity:.75">El investigador no te pregunta «qué harías tú»: al hablar por el personaje, bajas la guardia.</span>'; swapAnim(o); if(t.trim()) markProj(2); };
+  } else {
+    const ph=[['🧍‍♂️📱😐','Un chico mira el móvil con cara seria en una tienda de informática'],['👩‍👧🛒💸','Una madre y su hija frente a un lineal lleno de ofertas']];
+    st.innerHTML=`<p style="font-size:0.82rem;opacity:.85;margin-bottom:0.6rem">Mira cada escena e inventa una historia: ¿qué ha pasado antes?, ¿qué piensa?, ¿qué hará después?</p><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.8rem">${ph.map((p,k)=>`<div><div class="photo-card">${p[0]}<small>${p[1]}</small></div><textarea class="proj-in" rows="3" placeholder="Tu historia..."></textarea></div>`).join('')}</div><button class="btn btn-pink" style="margin-top:0.8rem" id="ph-btn">¿Qué analiza el investigador?</button><div class="proj-out" id="ph-out" style="display:none"></div>`;
+    document.getElementById('ph-btn').onclick=()=>{ const o=document.getElementById('ph-out'); o.style.display='block'; o.innerHTML='🔎 En tu historia, el investigador busca <b>qué emociones atribuyes</b> (¿frustración?, ¿ilusión?), <b>qué barreras imaginas</b> (precio, desconfianza, dificultad) y <b>cómo termina</b> la compra. Así descubre actitudes que nadie diría en una encuesta. Es la base del test de apercepción temática (TAT).'; swapAnim(o); markProj(3); };
+  }
+}
+function waShow(){
+  const w=document.getElementById('wa-word'), bar=document.getElementById('wa-bar'), inp=document.getElementById('wa-in');
+  if(!w) return; w.textContent=wa.words[wa.i]; swapAnim(w); inp.value='';
+  bar.style.transition='none'; bar.style.width='100%'; void bar.offsetWidth; bar.style.transition='width 6s linear'; bar.style.width='0%';
+  clearTimeout(wa.to); wa.to=setTimeout(waNext,6000);
+}
+function waNext(){
+  const inp=document.getElementById('wa-in'); if(!inp) return; clearTimeout(wa.to);
+  wa.ans.push([wa.words[wa.i], inp.value.trim()||'(sin respuesta)']); wa.i++;
+  if(wa.i<wa.words.length) return waShow();
+  document.getElementById('wa-word').textContent='¡Listo!'; inp.style.display='none'; document.querySelector('.timer').style.display='none';
+  const o=document.getElementById('wa-out'); o.style.display='block';
+  o.innerHTML='🧠 <b>Tus asociaciones:</b><br>'+wa.ans.map(a=>`${a[0]} → <b>${a[1].replace(/[<>&]/g,'')}</b>`).join('<br>')+'<br><br><span style="opacity:.8">Una agencia lo haría con cientos de personas y agruparía las respuestas: si a «Marca blanca» muchos responden «barato» o «mala calidad», la marca tiene un problema de imagen. Las respuestas <b>rápidas</b> evitan que la persona censure lo que piensa.</span>';
+  swapAnim(o); markProj(0);
+}
+renderProjTabs(0); proj(0);
+
+/* ===== ENCUESTA ===== */
+const surveys=[
+  {acr:'Personal',sub:'CAPI · MAPI · TAPI',c:'var(--pink)',def:'Entrevistador y entrevistado <b>cara a cara</b>, en el mismo espacio físico.<br><b>Modalidades:</b> <b>puerta a puerta</b> (en el domicilio) o <b>por interceptación</b> (centros comerciales o cualquier lugar público).<br><b>Tecnologías:</b> asistida por ordenador (<b>CAPI</b>), por teléfono móvil (<b>MAPI</b>) o por tableta (<b>TAPI</b>).',pro:['Permite cierta <b>flexibilidad</b> en la realización de la entrevista.','<b>Mayor control de los entrevistados</b> y mayor <b>información sobre su entorno</b>.'],con:['Los entrevistadores pueden <b>influir en gran medida</b> en las respuestas.']},
+  {acr:'Telefónica',sub:'CATI',c:'var(--sky)',def:'Se realiza a través del teléfono. Como hoy casi siempre es con ayuda de ordenador, se conoce como <b>CATI</b> (computer assisted telephone interview).',pro:['<b>Fácil organización</b>.','<b>Coste bajo y menor tiempo</b> para finalizar el estudio.'],con:['<b>Alto rechazo</b> a contestar.','No se tiene información sobre el <b>entorno</b> del encuestado.','El cuestionario debe ser <b>más corto</b>.','<b>No admite</b> imágenes ni materiales adicionales.']},
+  {acr:'Online',sub:'CAWI',c:'var(--teal)',def:'Se realiza enteramente con un cuestionario online, <b>sin intervención humana</b>: <b>CAWI</b> (computer assisted web interview). Herramientas como Google Forms o Typeform.',pro:['<b>Muy barata</b> y <b>muy rápida</b>.','Permite <b>material de apoyo</b>.','<b>Mínima intrusión</b> en la intimidad y alta percepción de <b>anonimato</b>.'],con:['No hay <b>listados (censos)</b> de usuarios de internet.','<b>Fraudes</b>: cuestionarios duplicados y dudas sobre quién lo ha respondido realmente.','<b>Baja tasa de respuestas</b>.']},
+  {acr:'Postal',sub:'ampliación',c:'#8a7a5a',def:'<i>(No aparece en el tema: es una ampliación.)</i> El cuestionario se envía por correo y el encuestado lo devuelve relleno. Hoy está casi en desuso.',pro:['Barata y anónima.','Sin influencia del entrevistador.'],con:['<b>Muy lenta</b>.','Tasa de respuesta muy baja.']}
+];
+document.getElementById('survey-grid').innerHTML=surveys.map((s,i)=>`<button class="sv" id="sv${i}" onclick="showSurvey(${i})" style="border-top:5px solid ${s.c}"><div class="acr">${s.acr}</div><div class="nm">${s.sub}</div></button>`).join('');
+function showSurvey(i){ document.querySelectorAll('.sv').forEach((b,k)=>b.classList.toggle('sel',k===i)); const s=surveys[i], d=document.getElementById('sv-detail');
+  d.innerHTML=`<div class="mini" style="border-left:5px solid ${s.c}"><h4>${s.acr} · ${s.sub}</h4><p>${s.def}</p><div class="grid2" style="margin-top:0.6rem"><div><p class="pros" style="font-weight:800">✅ Ventajas</p><ul>${s.pro.map(x=>`<li>${x}</li>`).join('')}</ul></div><div><p class="cons" style="font-weight:800">⚠️ Inconvenientes</p><ul>${s.con.map(x=>`<li>${x}</li>`).join('')}</ul></div></div></div>`; swapAnim(d); }
+showSurvey(0);
+function recommend(){
+  const b=+document.getElementById('p-budget').value, t=+document.getElementById('p-time').value, im=+document.getElementById('p-img').value, len=+document.getElementById('p-len').value, net=+document.getElementById('p-net').value;
+  const sc=[0,0,0,0], why=[[],[],[],[]];
+  sc[0]+= b===2?3:b===1?1:-3; sc[1]+= b===0?1:2; sc[2]+=3; sc[3]+=2;
+  if(t===0){ sc[1]+=2; sc[2]+=3; sc[0]-=1; sc[3]-=4; why[2].push('es la más rápida'); }
+  if(im){ sc[0]+=3; sc[2]+=1; sc[1]-=5; why[0].push('permite enseñar el producto'); }
+  if(len){ sc[0]+=3; sc[1]-=3; sc[2]-=1; why[0].push('admite cuestionarios largos'); }
+  if(!net){ sc[2]-=6; sc[1]+=2; sc[0]+=1; why[1].push('llega a quien no usa internet'); }
+  if(b===0){ why[2].push('es la más barata'); }
+  const best=sc.indexOf(Math.max(...sc));
+  document.querySelectorAll('.sv').forEach((x,k)=>x.classList.toggle('win',k===best));
+  const r=document.getElementById('reco');
+  r.innerHTML=`🏆 Te recomiendo la encuesta <b>${surveys[best].acr} (${surveys[best].sub})</b>${why[best].length?' porque '+why[best].join(' y '):''}.<br><span style="color:var(--text2);font-size:0.8rem">Tenla en cuenta: ${surveys[best].con.map(x=>x.replace(/<[^>]+>/g,'')).join(' ')}</span>`; swapAnim(r);
+}
+recommend();
+makeClassifier('cls-err',['🧑‍🔬 Investigador','🧑‍💼 Entrevistador','🙋 Entrevistado'],[
+  {q:'La población no se ha definido bien y la muestra no la representa',a:0,why:'Es un error de diseño: provocado por el investigador.'},
+  {q:'El encuestador pone cara de sorpresa ante algunas respuestas',a:1,why:'Influye en las respuestas: provocado por el entrevistador.'},
+  {q:'Un encuestado dice que lee mucho porque «queda mejor»',a:2,why:'Responde lo socialmente deseable: provocado por el entrevistado.'},
+  {q:'El encuestador rellena él mismo varios cuestionarios para acabar antes',a:1,why:'Fraude del entrevistador.'},
+  {q:'El cuestionario tiene preguntas ambiguas que cada uno entiende de una forma',a:0,why:'Mal diseño del cuestionario: provocado por el investigador.'},
+  {q:'La persona no recuerda cuántas veces compró online el año pasado',a:2,why:'Fallo de memoria del entrevistado.'}
+]);
+
+/* ===== CUESTIONARIO ===== */
+const qtypes=[
+  {n:'Abierta',th:'<h4>✏️ Pregunta abierta</h4>La respuesta <b>no está predefinida</b>: el encuestado contesta con sus palabras. Ofrece una información <b>más rica</b> que las cerradas, pero es más difícil de analizar (hay que codificarla).',form:'<div class="fq">¿Qué le parece la marca Mercedes?</div><textarea rows="2" placeholder="Tu respuesta"></textarea>'},
+  {n:'Cerrada dicotómica',th:'<h4>☑️ Cerrada dicotómica</h4>Las respuestas están <b>predefinidas</b> y <b>solo hay dos opciones</b>. Las cerradas son más fáciles de responder y de analizar que las abiertas.',form:'<div class="fq">¿Qué le parece la marca Mercedes?</div><label><input type="radio" name="qd"> Me gusta</label><label><input type="radio" name="qd"> No me gusta</label>'},
+  {n:'Cerrada de opción múltiple',th:'<h4>🔘 Cerrada de opción múltiple</h4>Respuestas predefinidas con <b>más de dos opciones</b>. Conviene añadir «Otra» si no están todas las posibles.',form:'<div class="fq">Indique su marca preferida entre las siguientes:</div>'+['Mercedes','Citroën','Kia','Toyota','Ford','Fiat'].map(x=>`<label><input type="radio" name="qm"> ${x}</label>`).join('')},
+  {n:'De escala',th:'<h4>📶 De escala</h4>Se plantean posibles respuestas que suponen una <b>valoración</b>, ordenadas de menor a mayor.',form:'<div class="fq">¿Qué le parece la marca Mercedes?</div><div class="likert-row">'+['Es la peor','No me gusta','Ni me gusta ni me disgusta','Me gusta','Es mi preferida'].map(x=>`<label><input type="radio" name="qe"> ${x}</label>`).join('')+'</div>'},
+  {n:'Filtro',th:'<h4>🚦 Pregunta filtro</h4>Permite determinar si se <b>continúa con la siguiente pregunta</b> o se <b>pasa a otra parte</b> del cuestionario (o se finaliza). Evita preguntar cosas que no aplican a esa persona.',form:'<div class="fq">¿Es conductor de automóvil?</div><label><input type="radio" name="qf" onchange="route(0)"> No</label><label><input type="radio" name="qf" onchange="route(1)"> Sí</label><div class="route" id="route"></div>'}
+];
+const structS=[
+  ['👋 1 · Presentación','En entrevistas personales, el entrevistador da su <b>nombre</b> y, si no afecta a la entrevista, la <b>empresa</b> para la que trabaja. Además presenta el estudio, con la información precisa para <b>no condicionar</b> el resto de la entrevista.','«Hola, soy Laura, de una agencia de investigación. Estamos haciendo un estudio sobre servicios para gamers. Serán 5 minutos.»'],
+  ['🌱 2 · Preguntas de inicio','Deben ser <b>interesantes y fáciles</b> de responder, para <b>generar confianza</b> en el entrevistado.','«¿Juegas a videojuegos en el ordenador?»'],
+  ['🎯 3 · Información básica','Las preguntas sobre los <b>temas centrales</b> de la investigación.','«¿Cuánto pagarías por que te montaran el PC en casa?»'],
+  ['👤 4 · Preguntas de clasificación','Si es necesario, aspectos <b>sociodemográficos</b>: sexo, edad, nivel de formación, lugar de residencia...','«Edad: 16-24 · 25-34 · 35 o más»'],
+  ['🪪 5 · Información de identificación','Solo si después se quiere <b>comprobar que la entrevista se ha realizado</b>: nombre y teléfono. En cualquier otro caso, la entrevista debe ser <b>totalmente anónima</b>.','«¿Nos deja un teléfono por si el supervisor necesita verificar la entrevista?»'],
+  ['🙏 6 · Agradecimientos','Terminar <b>siempre dando las gracias</b> por participar. El entrevistado debe quedar <b>satisfecho</b>.','«¡Muchas gracias por tu tiempo! Nos ayudas mucho.»']
+];
+document.getElementById('struct-steps').innerHTML=structS.map((s,i)=>`<button class="qtype ${i===0?'sel':''}" onclick="showStruct(${i},this)">${s[0]}</button>`).join('');
+function showStruct(i,el){ document.querySelectorAll('#struct-steps .qtype').forEach(b=>b.classList.remove('sel')); if(el) el.classList.add('sel'); const d=document.getElementById('struct-detail'), s=structS[i]; d.innerHTML=`<h4>${s[0]}</h4>${s[1]}<div class="ex">💬 Ejemplo (caso PCC): ${s[2]}</div>`; swapAnim(d); }
+showStruct(0);
+document.getElementById('qtypes').innerHTML=qtypes.map((q,i)=>`<button class="qtype ${i===0?'sel':''}" onclick="showQ(${i},this)">${q.n}</button>`).join('');
+function showQ(i,el){ document.querySelectorAll('#qtypes .qtype').forEach(b=>b.classList.remove('sel')); if(el) el.classList.add('sel'); const t=document.getElementById('qtheory'), f=document.getElementById('form-mock'); t.innerHTML=qtypes[i].th; f.innerHTML=qtypes[i].form; swapAnim(t); swapAnim(f); }
+function route(v){ const r=document.getElementById('route'); r.style.display='block'; r.style.background=v?'#e6f5ea':'#fdeaea'; r.style.color=v?'#22562d':'#a12c2c'; r.textContent=v?'➡️ Pasar a la siguiente pregunta':'⏹️ Finalizar el cuestionario'; swapAnim(r); }
+showQ(0);
+
+const scales=[
+  {n:'Nominal',p:[1,0,0,0],an:'Frecuencias, moda, test no paramétricos.',d:'No hay propiedad de orden ni de distancia. El número <b>solo sirve para identificar o categorizar</b>: se usa para codificar respuestas.',ex:'¿Vives en...? Zona norte [1] · Zona sur [2] · Zona centro [3]',pw:25},
+  {n:'Ordinal',p:[1,1,0,0],an:'Frecuencias, moda, mediana, test no paramétricos.',d:'Hay <b>orden</b>, pero la distancia entre el primero y el segundo no tiene por qué ser la misma que entre el segundo y el tercero.',ex:'Ordena de mayor a menor preferencia las zonas de residencia: [1] primera, [2] segunda, [3] tercera.',pw:50},
+  {n:'De intervalo',p:[1,1,1,0],an:'Frecuencias, moda, mediana, media, varianza, test paramétricos.',d:'Hay orden y <b>la misma distancia</b> entre los números, pero <b>el cero no implica la ausencia</b> de la característica medida.',ex:'Valora la zona norte de 0 (no te gusta nada) a 4 (te gusta mucho): [0] [1] [2] [3] [4]',pw:75},
+  {n:'De razón',p:[1,1,1,1],an:'Todos los anteriores (igual que la de intervalo).',d:'<b>Es la escala más potente</b>: hay orden y distancia, y además <b>el cero representa la ausencia</b> de la característica.',ex:'Indica cuántos años de tu vida has residido en la zona norte: ____',pw:100}
+];
+document.getElementById('scale-matrix').innerHTML='<tr><th>Escala</th><th>Identifica</th><th>Orden</th><th>Distancia igual</th><th>Cero absoluto</th></tr>'+scales.map((s,i)=>`<tr onclick="showScale(${i})" id="sc${i}"><td>${['🏷️','🥇','📏','⚖️'][i]} ${s.n}</td>${s.p.map(v=>`<td class="${v?'yes':'no'}">${v?'✔':'—'}</td>`).join('')}</tr>`).join('');
+function showScale(i){ document.querySelectorAll('.scale-matrix tr').forEach(r=>r.classList.remove('sel')); document.getElementById('sc'+i).classList.add('sel'); const s=scales[i], d=document.getElementById('ladder-detail');
+  d.innerHTML=`<h4>${s.n}</h4>${s.d}<div style="font-size:0.74rem;font-weight:800;margin-top:0.5rem">Potencia de análisis</div><div class="power"><i style="width:${s.pw}%"></i></div><b>Análisis posibles:</b> ${s.an}<div class="ex">📋 ${s.ex}</div>`; swapAnim(d); }
+showScale(0);
+makeClassifier('cls-esc',['🏷️ Nominal','🥇 Ordinal','📏 Intervalo','⚖️ Razón'],[
+  {q:'¿En qué zona vives? Norte [1], Sur [2], Centro [3]',a:0,why:'Los números solo identifican categorías.'},
+  {q:'Ordena estas 5 marcas de tu favorita a la que menos',a:1,why:'Hay orden, pero no distancias iguales.'},
+  {q:'Valora la atención recibida de 0 a 10',a:2,why:'Distancias iguales, pero un 0 no significa «ausencia de atención».'},
+  {q:'¿Cuántos euros gastas al mes en ropa?',a:3,why:'0 € es ausencia real de gasto y 100 € es el doble que 50 €.'},
+  {q:'Sexo: Hombre [1] · Mujer [2] · Otro [3]',a:0,why:'Solo clasifica.'},
+  {q:'La temperatura en grados centígrados',a:2,why:'0 ºC no es «ausencia de temperatura».'},
+  {q:'Número de compras online en el último año',a:3,why:'Tiene cero absoluto: ninguna compra.'},
+  {q:'Puesto en la clasificación de la liga',a:1,why:'Primero, segundo, tercero... sin distancias iguales.'}
+],(ok)=>{ if(ok>=6) award('arquitecto'); });
+
+const sdPairs=[['Barato','Caro'],['Lento','Rápido'],['Frío','Cercano'],['Anticuado','Innovador'],['Poco fiable','Fiable']];
+const sdVals=[3,5,3,6,5];
+document.getElementById('sd').innerHTML=sdPairs.map((p,i)=>`<div class="sd"><span>${p[0]}</span><input type="range" min="1" max="7" value="${sdVals[i]}" oninput="sdVals[${i}]=+this.value;drawProfile()"><span>${p[1]}</span></div>`).join('');
+function drawProfile(){ const svg=document.getElementById('profile'), n=sdVals.length; let pts=sdVals.map((v,i)=>[20+i*(360/(n-1)),110-(v-1)/6*100]);
+  svg.innerHTML=`<line x1="0" y1="60" x2="400" y2="60" stroke="#d8d0ee" stroke-dasharray="4 4"/>`+`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#e0447c" stroke-width="3" stroke-linejoin="round"/>`+pts.map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="#2a1760"/><text x="${p[0]}" y="${p[1]-10}" font-size="11" text-anchor="middle" fill="#2a1760" font-weight="700">${sdVals[i]}</text>`).join(''); }
+drawProfile();
+makeClassifier('cls-bad',['👯 Doble','🧲 Sugestiva','🌫️ Ambigua','🤓 Tecnicismo'],[
+  {q:'«¿Te gustan el precio y el envío de PCC?»',a:0,why:'Pregunta dos cosas a la vez: ¿y si me gusta el precio pero no el envío?'},
+  {q:'«¿Verdad que nuestro servicio de montaje es excelente?»',a:1,why:'Empuja hacia una respuesta: es sugestiva o tendenciosa.'},
+  {q:'«¿Compras a menudo en tiendas online?»',a:2,why:'«A menudo» significa cosas distintas para cada persona: ambigua.'},
+  {q:'«¿Valoras positivamente la latencia de la RAM DDR5 CL30?»',a:3,why:'Usa jerga que el público general no entiende.'},
+  {q:'«¿Es el envío rápido y barato?»',a:0,why:'Otra vez dos ideas en una sola pregunta.'},
+  {q:'«La mayoría de expertos recomienda PCC. ¿La recomendarías tú?»',a:1,why:'Condiciona la respuesta con una opinión previa.'}
+]);
+
+/* ===== EXPERIMENTACIÓN ===== */
+const prices=[29,39,49,59]; let selPrice=49, expRuns=new Set();
+document.getElementById('price-btns').innerHTML=prices.map(p=>`<button class="price-btn ${p===49?'sel':''}" onclick="selPrice=${p};document.querySelectorAll('.price-btn').forEach(b=>b.classList.toggle('sel',b.textContent==='${p} €'))">${p} €</button>`).join('');
+document.getElementById('chart').innerHTML=[1,2,3,4].map(w=>`<div class="bar-grp"><div class="bar" id="be${w}" style="height:0;background:var(--pink)"><span></span></div><div class="bar" id="bc${w}" style="height:0;background:#8a86a8"><span></span></div><span class="bar-lbl">Sem. ${w}${w===3?' 🛍️':''}</span></div>`).join('');
+function demand(p){ return Math.max(5,120-1.6*p); }
+function runExp(){
+  const ctrl=document.getElementById('ctrl').checked, base=demand(49);
+  const boost=[1,1,1.45,1.05], noise=()=>0.94+Math.random()*0.12;
+  const exp=[1,2,3,4].map((w,i)=>Math.round(demand(selPrice)*boost[i]*noise()));
+  const con=[1,2,3,4].map((w,i)=>Math.round(base*boost[i]*noise()));
+  const max=Math.max(...exp,...con)*1.15;
+  [1,2,3,4].forEach((w,i)=>{ const e=document.getElementById('be'+w), c=document.getElementById('bc'+w);
+    e.style.height=(exp[i]/max*100)+'%'; e.querySelector('span').textContent=exp[i];
+    c.style.height=ctrl?(con[i]/max*100)+'%':'0'; c.querySelector('span').textContent=ctrl?con[i]:''; });
+  document.getElementById('leg-ctrl').style.opacity=ctrl?1:.3;
+  const sumE=exp.reduce((a,b)=>a+b), sumC=con.reduce((a,b)=>a+b), r=document.getElementById('sim-read');
+  if(ctrl){
+    const ef=Math.round((sumE/sumC-1)*100);
+    r.innerHTML=`📊 A <b>${selPrice} €</b>, Cartagena contrata <b>${sumE}</b> montajes en 4 semanas frente a <b>${sumC}</b> en Lorca (${ef>=0?'+':''}${ef} %). Ingresos: <b>${(sumE*selPrice).toLocaleString('es-ES')} €</b>.<br>🛍️ Fíjate: el Black Friday dispara <b>las dos</b> ciudades en la semana 3. Gracias al grupo de control sabemos que ese pico <b>no lo causa el precio</b> (condición 3 de causalidad).`;
+    expRuns.add(selPrice);
+  } else {
+    r.innerHTML=`⚠️ Sin grupo de control ves el pico de la semana 3… pero <b>no puedes saber</b> si lo causa el precio o el Black Friday. ¡No se cumple la condición 3! Activa el grupo de control.`;
+  }
+  swapAnim(r);
+  if(expRuns.size>=2) showExpQ();
+}
+function showExpQ(){
+  const q=document.getElementById('exp-q'); if(q.dataset.on) return; q.dataset.on=1;
+  q.innerHTML=`<div style="font-size:0.84rem;font-weight:700;margin-bottom:0.4rem">🎯 Has probado varios precios con control. Pregunta final: ¿qué precio da <u>más ingresos</u> (precio × montajes)?</div><div style="display:flex;gap:0.4rem;flex-wrap:wrap">${prices.map(p=>`<button class="price-btn" onclick="expAns(${p},this)">${p} €</button>`).join('')}</div><div id="exp-fb" style="font-size:0.82rem;margin-top:0.5rem"></div>`; swapAnim(q);
+}
+function expAns(p,btn){
+  const best=prices.reduce((a,b)=>demand(b)*b>demand(a)*a?b:a), fb=document.getElementById('exp-fb');
+  if(p===best){ btn.style.background='var(--teal)'; fb.innerHTML=`✅ ¡Exacto! A ${best} € se obtienen más ingresos: bajar más el precio vende más montajes, pero cada uno deja menos dinero. Por eso se experimenta.`; award('cientifico'); }
+  else { btn.style.background='#a12c2c'; fb.innerHTML='❌ Prueba otra vez: compara los ingresos que te da el simulador con cada precio.'; }
+}
+function toggleHeat(btn){ const h=document.getElementById('heat'); h.classList.toggle('on'); btn.textContent=h.classList.contains('on')?'🙈 Ocultar mapa de calor':'👁️ Ver mapa de calor del eye tracking';
+  document.getElementById('heat-txt').innerHTML=h.classList.contains('on')?'🔴 Más calor = más tiempo mirando. Los números marcan el <b>orden</b> de las miradas: primero el producto, después el titular y el precio. El logo apenas recibe atención → ¡habría que rediseñarlo! <i>(Datos simulados.)</i>':'Datos simulados con fines didácticos.'; }
+
+/* ===== JUEGOS ===== */
+const words=[
+  {word:'OBSERVACION',hint:'Método que registra el comportamiento sin preguntar'},
+  {word:'ENCUESTA',hint:'Interrogación cuantitativa con cuestionario estructurado'},
+  {word:'PANEL',hint:'Muestra permanente que informa de forma periódica'},
+  {word:'EXPERIMENTACION',hint:'Método que manipula una variable para medir su efecto'},
+  {word:'PROYECTIVA',hint:'Técnica del cómic incompleto o la asociación de palabras'},
+  {word:'DICOTOMICA',hint:'Pregunta cerrada con solo dos opciones'},
+  {word:'FILTRO',hint:'Pregunta que decide si se continúa o se salta a otra parte'},
+  {word:'NOMINAL',hint:'Escala en la que el número solo identifica'},
+  {word:'ORDINAL',hint:'Escala con orden pero sin distancias iguales'},
+  {word:'MODERADOR',hint:'Quien dirige un focus group'},
+  {word:'DETALLISTA',hint:'Panel en el que participan establecimientos de venta'},
+  {word:'NEUROMARKETING',hint:'Mide la actividad cerebral o el ritmo cardiaco ante un anuncio'},
+  {word:'INDIRECTA',hint:'Observación de rastros, como el dustbin check'},
+  {word:'CUESTIONARIO',hint:'Conjunto ordenado de preguntas'}
+];
+let hState={};
+function openAhorcado(){ openModal('modal-ahorcado'); startHangman(); }
+function startHangman(){ const e=words[Math.floor(Math.random()*words.length)]; hState={word:e.word,hint:e.hint,guessed:[],wrong:0,maxWrong:7}; renderHangman(); }
+function renderHangman(){
+  const {word,hint,guessed,wrong,maxWrong}=hState, won=word.split('').every(l=>guessed.includes(l)), lost=wrong>=maxWrong;
+  const parts=[wrong>0?'<line x1="80" y1="130" x2="130" y2="130" stroke="currentColor" stroke-width="2.5"/>':'',wrong>1?'<line x1="100" y1="130" x2="100" y2="10" stroke="currentColor" stroke-width="2.5"/>':'',wrong>2?'<line x1="100" y1="10" x2="140" y2="10" stroke="currentColor" stroke-width="2"/>':'',wrong>3?'<line x1="140" y1="10" x2="140" y2="28" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4,3"/>':'',wrong>4?'<circle cx="140" cy="38" r="10" stroke="currentColor" stroke-width="2" fill="none"/>':'',wrong>5?'<line x1="140" y1="48" x2="140" y2="82" stroke="currentColor" stroke-width="2"/><line x1="140" y1="58" x2="122" y2="72" stroke="currentColor" stroke-width="2"/><line x1="140" y1="58" x2="158" y2="72" stroke="currentColor" stroke-width="2"/>':'',wrong>6?'<line x1="140" y1="82" x2="124" y2="105" stroke="currentColor" stroke-width="2"/><line x1="140" y1="82" x2="156" y2="105" stroke="currentColor" stroke-width="2"/>':''].join('');
+  document.getElementById('hangman-content').innerHTML=`<div class="hint-text">💡 Pista: ${hint}</div><svg class="hangman-drawing" width="200" height="140" viewBox="0 0 200 140" style="color:var(--text)"><rect x="0" y="125" width="200" height="5" rx="2" fill="var(--border)"/>${parts}</svg><div class="hangman-word">${word.split('').map(l=>`<div class="letter-box">${guessed.includes(l)?l:''}</div>`).join('')}</div><div class="hangman-status" style="color:${won?'#22562d':lost?'#a12c2c':'var(--text2)'}">${won?'🎉 ¡Correcto! Era: '+word:lost?'❌ Game over. Era: '+word:'Errores: '+wrong+'/'+maxWrong}</div>${won||lost?'<button class="play-again" onclick="startHangman()">Jugar de nuevo</button>':''}<div class="hangman-keys">${'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('').map(l=>{ const g=guessed.includes(l), cls=g?(word.includes(l)?'right':'wrong'):''; return `<button class="key-btn ${cls}" ${g||won||lost?'disabled':''} onclick="guessLetter('${l}')">${l}</button>`; }).join('')}</div>`;
+}
+function guessLetter(l){ if(hState.guessed.includes(l)) return; hState.guessed.push(l); if(!hState.word.includes(l)) hState.wrong++; renderHangman(); }
+
+const sopaWords=['CAPI','CATI','CAWI','PANEL','FILTRO','NOMINAL','ORDINAL','RAZON','ABIERTA','CERRADA','FOCUS','LIKERT'];
+let sopaState={};
+function openSopa(){ openModal('modal-sopa'); buildSopa(); }
+function buildSopa(){
+  const SIZE=13, grid=Array.from({length:SIZE},()=>Array(SIZE).fill('')), placed=[], dirs=[[0,1],[1,0],[1,1],[0,-1],[-1,0],[-1,-1],[1,-1],[-1,1]];
+  [...sopaWords].sort((a,b)=>b.length-a.length).forEach(word=>{ for(let t=0;t<300;t++){ const dir=dirs[Math.floor(Math.random()*8)], r=Math.floor(Math.random()*SIZE), c=Math.floor(Math.random()*SIZE), cells=[]; for(let i=0;i<word.length;i++){ const nr=r+dir[0]*i, nc=c+dir[1]*i; if(nr<0||nr>=SIZE||nc<0||nc>=SIZE) break; if(grid[nr][nc]&&grid[nr][nc]!==word[i]) break; cells.push([nr,nc]); } if(cells.length===word.length){ cells.forEach(([nr,nc],i)=>grid[nr][nc]=word[i]); placed.push({word,cells}); break; } } });
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) if(!grid[r][c]) grid[r][c]='ABCDEFGHIJKLMNOPQRSTUVWXYZ'[Math.floor(Math.random()*26)];
+  sopaState={SIZE,grid,placed,found:[],selecting:[],down:false}; renderSopa();
+}
+function renderSopa(){
+  const {SIZE,grid,placed,found}=sopaState, cls={};
+  placed.forEach(p=>{ if(found.includes(p.word)) p.cells.forEach(([r,c])=>cls[r+','+c]='found'); });
+  let h=`<div style="text-align:center"><div class="grid-sopa" id="gsopa" style="grid-template-columns:repeat(${SIZE},auto)">`;
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++) h+=`<div class="sopa-cell ${cls[r+','+c]||''}" data-r="${r}" data-c="${c}">${grid[r][c]}</div>`;
+  h+=`</div><div class="sopa-words">${placed.map(p=>`<span class="sopa-word ${found.includes(p.word)?'found':''}">${p.word}</span>`).join('')}</div>`;
+  if(found.length===placed.length) h+='<div style="margin-top:1rem;font-weight:800;color:#22562d">🎉 ¡Todas encontradas!</div><button class="play-again" onclick="buildSopa()">Jugar otra vez</button>';
+  document.getElementById('sopa-content').innerHTML=h+'</div>';
+  const g=document.getElementById('gsopa'), cellAt=e=>{ const t=document.elementFromPoint(e.clientX,e.clientY); return t&&t.classList.contains('sopa-cell')?[+t.dataset.r,+t.dataset.c]:null; };
+  g.onpointerdown=e=>{ const c=cellAt(e); if(!c) return; sopaState.down=true; sopaState.start=c; sopaState.selecting=[c]; paintSel(); };
+  g.onpointermove=e=>{ if(!sopaState.down) return; const c=cellAt(e); if(!c) return; const [sr,sc]=sopaState.start, dr=c[0]-sr, dc=c[1]-sc, len=Math.max(Math.abs(dr),Math.abs(dc)); let R=0,C=0; if(Math.abs(dr)>=Math.abs(dc)) R=Math.sign(dr); if(Math.abs(dc)>=Math.abs(dr)) C=Math.sign(dc); sopaState.selecting=[...Array(len+1)].map((_,i)=>[sr+R*i,sc+C*i]); paintSel(); };
+  g.onpointerup=()=>endSel(); g.onpointerleave=()=>{ if(sopaState.down) endSel(); };
+}
+function paintSel(){ document.querySelectorAll('#gsopa .sopa-cell').forEach(el=>{ const on=sopaState.selecting.some(([r,c])=>r==el.dataset.r&&c==el.dataset.c); el.classList.toggle('selected',on&&!el.classList.contains('found')); }); }
+function endSel(){ sopaState.down=false; const sel=sopaState.selecting; if(sel.length>1){ const s=sel.map(([r,c])=>sopaState.grid[r][c]).join(''); const hit=sopaState.placed.find(p=>p.word===s||p.word===[...s].reverse().join('')); if(hit&&!sopaState.found.includes(hit.word)) sopaState.found.push(hit.word); } sopaState.selecting=[]; renderSopa(); }
+
+const quizQ=[
+  {q:'Respecto a la información primaria, es correcto que...',o:['El EGM es un ejemplo de información primaria','Es más fácil de obtener que la secundaria','Es más cara de obtener que la secundaria'],a:2},
+  {q:'«Registra el comportamiento de los consumidores o usuarios». ¿Qué método es?',o:['Experimentación','Interrogación','Observación'],a:2},
+  {q:'En la investigación cualitativa...',o:['La muestra es grande y representativa','El análisis es de contenido (no estadístico)','El objetivo es cuantificar'],a:1},
+  {q:'Un ejemplo de dato cuantitativo discreto es...',o:['«Me gusta mucho esta marca»','El número de hijos de un hogar','La temperatura'],a:1},
+  {q:'El dustbin check es una observación...',o:['Directa','Indirecta','Artificial'],a:1},
+  {q:'Si el investigador se integra en el grupo que observa, hablamos de...',o:['Cliente misterioso','Observación participante','Focus group'],a:1},
+  {q:'Para «generar nuevas ideas y hacer descubrimientos no previstos» usamos...',o:['Focus group','Panel','Encuesta telefónica'],a:0},
+  {q:'La asociación de palabras y el cómic incompleto son...',o:['Técnicas proyectivas','Paneles','Escalas de medida'],a:0},
+  {q:'CAPI significa...',o:['Entrevista personal asistida por ordenador','Entrevista telefónica','Cuestionario online sin entrevistador'],a:0},
+  {q:'Una ventaja de la encuesta telefónica es...',o:['Admite imágenes','Coste bajo y menor tiempo','Permite cuestionarios muy largos'],a:1},
+  {q:'Un inconveniente de la encuesta online (CAWI) es...',o:['Es muy lenta','La baja tasa de respuesta','Es la más cara'],a:1},
+  {q:'En un panel de detallistas participan...',o:['Consumidores','Establecimientos de venta','Espectadores de TV'],a:1},
+  {q:'«¿Es conductor? No → finalizar. Sí → siguiente pregunta» es una pregunta...',o:['Abierta','Filtro','Dicotómica de escala'],a:1},
+  {q:'La escala en la que el cero representa la ausencia de la característica es...',o:['De intervalo','Ordinal','De razón'],a:2},
+  {q:'Si los experimentos se hacen en el mercado real, los resultados se generalizan mejor. Es la validez...',o:['Interna','Externa','Numérica'],a:1}
+];
+let userAnswers=[], quizDone=false;
+function openQuiz(){ openModal('modal-quiz'); userAnswers=Array(quizQ.length).fill(null); quizDone=false; renderQuiz(); }
+function renderQuiz(){
+  let h=''; quizQ.forEach((q,qi)=>{ h+=`<p class="quiz-q">${qi+1}. ${q.q}</p><div class="quiz-options">${q.o.map((o,oi)=>{ let c=userAnswers[qi]===oi?'selected':''; if(quizDone){ if(oi===q.a) c='right'; else if(userAnswers[qi]===oi) c='wrong'; } return `<button class="quiz-opt ${c}" ${quizDone?'disabled':''} onclick="selQ(${qi},${oi})">${o}</button>`; }).join('')}</div>`; });
+  const all=userAnswers.every(a=>a!==null);
+  if(!quizDone) h+=`<button class="play-again" ${all?'':'disabled style="opacity:.5"'} onclick="finishQuiz()">${all?'Corregir':'Responde todas para corregir'}</button>`;
+  else { const sc=userAnswers.filter((a,i)=>a===quizQ[i].a).length, n=(sc/quizQ.length*10).toFixed(1); h+=`<div class="result-box">${n>=9?'🏆':n>=7?'🎉':n>=5?'👍':'💪'} ${sc}/${quizQ.length} · Nota: ${n}/10</div><button class="play-again" onclick="openQuiz()">Repetir</button>`; }
+  document.getElementById('quiz-content').innerHTML=h;
+}
+function selQ(qi,oi){ userAnswers[qi]=oi; const m=document.querySelector('#modal-quiz .modal'), st=m.scrollTop; renderQuiz(); m.scrollTop=st; }
+function finishQuiz(){ quizDone=true; renderQuiz(); document.querySelector('#modal-quiz .modal').scrollTop=1e6; }
+
+const memPairs=[['💻 CAPI','Entrevista personal con ordenador'],['☎️ CATI','Encuesta telefónica asistida'],['🌐 CAWI','Cuestionario online sin entrevistador'],['🗑️ Dustbin check','Observación indirecta'],['👥 Focus group','Generar ideas en grupo'],['💬 Cómic incompleto','Técnica proyectiva'],['🏷️ Escala nominal','El número solo identifica'],['⚖️ Escala de razón','El cero es ausencia real']];
+let memState={};
+function openMemoria(){ openModal('modal-memoria'); buildMemoria(); }
+function buildMemoria(){ const cards=shuffle(memPairs.flatMap((p,i)=>[{t:p[0],pair:i,k:0},{t:p[1],pair:i,k:1}])); memState={cards,flipped:[],matched:[],moves:0}; renderMemoria(); }
+function renderMemoria(){ const {cards,flipped,matched,moves}=memState, done=matched.length===memPairs.length;
+  document.getElementById('memoria-content').innerHTML=`<div class="mem-status">Intentos: ${moves}${done?' · 🎉 ¡Completado!':''}</div><div class="memory-grid">${cards.map((c,i)=>{ const f=flipped.includes(i)||matched.includes(c.pair); return `<div class="mem-card ${f?'flipped':''} ${matched.includes(c.pair)?'matched':''}" onclick="flipMem(${i})"><div class="mem-inner"><div class="mem-front">?</div><div class="mem-back">${c.t}</div></div></div>`; }).join('')}</div>${done?'<button class="play-again" onclick="buildMemoria()">Jugar otra vez</button>':''}`; }
+function flipMem(i){ const {cards,flipped,matched}=memState, c=cards[i]; if(flipped.includes(i)||matched.includes(c.pair)||flipped.length>=2) return; memState.flipped=[...flipped,i]; renderMemoria();
+  if(memState.flipped.length===2){ memState.moves++; const [a,b]=memState.flipped.map(x=>cards[x]); if(a.pair===b.pair&&a.k!==b.k){ memState.matched.push(a.pair); memState.flipped=[]; setTimeout(renderMemoria,300); } else setTimeout(()=>{ memState.flipped=[]; renderMemoria(); },1000); } }
+</script>
+</body>
+</html>
