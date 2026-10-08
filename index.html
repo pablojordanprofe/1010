@@ -223,6 +223,7 @@ footer b { color:white; }
       <div><h2>El <em>temario</em>, unidad a unidad</h2><p>Entra en las unidades disponibles. Las bloqueadas se abrirán cuando las trabajemos en clase.</p></div>
       <div class="legend"><span><i style="background:#13a35a"></i>Disponible</span><span><i style="background:#b9b4cc"></i>Próximamente</span></div>
     </div>
+    <div id="profe-bar" style="display:none;align-items:center;gap:.6rem;background:#fff1d6;border:1px solid #f3c56b;color:#6b4500;border-radius:14px;padding:.8rem 1rem;margin-bottom:1rem;font-size:.86rem;font-weight:600">👨‍🏫 <span><b>Modo profesor:</b> ves todas las unidades, también las que tus alumnos aún tienen bloqueadas.</span></div>
     <div class="units" id="units"></div>
   </div>
 
@@ -236,7 +237,7 @@ footer b { color:white; }
 
 <script>
 /* Llavero generado por tools/publicar.py: claves de las unidades abiertas, cifradas con la contraseña */
-const KEYRING = {"salt": "1jMTvYJ3KsOw/taV523/WQ==", "iter": 310000, "check": {"iv": "vUHgMsFOlkuGTHTi", "ct": "Rcmod63u5oFRMCSGhr+5jFs/7cLBDg=="}, "units": {"ut1": {"iv": "dQANEcjBMS5ftJgR", "ct": "qeRVd5sXb/YqsGZIO4uwY1/nLmnsg8eFcWQKNckIuTTn0B7ih+zD5wpjAewucoYf"}}};
+const KEYRING = {"salt": "1jMTvYJ3KsOw/taV523/WQ==", "iter": 310000, "check": {"iv": "5rB3UMwNZ0fDL560", "ct": "VKDgb6Uw51zEBW1Nc63rPgtLloIB8g=="}, "units": {"ut1": {"iv": "JuIYvsRYMv6vsM5o", "ct": "MsWSQDCndeyWNqc9i6chx2C1tORv6kUveR8fDRUN3Ype5NRKUaQAg1LcLyQyRBO5"}}, "profe": {"salt": "p3HXBVB4vmuRQFStGDdeYQ==", "check": {"iv": "xQjTb01JrVxIAEkN", "ct": "ghNxSXsF8YVQ+Q5hld89YetBfEDCJw=="}, "units": {"ut1": {"iv": "CP3SZ6e/xv7os7Ly", "ct": "ZKaK3/99yOugEtk3Jxsfg2+h83uo2IWjwI0QyoNMwVB5F9Xyzjbzo/6hOF/6IsGN"}, "ut2": {"iv": "VhkyLOnf4V8lSqJg", "ct": "nEXyuFiTETFsfAFAogg7p44BvxC5B1NKzBSXMhLzsyrAczMyS7o3cd1/4J2qSk50"}, "ut4": {"iv": "kmm2GNDYbSpZptrC", "ct": "w/Uk187v6dvjv9eCBIl8YCQs6f0kK8cX8xEflm/ztADSL83rq8R2UqI6EPyR66I7"}, "ut5": {"iv": "GDuzSUAy+y0Fygav", "ct": "7LpX5iEosfAvtuzxi9oVJTNROCc1ww3pYT1rHHy+2XPLLKuuZBB36Vq2OJRDSUea"}, "ut6": {"iv": "rnJk/P7Wsoz43eyd", "ct": "Huo2fyiSFHnnBooWnOrVIdwVkRzCdWKzYYMeqpvveVQW4Av6vKZuNCEMZJPBHqIx"}}}};
 
 const UNITS = [
   {id:'ut1', n:'01', t:'El sistema comercial y el entorno de la empresa', d:'Variables controlables (4Ps) · Mercado · PESTEL · 5 Fuerzas de Porter · Instituciones', g:'linear-gradient(135deg,#533ab7,#0f6e56)'},
@@ -248,7 +249,8 @@ const UNITS = [
   {id:'ut7', n:'07', t:'Análisis estadístico de datos', d:'Estadística descriptiva · Media, moda y mediana · Varianza · Tablas y gráficos de frecuencias', g:'linear-gradient(135deg,#f2b33d,#e4572e)'},
   {id:'ut8', n:'08', t:'Bases de datos', d:'Diseño y gestión de bases de datos comerciales · CRM · Segmentación · Minería de datos', g:'linear-gradient(135deg,#0f6e56,#17c3b2)'}
 ];
-const OPEN = KEYRING ? Object.keys(KEYRING.units) : [];
+let OPEN = KEYRING ? Object.keys(KEYRING.units) : [];
+const isProfe = () => ss.get('pjp:profe') === '1';
 const $ = id => document.getElementById(id);
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 const tob64 = u => btoa(String.fromCharCode(...new Uint8Array(u)));
@@ -266,14 +268,22 @@ const intento=params.get('acceso');
 if(intento){ history.replaceState(null,'',location.pathname); }
 
 /* LOGIN: la contraseña deriva una clave (PBKDF2) que descifra el llavero. No hay contraseña en el código. */
+async function unlock(pwd,ring){
+  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pwd),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(ring.salt),iterations:KEYRING.iter,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
+  await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(ring.check.iv)},key,b64(ring.check.ct)); /* falla si la contraseña no es correcta */
+  for(const id of Object.keys(ring.units)){
+    const k=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(ring.units[id].iv)},key,b64(ring.units[id].ct));
+    ss.set('pjp:'+id,tob64(k));
+  }
+}
 async function login(pwd){
   if(!KEYRING || !window.crypto || !crypto.subtle) throw new Error('nocrypto');
-  const base=await crypto.subtle.importKey('raw',new TextEncoder().encode(pwd),'PBKDF2',false,['deriveKey']);
-  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(KEYRING.salt),iterations:KEYRING.iter,hash:'SHA-256'},base,{name:'AES-GCM',length:256},false,['decrypt']);
-  await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(KEYRING.check.iv)},key,b64(KEYRING.check.ct)); /* falla si la contraseña no es correcta */
-  for(const id of OPEN){
-    const k=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(KEYRING.units[id].iv)},key,b64(KEYRING.units[id].ct));
-    ss.set('pjp:'+id,tob64(k));
+  try{ await unlock(pwd,KEYRING); }
+  catch(e){
+    if(!KEYRING.profe) throw e;
+    await unlock(pwd,KEYRING.profe); /* contraseña de profesor: abre todas las unidades para revisarlas */
+    ss.set('pjp:profe','1');
   }
   ss.set('pjp:auth','1');
 }
@@ -292,13 +302,16 @@ $('login-form').addEventListener('submit',async e=>{
 $('logout').onclick=()=>{ ss.clear(); $('app').style.display='none'; $('login').style.display='grid'; $('pwd').value=''; scrollTo(0,0); };
 
 function renderUnits(){
+  const profe=isProfe();
+  $('profe-bar').style.display=profe?'flex':'none';
   $('units').innerHTML=UNITS.map((u,i)=>{
-    const open=OPEN.includes(u.id)&&ss.get('pjp:'+u.id);
+    const open=(OPEN.includes(u.id)||profe)&&ss.get('pjp:'+u.id);
+    const hidden=profe&&open&&!OPEN.includes(u.id);
     return `<div class="unit ${open?'open':'locked'}" data-id="${u.id}" style="--g:${u.g};animation-delay:${i*0.06}s" ${open?'role="link" tabindex="0"':''}>
       <span class="band"></span>
       <div class="num">${u.n}</div><div class="ut">Unidad de trabajo ${+u.n}</div>
       <h3>${u.t}</h3><p>${u.d}</p>
-      <div class="foot"><span class="state">${open?'● Disponible':'Próximamente'}</span>${open?'<span class="arrow">→</span>':'<span class="lock">🔒</span>'}</div>
+      <div class="foot"><span class="state" ${hidden?'style="background:#fff1d6;color:#8a5a00"':''}>${hidden?'👁️ Oculta a alumnos':open?'● Disponible':'Próximamente'}</span>${open?'<span class="arrow">→</span>':'<span class="lock">🔒</span>'}</div>
     </div>`; }).join('');
   document.querySelectorAll('.unit').forEach(el=>{
     const go=()=>{ if(el.classList.contains('open')) location.href=el.dataset.id+'.html'; else { el.classList.remove('nope'); void el.offsetWidth; el.classList.add('nope'); toast('🔒 Esta unidad se abrirá cuando la trabajemos en clase.'); } };
@@ -311,8 +324,8 @@ function renderUnits(){
 }
 function showApp(fresh){
   $('login').style.display='none'; $('app').style.display='block'; scrollTo(0,0); renderUnits();
-  if(intento){ toast(OPEN.includes(intento)?'✅ Ya puedes entrar en la unidad.':'🔒 Esa unidad todavía no está disponible.'); }
-  else if(fresh) toast('👋 ¡Bienvenido/a al temario del Proyecto PJP!');
+  if(intento){ toast((OPEN.includes(intento)||isProfe())?'✅ Ya puedes entrar en la unidad.':'🔒 Esa unidad todavía no está disponible.'); }
+  else if(fresh) toast(isProfe()?'👨‍🏫 Modo profesor activado: todas las unidades visibles.':'👋 ¡Bienvenido/a al temario del Proyecto PJP!');
 }
 if(ss.get('pjp:auth')) showApp(false);
 else if(intento) toast('🔐 Para entrar en una unidad primero tienes que acceder con la contraseña.');
